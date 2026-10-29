@@ -1,0 +1,959 @@
+---
+import { sampleArtworks } from '../data/sampleArtworks';
+
+const collections = [
+  { id: 'all', label: 'All Works' },
+  { id: 'new-works', label: 'New Works 2026' },
+  { id: 'landscapes', label: 'Landscapes & Botanicals' },
+  { id: 'abstracts', label: 'Abstract Studies' },
+  { id: 'portraits', label: 'Portraiture' },
+];
+
+const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtworks[0];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Lindsay — Neobrutalist Minimalist Prototype</title>
+    <meta name="description" content="Minimal neobrutalist portfolio prototype for Lindsay visual art." />
+
+    <!-- Google Fonts: Space Grotesk (Punchy Neobrutalist Sans) & Space Mono (Technical Monospace) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="neobrutal-body">
+    
+    <!-- Top Prototype Sticky Banner -->
+    <div class="prototype-top-bar">
+      <div class="top-bar-inner">
+        <span class="proto-tag">PROTOTYPE</span>
+        <span class="proto-desc">Minimal Neobrutalist Theme • Fonts: <strong>Space Grotesk</strong> + <strong>Space Mono</strong></span>
+        <a href="/" class="proto-return-link">← Return to Original Site</a>
+      </div>
+    </div>
+
+    <!-- Neobrutalist Masthead Bar (Toby Sparks Style) -->
+    <header class="neo-header-wrapper">
+      <div class="neo-header">
+        <a href="/prototype" class="neo-brand">
+          <span class="brand-badge">L</span>
+          <span class="brand-name">LINDSAY.ART</span>
+        </a>
+
+        <nav class="neo-nav">
+          <a href="#gallery" class="nav-item active">Work</a>
+          <a href="#about-card" class="nav-item">About</a>
+          <a href="/contact" class="nav-item">Contact</a>
+        </nav>
+
+        <div class="neo-header-cta">
+          <a href="/contact" class="neo-btn neo-btn-pink sm">
+            INQUIRE ↗
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="neo-main">
+      <!-- ========================================================= -->
+      <!-- NEOBRUTALIST HERO BENTO (Inspired by Reference)           -->
+      <!-- ========================================================= -->
+      <section class="neo-hero-bento">
+        
+        <!-- Card 1: Main Intro Statement -->
+        <article class="neo-card intro-card">
+          <div class="status-pill">
+            <span class="status-dot"></span>
+            AVAILABLE FOR SELECTED COMMISSIONS
+          </div>
+
+          <h1 class="intro-headline">
+            Hey, I'm Lindsay! I paint light & stillness onto linen.
+          </h1>
+
+          <p class="intro-body">
+            Original oil paintings, botanical studies, and textural mineral compositions exploring space, quiet contemplation, and natural pigments on hand-stretched Belgian linen.
+          </p>
+
+          <div class="intro-btn-row">
+            <a href="#gallery" class="neo-btn neo-btn-pink">
+              VIEW MY WORK
+            </a>
+            <a href="/contact" class="neo-btn neo-btn-white">
+              STUDIO INQUIRIES
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2: Artist Portrait Card -->
+        <article class="neo-card portrait-card" id="about-card">
+          <div class="portrait-crown-icon">✦</div>
+          <div class="portrait-avatar-wrap">
+            <img 
+              src="/artworks/lindsay-portrait.jpg" 
+              alt="Lindsay Studio Portrait" 
+              class="portrait-avatar" 
+            />
+          </div>
+          <div class="portrait-details">
+            <h2 class="portrait-name">Lindsay</h2>
+            <span class="portrait-pill-sticker">FINE ARTIST & PAINTER ✦</span>
+            <p class="portrait-subtext">Working from Brooklyn & London</p>
+          </div>
+        </article>
+
+        <!-- Card 3: Currently In Studio -->
+        <article class="neo-card blue-card">
+          <div class="mini-kicker">CURRENTLY IN STUDIO 🎨</div>
+          <h3 class="card-feature-title">Nocturne Series & Large Impasto Works</h3>
+          <div class="card-status-line">
+            <span class="status-bullet yellow"></span>
+            Preparing for 2026 Solo Exhibition
+          </div>
+        </article>
+
+        <!-- Card 4: Mediums & Specialty -->
+        <article class="neo-card yellow-card">
+          <div class="mini-kicker">MEDIUMS & MATERIALS ⚡</div>
+          <h3 class="card-feature-title">Oil on Belgian Linen & Mineral Pigments</h3>
+          <p class="card-sub-info">Encaustic • Marble Dust • Gouache on Cotton</p>
+        </article>
+
+        <!-- Card 5: Studio Stats -->
+        <article class="neo-card green-card">
+          <div class="mini-kicker">ORIGINAL WORKS 🖼️</div>
+          <div class="stat-number">6+</div>
+          <p class="stat-desc">Archived catalog pieces</p>
+        </article>
+
+        <!-- Card 6: Studio Quote -->
+        <article class="neo-card purple-card">
+          <div class="mini-kicker">STUDIO PHILOSOPHY ✍️</div>
+          <blockquote class="neo-quote">
+            “Hold the quiet dialogue between natural light and raw linen.”
+          </blockquote>
+        </article>
+
+      </section>
+
+      <!-- ========================================================= -->
+      <!-- NEOBRUTALIST ARTWORK GALLERY BENTO                        -->
+      <!-- ========================================================= -->
+      <section class="neo-gallery-section" id="gallery">
+        <div class="gallery-section-header">
+          <div class="section-title-wrap">
+            <span class="section-tag">CATALOGUE</span>
+            <h2 class="section-main-title">Selected Artworks</h2>
+          </div>
+
+          <!-- Neobrutalist Filter Pills -->
+          <div class="neo-filters">
+            {collections.map((col, index) => (
+              <button
+                type="button"
+                class={`neo-filter-pill ${index === 0 ? 'active' : ''}`}
+                data-filter={col.id}
+              >
+                {col.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Artwork Bento Grid -->
+        <div class="neo-artwork-grid">
+          {sampleArtworks.map((art) => (
+            <article 
+              class={`neo-artwork-card neo-${art.bentoSpan}`} 
+              data-collection={art.collection}
+            >
+              <div class="art-media-wrap">
+                <img src={art.imageUrl} alt={art.alt} class="art-img" loading="lazy" />
+                <span class="art-year-badge">{art.year}</span>
+              </div>
+
+              <div class="art-content">
+                <div class="art-tag-row">
+                  <span class="art-collection-chip">{art.collection.replace('-', ' ')}</span>
+                  <span class="art-medium-chip">{art.medium.split('&')[0]}</span>
+                </div>
+
+                <h3 class="art-title">{art.title}</h3>
+                
+                <p class="art-description">{art.description}</p>
+
+                <div class="art-footer-meta">
+                  <span class="art-dims">{art.dimensions}</span>
+                  <a href="/contact" class="art-inquire-btn">Inquire ↗</a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <!-- Neobrutalist Footer Callout -->
+      <footer class="neo-footer-card">
+        <h2 class="footer-cta-title">Interested in an original piece or commission?</h2>
+        <p class="footer-cta-sub">Studio visits are available by appointment in Brooklyn and London.</p>
+        <div class="footer-btn-row">
+          <a href="/contact" class="neo-btn neo-btn-pink">GET IN TOUCH ✦</a>
+          <a href="/about" class="neo-btn neo-btn-white">READ FULL BIO</a>
+        </div>
+        <p class="footer-copyright">© {new Date().getFullYear()} Lindsay Studio. Neobrutalist minimal prototype.</p>
+      </footer>
+    </main>
+
+    <!-- Client-side filter script -->
+    <script>
+      const filterPills = document.querySelectorAll<HTMLButtonElement>('.neo-filter-pill');
+      const cards = document.querySelectorAll<HTMLElement>('.neo-artwork-card');
+
+      filterPills.forEach((pill) => {
+        pill.addEventListener('click', () => {
+          filterPills.forEach((p) => p.classList.remove('active'));
+          pill.classList.add('active');
+
+          const filter = pill.dataset.filter;
+          cards.forEach((card) => {
+            const matches = !filter || filter === 'all' || card.dataset.collection === filter;
+            if (matches) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
+
+<style>
+  /* ============================================================ */
+  /* NEOBRUTALIST TOKENS & RESET                                  */
+  /* ============================================================ */
+  :root {
+    --neo-bg: #FAF6EE;           /* Warm pale cream background */
+    --neo-card-bg: #FFFFFF;      /* Crisp white card base */
+    --neo-black: #121212;        /* Pitch black stroke & ink */
+    --neo-pink: #FF6B8B;         /* Vibrant coral pink accent */
+    --neo-yellow: #FFD166;       /* Warm marigold accent */
+    --neo-blue: #60A5FA;         /* Sky blue card fill */
+    --neo-green: #4ECCA3;        /* Fresh mint green */
+    --neo-purple: #C4B5FD;       /* Soft lilac card fill */
+    
+    --neo-stroke: 2.5px solid var(--neo-black);
+    --neo-shadow: 4px 4px 0px var(--neo-black);
+    --neo-shadow-lg: 6px 6px 0px var(--neo-black);
+    --neo-shadow-sm: 2px 2px 0px var(--neo-black);
+    --neo-radius: 20px;
+    --neo-radius-sm: 12px;
+    --neo-radius-pill: 9999px;
+
+    --font-neo-heading: 'Space Grotesk', -apple-system, sans-serif;
+    --font-neo-mono: 'Space Mono', monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body.neobrutal-body {
+    background-color: var(--neo-bg);
+    color: var(--neo-black);
+    font-family: var(--font-neo-heading);
+    line-height: 1.45;
+    min-height: 100vh;
+    padding-bottom: 80px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Sticky Prototype Announcement */
+  .prototype-top-bar {
+    background-color: var(--neo-yellow);
+    border-bottom: var(--neo-stroke);
+    padding: 8px 16px;
+    font-family: var(--font-neo-mono);
+    font-size: 0.75rem;
+  }
+
+  .top-bar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .proto-tag {
+    background: var(--neo-black);
+    color: #ffffff;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.08em;
+  }
+
+  .proto-return-link {
+    color: var(--neo-black);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ============================================================ */
+  /* NEOBRUTALIST HEADER (Toby Sparks Style)                      */
+  /* ============================================================ */
+  .neo-header-wrapper {
+    max-width: 1200px;
+    margin: 24px auto 32px;
+    padding: 0 20px;
+  }
+
+  .neo-header {
+    background: #FFFFFF;
+    border: var(--neo-stroke);
+    box-shadow: var(--neo-shadow);
+    border-radius: var(--neo-radius-pill);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .neo-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--neo-black);
+  }
+
+  .brand-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--neo-yellow);
+    border: 2px solid var(--neo-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-family: var(--font-neo-mono);
+    font-size: 0.9rem;
+    box-shadow: 1.5px 1.5px 0px var(--neo-black);
+  }
+
+  .brand-name {
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+  }
+
+  .neo-nav {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .nav-item {
+    text-decoration: none;
+    color: var(--neo-black);
+    font-weight: 600;
+    font-size: 0.9rem;
+    position: relative;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.15s ease;
+  }
+
+  .nav-item:hover,
+  .nav-item.active {
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+
+  /* Neobrutalist Button Component */
+  .neo-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: var(--neo-radius-pill);
+    border: var(--neo-stroke);
+    box-shadow: var(--neo-shadow);
+    font-family: var(--font-neo-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    user-select: none;
+  }
+
+  .neo-btn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0px var(--neo-black);
+  }
+
+  .neo-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--neo-black);
+  }
+
+  .neo-btn.sm {
+    padding: 8px 16px;
+    font-size: 0.75rem;
+    box-shadow: var(--neo-shadow-sm);
+  }
+
+  .neo-btn-pink {
+    background-color: var(--neo-pink);
+    color: var(--neo-black);
+  }
+
+  .neo-btn-white {
+    background-color: #FFFFFF;
+    color: var(--neo-black);
+  }
+
+  /* Main Container */
+  .neo-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ============================================================ */
+  /* HERO BENTO GRID                                              */
+  /* ============================================================ */
+  .neo-hero-bento {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+
+  .neo-card {
+    border: var(--neo-stroke);
+    box-shadow: var(--neo-shadow);
+    border-radius: var(--neo-radius);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Card 1: Intro Card (Span 7) */
+  .intro-card {
+    grid-column: span 7;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #FFFFFF;
+    border: 1.5px solid var(--neo-black);
+    padding: 6px 14px;
+    border-radius: var(--neo-radius-pill);
+    font-family: var(--font-neo-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    box-shadow: var(--neo-shadow-sm);
+    width: fit-content;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--neo-green);
+    border: 1px solid var(--neo-black);
+  }
+
+  .intro-headline {
+    font-size: clamp(2rem, 3.2vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+    margin-bottom: 16px;
+  }
+
+  .intro-body {
+    font-size: 1rem;
+    color: #333333;
+    line-height: 1.6;
+    margin-bottom: 28px;
+    max-width: 90%;
+  }
+
+  .intro-btn-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  /* Card 2: Portrait Card (Span 5) */
+  .portrait-card {
+    grid-column: span 5;
+    background-color: var(--neo-pink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px 20px;
+  }
+
+  .portrait-crown-icon {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    font-size: 1.5rem;
+  }
+
+  .portrait-avatar-wrap {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 3px solid var(--neo-black);
+    box-shadow: var(--neo-shadow);
+    overflow: hidden;
+    margin-bottom: 18px;
+    background: #FFFFFF;
+  }
+
+  .portrait-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .portrait-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .portrait-pill-sticker {
+    display: inline-block;
+    background-color: var(--neo-yellow);
+    border: 1.5px solid var(--neo-black);
+    box-shadow: var(--neo-shadow-sm);
+    padding: 4px 12px;
+    border-radius: var(--neo-radius-pill);
+    font-family: var(--font-neo-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .portrait-subtext {
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  /* Smaller Bento Cards (Row 2) */
+  .blue-card {
+    grid-column: span 4;
+    background-color: var(--neo-blue);
+  }
+
+  .yellow-card {
+    grid-column: span 4;
+    background-color: var(--neo-yellow);
+  }
+
+  .green-card {
+    grid-column: span 2;
+    background-color: var(--neo-green);
+  }
+
+  .purple-card {
+    grid-column: span 2;
+    background-color: var(--neo-purple);
+  }
+
+  .mini-kicker {
+    font-family: var(--font-neo-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .card-feature-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+
+  .card-status-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .status-bullet.yellow {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--neo-yellow);
+    border: 1px solid var(--neo-black);
+  }
+
+  .card-sub-info {
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .stat-number {
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-desc {
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .neo-quote {
+    font-size: 0.75rem;
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  /* ============================================================ */
+  /* NEOBRUTALIST ARTWORK GALLERY                                 */
+  /* ============================================================ */
+  .neo-gallery-section {
+    margin-bottom: 64px;
+  }
+
+  .gallery-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .section-tag {
+    font-family: var(--font-neo-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: var(--neo-black);
+    color: #ffffff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.08em;
+  }
+
+  .section-main-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-top: 6px;
+  }
+
+  .neo-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .neo-filter-pill {
+    background: #FFFFFF;
+    border: var(--neo-stroke);
+    box-shadow: var(--neo-shadow-sm);
+    padding: 8px 16px;
+    border-radius: var(--neo-radius-pill);
+    font-family: var(--font-neo-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  }
+
+  .neo-filter-pill:hover {
+    background-color: var(--neo-bg);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px var(--neo-black);
+  }
+
+  .neo-filter-pill.active {
+    background-color: var(--neo-black);
+    color: #FFFFFF;
+    box-shadow: 3px 3px 0px var(--neo-yellow);
+  }
+
+  /* Bento Artwork Grid */
+  .neo-artwork-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+  }
+
+  .neo-artwork-card {
+    background: #FFFFFF;
+    border: var(--neo-stroke);
+    box-shadow: var(--neo-shadow);
+    border-radius: var(--neo-radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .neo-artwork-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 7px 7px 0px var(--neo-black);
+  }
+
+  /* Spans for Bento Dynamics */
+  .neo-hero {
+    grid-column: span 7;
+  }
+
+  .neo-tall {
+    grid-column: span 5;
+  }
+
+  .neo-square {
+    grid-column: span 4;
+  }
+
+  .neo-wide {
+    grid-column: span 8;
+  }
+
+  .art-media-wrap {
+    position: relative;
+    width: 100%;
+    background-color: #EEE;
+    border-bottom: var(--neo-stroke);
+    overflow: hidden;
+  }
+
+  .neo-hero .art-media-wrap {
+    aspect-ratio: 16/10;
+  }
+
+  .neo-tall .art-media-wrap {
+    aspect-ratio: 4/5;
+  }
+
+  .neo-square .art-media-wrap {
+    aspect-ratio: 1/1;
+  }
+
+  .neo-wide .art-media-wrap {
+    aspect-ratio: 16/9;
+  }
+
+  .art-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .neo-artwork-card:hover .art-img {
+    transform: scale(1.03);
+  }
+
+  .art-year-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: var(--neo-yellow);
+    border: 2px solid var(--neo-black);
+    box-shadow: 2px 2px 0px var(--neo-black);
+    padding: 3px 10px;
+    border-radius: var(--neo-radius-pill);
+    font-family: var(--font-neo-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .art-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+  }
+
+  .art-tag-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .art-collection-chip {
+    font-family: var(--font-neo-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: #F0EDE6;
+    border: 1px solid var(--neo-black);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .art-medium-chip {
+    font-family: var(--font-neo-mono);
+    font-size: 0.7rem;
+    color: #555555;
+    padding: 2px 0;
+  }
+
+  .art-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+
+  .art-description {
+    font-size: 0.88rem;
+    color: #444444;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .art-footer-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1.5px dashed #CCC;
+    padding-top: 12px;
+    margin-top: auto;
+  }
+
+  .art-dims {
+    font-family: var(--font-neo-mono);
+    font-size: 0.75rem;
+    color: #555;
+    font-weight: 600;
+  }
+
+  .art-inquire-btn {
+    font-family: var(--font-neo-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--neo-black);
+    text-decoration: none;
+    border-bottom: 2px solid var(--neo-black);
+    padding-bottom: 1px;
+  }
+
+  .art-inquire-btn:hover {
+    color: var(--neo-pink);
+    border-color: var(--neo-pink);
+  }
+
+  /* ============================================================ */
+  /* FOOTER CALLOUT                                               */
+  /* ============================================================ */
+  .neo-footer-card {
+    background: #FFFFFF;
+    border: var(--neo-stroke);
+    box-shadow: var(--neo-shadow);
+    border-radius: var(--neo-radius);
+    padding: 48px 24px;
+    text-align: center;
+    margin-top: 48px;
+  }
+
+  .footer-cta-title {
+    font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .footer-cta-sub {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 24px;
+  }
+
+  .footer-btn-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .footer-copyright {
+    font-family: var(--font-neo-mono);
+    font-size: 0.75rem;
+    color: #888;
+  }
+
+  /* ============================================================ */
+  /* RESPONSIVE BREAKPOINTS                                       */
+  /* ============================================================ */
+  @media (max-width: 900px) {
+    .intro-card {
+      grid-column: span 12;
+    }
+    .portrait-card {
+      grid-column: span 12;
+    }
+    .blue-card, .yellow-card {
+      grid-column: span 6;
+    }
+    .green-card, .purple-card {
+      grid-column: span 6;
+    }
+    .neo-hero, .neo-tall, .neo-square, .neo-wide {
+      grid-column: span 12;
+    }
+    .neo-header {
+      flex-wrap: wrap;
+      border-radius: var(--neo-radius);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .blue-card, .yellow-card, .green-card, .purple-card {
+      grid-column: span 12;
+    }
+    .gallery-section-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .neo-nav {
+      gap: 12px;
+    }
+  }
+</style>
