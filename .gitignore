@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+build/
+.astro/
+
+# Environment and secrets
+.env
+.env.local
+.env.production
+.env.*.local
+
+# VibeWise learning notes & IDE
+.vibe-wise/
+.gemini/
+
+# System & logs
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
