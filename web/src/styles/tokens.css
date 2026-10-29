@@ -1,0 +1,142 @@
+/* ==========================================================================
+   LINDSAY ART PORTFOLIO — DESIGN SYSTEM TOKENS (Vanilla CSS)
+   ========================================================================== */
+
+:root {
+  /* Typography */
+  --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Futura', 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Color Palette — Refined Fine-Art Museum Theme */
+  --color-bg: #faf9f6;              /* Warm off-white museum linen canvas */
+  --color-surface: #ffffff;         /* Pure white card / tile surface */
+  --color-ink: #171615;             /* Deep charcoal ink */
+  --color-ink-muted: #6e6b66;       /* Subdued metadata gray */
+  --color-ink-light: #9c9993;       /* Delicate captions / years */
+  --color-border: #eae7e0;          /* Subtle dividing lines */
+  --color-border-subtle: #f0eee8;   /* Ultra-soft card hairline borders */
+  --color-accent: #c84b31;          /* Warm artistic terracotta accent */
+
+  /* Spacing Scale */
+  --space-2xs: 0.25rem;  /* 4px */
+  --space-xs: 0.5rem;    /* 8px */
+  --space-sm: 0.75rem;   /* 12px */
+  --space-md: 1rem;      /* 16px */
+  --space-lg: 1.5rem;    /* 24px */
+  --space-xl: 2rem;      /* 32px */
+  --space-2xl: 3rem;     /* 48px */
+  --space-3xl: 5rem;     /* 80px */
+
+  /* Layout */
+  --max-width: 1400px;
+  --header-height: 90px;
+  --grid-gap: 1.75rem;   /* 28px clean gutter between art pieces */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+
+  /* Transitions & Shadows */
+  --transition-smooth: 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-subtle: 0 4px 20px -2px rgba(23, 22, 21, 0.05);
+  --shadow-hover: 0 16px 36px -4px rgba(23, 22, 21, 0.12);
+}
+
+/* Base Reset & Typography */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-smooth);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+/* Bento Grid System */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-auto-rows: 280px;
+  grid-auto-flow: dense;
+  gap: var(--grid-gap);
+}
+
+@media (min-width: 680px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 320px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 360px;
+  }
+}
+
+/* Bento Span Modifiers */
+.bento-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-subtle);
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.bento-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Multi-cell spans on desktop */
+@media (min-width: 1024px) {
+  .bento-hero {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .bento-tall {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+  .bento-wide {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  .bento-square {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+}

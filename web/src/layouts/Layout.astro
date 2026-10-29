@@ -1,0 +1,175 @@
+---
+import '../styles/tokens.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Lindsay — Contemporary Visual Art Portfolio',
+  description = 'Original paintings, botanicals, and abstract studies by Lindsay.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Google Fonts: Playfair Display (Serif) & Jost (Geometric Sans Fallback for Futura) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Masthead inspired by Philippa Rice reference -->
+    <header class="masthead">
+      <div class="masthead-inner">
+        <a href="/" class="brand-logo" aria-label="Lindsay Portfolio Homepage">
+          <span class="brand-text">LINDSAY</span>
+        </a>
+
+        <nav class="main-nav" aria-label="Main Navigation">
+          <ul class="nav-list">
+            <li><a href="/" class="nav-link active">PORTFOLIO</a></li>
+            <li><a href="#about" class="nav-link">ABOUT</a></li>
+            <li><a href="#contact" class="nav-link">CONTACT</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-copy">© {new Date().getFullYear()} Lindsay. All rights reserved.</p>
+        <p class="footer-note">Original Artwork & Exhibitions</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .masthead {
+    width: 100%;
+    background-color: var(--color-bg);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+    background-color: rgba(250, 249, 246, 0.92);
+  }
+
+  .masthead-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-xl) var(--space-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .brand-logo {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .brand-text {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-ink);
+    text-transform: uppercase;
+  }
+
+  .main-nav .nav-list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+  }
+
+  .nav-link {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    position: relative;
+    padding: var(--space-2xs) 0;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--color-ink);
+  }
+
+  .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 1.5px;
+    background-color: var(--color-ink);
+  }
+
+  .page-content {
+    flex: 1;
+    max-width: var(--max-width);
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--space-lg) var(--space-3xl);
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+  }
+
+  .footer-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-xl) var(--space-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--color-ink-light);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 640px) {
+    .masthead-inner {
+      padding: var(--space-lg) var(--space-md);
+    }
+    .brand-text {
+      font-size: 1.4rem;
+    }
+    .main-nav .nav-list {
+      gap: var(--space-md);
+    }
+    .nav-link {
+      font-size: 0.75rem;
+    }
+    .footer-inner {
+      flex-direction: column;
+      gap: var(--space-xs);
+      text-align: center;
+    }
+  }
+</style>
