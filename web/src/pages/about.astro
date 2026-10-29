@@ -1,0 +1,322 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const exhibitions = [
+  { year: 2026, title: 'Luminescence', gallery: 'Gallery Meridian', location: 'New York, USA' },
+  { year: 2025, title: 'Mineral & Void', gallery: 'Studio Oberlin', location: 'London, UK' },
+  { year: 2024, title: 'New Botanical Form', gallery: 'Pacific Contemporary', location: 'San Francisco, USA' },
+  { year: 2023, title: 'Studies in Cadmium', gallery: 'Atelier Marais', location: 'Paris, France' },
+  { year: 2022, title: 'Coastal Strata', gallery: 'North Light Gallery', location: 'Melbourne, Australia' },
+];
+---
+
+<Layout
+  title="About Lindsay — Artist Statement, Biography & Exhibitions"
+  description="Learn about contemporary visual artist Lindsay, her painting practice, materials, and exhibition history."
+>
+  <div class="about-container">
+    <header class="about-header">
+      <span class="section-label">Biography & Practice</span>
+      <h1 class="page-title">About Lindsay</h1>
+    </header>
+
+    <div class="editorial-grid">
+      <!-- Portrait & Studio Views -->
+      <aside class="portrait-column">
+        <div class="portrait-card">
+          <img
+            src="/artworks/lindsay-portrait.jpg"
+            alt="Artist Lindsay in her painting studio surrounded by canvases and pigments"
+            class="portrait-img"
+            loading="eager"
+          />
+          <figcaption class="portrait-caption">
+            Lindsay in her natural light studio, 2026.
+          </figcaption>
+        </div>
+
+        <div class="quick-facts">
+          <h3 class="facts-title">Studio Location</h3>
+          <p class="facts-detail">Coastal California & Pacific Northwest</p>
+          <h3 class="facts-title">Primary Focus</h3>
+          <p class="facts-detail">Oil, Dry Mineral Pigments, Belgian Linen</p>
+        </div>
+      </aside>
+
+      <!-- Statement & Biography -->
+      <article class="bio-column">
+        <section class="statement-block">
+          <h2 class="statement-heading">
+            "Exploring the delicate boundary between architectural form, mineral pigments, and quiet natural contemplation."
+          </h2>
+        </section>
+
+        <section class="bio-body">
+          <p>
+            Lindsay is a contemporary painter whose work examines natural light, organic geology, and botanical forms.
+            Working predominantly with oil paints, natural chalks, and raw mineral pigments on hand-primed Belgian linen,
+            her canvases capture the meditative stillness of coastal landscapes and native flora.
+          </p>
+          <p>
+            Her creative process is slow and layered. Beginning with thin washes of earth-toned glazes, each composition
+            gradually accumulates structural weight through heavy impasto strokes, palette knife marks, and dry pigments.
+            The resulting surfaces possess tactile depth—drawing viewers close to inspect micro-textures before stepping back
+            to take in the harmonious expanse of the whole piece.
+          </p>
+          <p>
+            Her works are held in private collections across North America, Europe, and Australia, and she regularly
+            exhibits with contemporary galleries focusing on abstract landscapes and experimental botanical still life.
+          </p>
+        </section>
+
+        <!-- Exhibitions Timeline -->
+        <section class="exhibitions-section">
+          <h2 class="section-heading">Selected Exhibitions & Shows</h2>
+          <div class="exhibitions-table-wrapper">
+            <table class="exhibitions-table">
+              <thead>
+                <tr>
+                  <th scope="col">Year</th>
+                  <th scope="col">Exhibition</th>
+                  <th scope="col">Gallery / Venue</th>
+                  <th scope="col">Location</th>
+                </tr>
+              </thead>
+              <tbody>
+                {exhibitions.map((ex) => (
+                  <tr>
+                    <td class="col-year">{ex.year}</td>
+                    <td class="col-title">{ex.title}</td>
+                    <td class="col-gallery">{ex.gallery}</td>
+                    <td class="col-location">{ex.location}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Link to Inquiries -->
+        <div class="about-cta">
+          <p>Interested in representation, curatorial projects, or viewing available works in person?</p>
+          <a href="/contact" class="cta-button">Inquire With Studio</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .about-container {
+    padding-top: var(--space-md);
+  }
+
+  .about-header {
+    margin-bottom: var(--space-2xl);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-lg);
+  }
+
+  .section-label {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: var(--space-xs);
+  }
+
+  .page-title {
+    font-size: 3rem;
+    color: var(--color-ink);
+  }
+
+  .editorial-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .editorial-grid {
+      grid-template-columns: 4fr 7fr;
+      gap: var(--space-3xl);
+    }
+  }
+
+  /* Portrait Column */
+  .portrait-card {
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-subtle);
+  }
+
+  .portrait-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+  }
+
+  .portrait-caption {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--color-ink-muted);
+    padding: var(--space-sm) var(--space-md);
+    border-top: 1px solid var(--color-border-subtle);
+    font-style: italic;
+  }
+
+  .quick-facts {
+    margin-top: var(--space-xl);
+    padding: var(--space-lg);
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+  }
+
+  .facts-title {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .facts-detail {
+    font-size: 0.95rem;
+    color: var(--color-ink);
+    margin-bottom: var(--space-md);
+  }
+
+  .facts-detail:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Biography & Statement Column */
+  .statement-block {
+    margin-bottom: var(--space-xl);
+  }
+
+  .statement-heading {
+    font-size: 1.85rem;
+    line-height: 1.35;
+    color: var(--color-ink);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .bio-body p {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--color-ink-muted);
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Exhibitions Table */
+  .exhibitions-section {
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .section-heading {
+    font-size: 1.65rem;
+    color: var(--color-ink);
+    margin-bottom: var(--space-lg);
+  }
+
+  .exhibitions-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .exhibitions-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+  }
+
+  .exhibitions-table th {
+    text-align: left;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink-light);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .exhibitions-table td {
+    padding: var(--space-md) var(--space-xs);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .col-year {
+    font-weight: 600;
+    color: var(--color-ink);
+    width: 80px;
+  }
+
+  .col-title {
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+
+  .col-gallery,
+  .col-location {
+    color: var(--color-ink-muted);
+  }
+
+  /* CTA Block */
+  .about-cta {
+    margin-top: var(--space-2xl);
+    padding: var(--space-xl);
+    background-color: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .about-cta p {
+    font-size: 0.95rem;
+    color: var(--color-ink-muted);
+  }
+
+  .cta-button {
+    background-color: var(--color-ink);
+    color: #ffffff;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: var(--space-sm) var(--space-xl);
+    border-radius: 9999px;
+    white-space: nowrap;
+    transition: background-color var(--transition-smooth), transform var(--transition-smooth);
+  }
+
+  .cta-button:hover {
+    background-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 640px) {
+    .page-title {
+      font-size: 2.25rem;
+    }
+    .statement-heading {
+      font-size: 1.5rem;
+    }
+  }
+</style>
