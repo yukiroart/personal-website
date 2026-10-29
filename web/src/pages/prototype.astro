@@ -8,8 +8,6 @@ const collections = [
   { id: 'abstracts', label: 'Abstract Studies' },
   { id: 'portraits', label: 'Portraiture' },
 ];
-
-const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtworks[0];
 ---
 
 <!doctype html>
@@ -19,7 +17,7 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Lindsay — Neobrutalist Minimalist Prototype</title>
-    <meta name="description" content="Minimal neobrutalist portfolio prototype for Lindsay visual art." />
+    <meta name="description" content="Minimal neobrutalist portfolio prototype for Lindsay visual art: pure Bento gallery layout with tactile neobrutalist styling." />
 
     <!-- Google Fonts: Space Grotesk (Punchy Neobrutalist Sans) & Space Mono (Technical Monospace) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -34,24 +32,30 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
     <!-- Top Prototype Sticky Banner -->
     <div class="prototype-top-bar">
       <div class="top-bar-inner">
-        <span class="proto-tag">PROTOTYPE</span>
-        <span class="proto-desc">Minimal Neobrutalist Theme • Fonts: <strong>Space Grotesk</strong> + <strong>Space Mono</strong></span>
-        <a href="/" class="proto-return-link">← Return to Original Site</a>
+        <div class="top-bar-left">
+          <span class="proto-tag">PROTOTYPE</span>
+          <span class="proto-desc">Minimal Neobrutalism • Real Site Layout (Non-Redundant Bento Gallery)</span>
+        </div>
+        <div class="top-bar-right">
+          <span class="proto-fonts">Space Grotesk + Space Mono</span>
+          <a href="/" class="proto-return-link">← Return to Real Site</a>
+        </div>
       </div>
     </div>
 
-    <!-- Neobrutalist Masthead Bar (Toby Sparks Style) -->
+    <!-- Minimal Neobrutalist Masthead Bar (Real Site Nav Layout) -->
     <header class="neo-header-wrapper">
       <div class="neo-header">
         <a href="/prototype" class="neo-brand">
           <span class="brand-badge">L</span>
-          <span class="brand-name">LINDSAY.ART</span>
+          <span class="brand-name">LINDSAY</span>
         </a>
 
+        <!-- Real site 3-link navigation -->
         <nav class="neo-nav">
-          <a href="#gallery" class="nav-item active">Work</a>
-          <a href="#about-card" class="nav-item">About</a>
-          <a href="/contact" class="nav-item">Contact</a>
+          <a href="/prototype" class="nav-item active">PORTFOLIO</a>
+          <a href="/about" class="nav-item">ABOUT</a>
+          <a href="/contact" class="nav-item">CONTACT</a>
         </nav>
 
         <div class="neo-header-cta">
@@ -63,104 +67,36 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
     </header>
 
     <main class="neo-main">
-      <!-- ========================================================= -->
-      <!-- NEOBRUTALIST HERO BENTO (Inspired by Reference)           -->
-      <!-- ========================================================= -->
-      <section class="neo-hero-bento">
-        
-        <!-- Card 1: Main Intro Statement -->
-        <article class="neo-card intro-card">
-          <div class="status-pill">
+      <!-- Clean Minimal Header (Matches Real Site Tone & Focus) -->
+      <section class="gallery-masthead-section" aria-label="Gallery Introduction">
+        <div class="masthead-badge-row">
+          <span class="meta-sticker">ORIGINAL PAINTINGS & STUDIES</span>
+          <span class="status-indicator-pill">
             <span class="status-dot"></span>
-            AVAILABLE FOR SELECTED COMMISSIONS
-          </div>
-
-          <h1 class="intro-headline">
-            Hey, I'm Lindsay! I paint light & stillness onto linen.
-          </h1>
-
-          <p class="intro-body">
-            Original oil paintings, botanical studies, and textural mineral compositions exploring space, quiet contemplation, and natural pigments on hand-stretched Belgian linen.
-          </p>
-
-          <div class="intro-btn-row">
-            <a href="#gallery" class="neo-btn neo-btn-pink">
-              VIEW MY WORK
-            </a>
-            <a href="/contact" class="neo-btn neo-btn-white">
-              STUDIO INQUIRIES
-            </a>
-          </div>
-        </article>
-
-        <!-- Card 2: Artist Portrait Card -->
-        <article class="neo-card portrait-card" id="about-card">
-          <div class="portrait-crown-icon">✦</div>
-          <div class="portrait-avatar-wrap">
-            <img 
-              src="/artworks/lindsay-portrait.jpg" 
-              alt="Lindsay Studio Portrait" 
-              class="portrait-avatar" 
-            />
-          </div>
-          <div class="portrait-details">
-            <h2 class="portrait-name">Lindsay</h2>
-            <span class="portrait-pill-sticker">FINE ARTIST & PAINTER ✦</span>
-            <p class="portrait-subtext">Working from Brooklyn & London</p>
-          </div>
-        </article>
-
-        <!-- Card 3: Currently In Studio -->
-        <article class="neo-card blue-card">
-          <div class="mini-kicker">CURRENTLY IN STUDIO 🎨</div>
-          <h3 class="card-feature-title">Nocturne Series & Large Impasto Works</h3>
-          <div class="card-status-line">
-            <span class="status-bullet yellow"></span>
-            Preparing for 2026 Solo Exhibition
-          </div>
-        </article>
-
-        <!-- Card 4: Mediums & Specialty -->
-        <article class="neo-card yellow-card">
-          <div class="mini-kicker">MEDIUMS & MATERIALS ⚡</div>
-          <h3 class="card-feature-title">Oil on Belgian Linen & Mineral Pigments</h3>
-          <p class="card-sub-info">Encaustic • Marble Dust • Gouache on Cotton</p>
-        </article>
-
-        <!-- Card 5: Studio Stats -->
-        <article class="neo-card green-card">
-          <div class="mini-kicker">ORIGINAL WORKS 🖼️</div>
-          <div class="stat-number">6+</div>
-          <p class="stat-desc">Archived catalog pieces</p>
-        </article>
-
-        <!-- Card 6: Studio Quote -->
-        <article class="neo-card purple-card">
-          <div class="mini-kicker">STUDIO PHILOSOPHY ✍️</div>
-          <blockquote class="neo-quote">
-            “Hold the quiet dialogue between natural light and raw linen.”
-          </blockquote>
-        </article>
-
+            AVAILABLE FOR COMMISSIONS
+          </span>
+        </div>
+        <h1 class="gallery-main-title">Selected Works</h1>
+        <p class="gallery-main-subtitle">
+          Original oil paintings, botanical studies, and textural mineral compositions on hand-stretched Belgian linen — 2024–2026.
+        </p>
       </section>
 
       <!-- ========================================================= -->
-      <!-- NEOBRUTALIST ARTWORK GALLERY BENTO                        -->
+      <!-- PURE BENTO ARTWORK GALLERY (Non-Redundant Real Layout)   -->
       <!-- ========================================================= -->
-      <section class="neo-gallery-section" id="gallery">
-        <div class="gallery-section-header">
-          <div class="section-title-wrap">
-            <span class="section-tag">CATALOGUE</span>
-            <h2 class="section-main-title">Selected Artworks</h2>
-          </div>
-
-          <!-- Neobrutalist Filter Pills -->
-          <div class="neo-filters">
+      <section class="neo-gallery-section" aria-label="Artwork Gallery Showcase">
+        
+        <!-- Collection Filter Toolbar -->
+        <div class="neo-filters-bar">
+          <div class="neo-filters" role="tablist" aria-label="Artwork Collections">
             {collections.map((col, index) => (
               <button
                 type="button"
+                role="tab"
                 class={`neo-filter-pill ${index === 0 ? 'active' : ''}`}
                 data-filter={col.id}
+                aria-selected={index === 0 ? 'true' : 'false'}
               >
                 {col.label}
               </button>
@@ -168,8 +104,8 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
           </div>
         </div>
 
-        <!-- Artwork Bento Grid -->
-        <div class="neo-artwork-grid">
+        <!-- Pure Bento Artwork Grid (Zero Redundant Hero Cards) -->
+        <div class="neo-artwork-grid" id="artworkGrid">
           {sampleArtworks.map((art) => (
             <article 
               class={`neo-artwork-card neo-${art.bentoSpan}`} 
@@ -183,12 +119,14 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
               <div class="art-content">
                 <div class="art-tag-row">
                   <span class="art-collection-chip">{art.collection.replace('-', ' ')}</span>
-                  <span class="art-medium-chip">{art.medium.split('&')[0]}</span>
+                  <span class="art-medium-chip">{art.medium}</span>
                 </div>
 
-                <h3 class="art-title">{art.title}</h3>
+                <h2 class="art-title">{art.title}</h2>
                 
-                <p class="art-description">{art.description}</p>
+                {art.description && (
+                  <p class="art-description">{art.description}</p>
+                )}
 
                 <div class="art-footer-meta">
                   <span class="art-dims">{art.dimensions}</span>
@@ -200,35 +138,45 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
         </div>
       </section>
 
-      <!-- Neobrutalist Footer Callout -->
+      <!-- Minimal Neobrutalist Footer Card -->
       <footer class="neo-footer-card">
-        <h2 class="footer-cta-title">Interested in an original piece or commission?</h2>
-        <p class="footer-cta-sub">Studio visits are available by appointment in Brooklyn and London.</p>
+        <h2 class="footer-cta-title">Studio Inquiries & Commissions</h2>
+        <p class="footer-cta-sub">
+          Works are available directly through the studio or represented galleries. Studio visits by appointment in Brooklyn & London.
+        </p>
         <div class="footer-btn-row">
-          <a href="/contact" class="neo-btn neo-btn-pink">GET IN TOUCH ✦</a>
-          <a href="/about" class="neo-btn neo-btn-white">READ FULL BIO</a>
+          <a href="/contact" class="neo-btn neo-btn-pink">CONTACT STUDIO ✦</a>
+          <a href="/about" class="neo-btn neo-btn-white">ARTIST STATEMENT & BIO</a>
         </div>
-        <p class="footer-copyright">© {new Date().getFullYear()} Lindsay Studio. Neobrutalist minimal prototype.</p>
+        <div class="footer-meta-line">
+          <span>© {new Date().getFullYear()} Lindsay. All rights reserved.</span>
+          <span class="sep">•</span>
+          <span>Neobrutalist Minimalist Prototype</span>
+        </div>
       </footer>
     </main>
 
-    <!-- Client-side filter script -->
+    <!-- Client-side filter script preserving CSS Grid spans via class toggle -->
     <script>
       const filterPills = document.querySelectorAll<HTMLButtonElement>('.neo-filter-pill');
       const cards = document.querySelectorAll<HTMLElement>('.neo-artwork-card');
 
       filterPills.forEach((pill) => {
         pill.addEventListener('click', () => {
-          filterPills.forEach((p) => p.classList.remove('active'));
+          filterPills.forEach((p) => {
+            p.classList.remove('active');
+            p.setAttribute('aria-selected', 'false');
+          });
           pill.classList.add('active');
+          pill.setAttribute('aria-selected', 'true');
 
           const filter = pill.dataset.filter;
           cards.forEach((card) => {
             const matches = !filter || filter === 'all' || card.dataset.collection === filter;
             if (matches) {
-              card.style.display = 'flex';
+              card.classList.remove('is-hidden');
             } else {
-              card.style.display = 'none';
+              card.classList.add('is-hidden');
             }
           });
         });
@@ -239,28 +187,29 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
 
 <style>
   /* ============================================================ */
-  /* NEOBRUTALIST TOKENS & RESET                                  */
+  /* MINIMAL NEOBRUTALIST TOKENS                                 */
   /* ============================================================ */
   :root {
-    --neo-bg: #FAF6EE;           /* Warm pale cream background */
-    --neo-card-bg: #FFFFFF;      /* Crisp white card base */
+    --neo-bg: #FAF6EE;           /* Warm paper cream canvas */
+    --neo-card-bg: #FFFFFF;      /* Clean card white */
     --neo-black: #121212;        /* Pitch black stroke & ink */
-    --neo-pink: #FF6B8B;         /* Vibrant coral pink accent */
-    --neo-yellow: #FFD166;       /* Warm marigold accent */
-    --neo-blue: #60A5FA;         /* Sky blue card fill */
-    --neo-green: #4ECCA3;        /* Fresh mint green */
-    --neo-purple: #C4B5FD;       /* Soft lilac card fill */
+    --neo-pink: #FF6B8B;         /* Coral pink button accent */
+    --neo-yellow: #FFD166;       /* Marigold yellow badge accent */
+    --neo-green: #06D6A0;        /* Emerald availability indicator */
+    --neo-muted: #555555;        /* Secondary technical text */
     
     --neo-stroke: 2.5px solid var(--neo-black);
-    --neo-shadow: 4px 4px 0px var(--neo-black);
-    --neo-shadow-lg: 6px 6px 0px var(--neo-black);
-    --neo-shadow-sm: 2px 2px 0px var(--neo-black);
+    --neo-shadow: 5px 5px 0px var(--neo-black);
+    --neo-shadow-sm: 3px 3px 0px var(--neo-black);
+    --neo-shadow-xs: 2px 2px 0px var(--neo-black);
+    --neo-shadow-hover: 7px 7px 0px var(--neo-black);
+    
     --neo-radius: 20px;
-    --neo-radius-sm: 12px;
+    --neo-radius-sm: 10px;
     --neo-radius-pill: 9999px;
 
-    --font-neo-heading: 'Space Grotesk', -apple-system, sans-serif;
-    --font-neo-mono: 'Space Mono', monospace;
+    --font-neo-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-neo-mono: 'Space Mono', SFMono-Regular, Menlo, monospace;
   }
 
   * {
@@ -273,9 +222,9 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
     background-color: var(--neo-bg);
     color: var(--neo-black);
     font-family: var(--font-neo-heading);
-    line-height: 1.45;
+    line-height: 1.5;
     min-height: 100vh;
-    padding-bottom: 80px;
+    padding-bottom: 96px;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -283,16 +232,26 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
   .prototype-top-bar {
     background-color: var(--neo-yellow);
     border-bottom: var(--neo-stroke);
-    padding: 8px 16px;
+    padding: 10px 20px;
     font-family: var(--font-neo-mono);
-    font-size: 0.75rem;
+    font-size: 0.78rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
 
   .top-bar-inner {
-    max-width: 1200px;
+    max-width: 1240px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .top-bar-left, .top-bar-right {
+    display: flex;
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
@@ -302,9 +261,18 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
     background: var(--neo-black);
     color: #ffffff;
     font-weight: 700;
-    padding: 2px 6px;
+    padding: 3px 8px;
     border-radius: 4px;
     letter-spacing: 0.08em;
+  }
+
+  .proto-desc {
+    font-weight: 700;
+  }
+
+  .proto-fonts {
+    color: #333;
+    font-weight: 500;
   }
 
   .proto-return-link {
@@ -312,15 +280,22 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
     font-weight: 700;
     text-decoration: underline;
     text-underline-offset: 3px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background 0.15s ease;
+  }
+
+  .proto-return-link:hover {
+    background: rgba(0, 0, 0, 0.08);
   }
 
   /* ============================================================ */
-  /* NEOBRUTALIST HEADER (Toby Sparks Style)                      */
+  /* NEOBRUTALIST MASTHEAD (Real Nav Layout: Brand + 3 Links)     */
   /* ============================================================ */
   .neo-header-wrapper {
-    max-width: 1200px;
-    margin: 24px auto 32px;
-    padding: 0 20px;
+    max-width: 1240px;
+    margin: 28px auto 36px;
+    padding: 0 24px;
   }
 
   .neo-header {
@@ -328,40 +303,40 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
     border: var(--neo-stroke);
     box-shadow: var(--neo-shadow);
     border-radius: var(--neo-radius-pill);
-    padding: 12px 24px;
+    padding: 12px 28px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 20px;
   }
 
   .neo-brand {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     text-decoration: none;
     color: var(--neo-black);
   }
 
   .brand-badge {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background-color: var(--neo-yellow);
-    border: 2px solid var(--neo-black);
+    border: var(--neo-stroke);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
     font-family: var(--font-neo-mono);
-    font-size: 0.9rem;
-    box-shadow: 1.5px 1.5px 0px var(--neo-black);
+    font-size: 1rem;
+    box-shadow: var(--neo-shadow-xs);
   }
 
   .brand-name {
     font-weight: 700;
-    font-size: 1.15rem;
-    letter-spacing: -0.02em;
+    font-size: 1.25rem;
+    letter-spacing: 0.02em;
   }
 
   .neo-nav {
@@ -373,28 +348,34 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
   .nav-item {
     text-decoration: none;
     color: var(--neo-black);
-    font-weight: 600;
-    font-size: 0.9rem;
+    font-family: var(--font-neo-mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
     position: relative;
-    padding: 4px 8px;
-    border-radius: 6px;
-    transition: background 0.15s ease;
+    padding: 6px 14px;
+    border-radius: var(--neo-radius-pill);
+    transition: all 0.15s ease;
   }
 
-  .nav-item:hover,
-  .nav-item.active {
+  .nav-item:hover {
     background-color: rgba(0, 0, 0, 0.06);
   }
 
-  /* Neobrutalist Button Component */
+  .nav-item.active {
+    background-color: var(--neo-black);
+    color: #FFFFFF;
+  }
+
+  /* Tactile Button */
   .neo-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 24px;
+    padding: 12px 26px;
     border-radius: var(--neo-radius-pill);
     border: var(--neo-stroke);
-    box-shadow: var(--neo-shadow);
+    box-shadow: var(--neo-shadow-sm);
     font-family: var(--font-neo-mono);
     font-size: 0.85rem;
     font-weight: 700;
@@ -405,19 +386,19 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
   }
 
   .neo-btn:hover {
-    transform: translate(-1px, -1px);
-    box-shadow: 5px 5px 0px var(--neo-black);
+    transform: translate(-1.5px, -1.5px);
+    box-shadow: var(--neo-shadow);
   }
 
   .neo-btn:active {
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px var(--neo-black);
+    box-shadow: var(--neo-shadow-xs);
   }
 
   .neo-btn.sm {
-    padding: 8px 16px;
-    font-size: 0.75rem;
-    box-shadow: var(--neo-shadow-sm);
+    padding: 8px 18px;
+    font-size: 0.78rem;
+    box-shadow: var(--neo-shadow-xs);
   }
 
   .neo-btn-pink {
@@ -432,53 +413,49 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
 
   /* Main Container */
   .neo-main {
-    max-width: 1200px;
+    max-width: 1240px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 24px;
   }
 
   /* ============================================================ */
-  /* HERO BENTO GRID                                              */
+  /* GALLERY MASTHEAD HEADER                                      */
   /* ============================================================ */
-  .neo-hero-bento {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 20px;
-    margin-bottom: 48px;
+  .gallery-masthead-section {
+    margin-bottom: 36px;
   }
 
-  .neo-card {
-    border: var(--neo-stroke);
-    box-shadow: var(--neo-shadow);
-    border-radius: var(--neo-radius);
-    padding: 28px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* Card 1: Intro Card (Span 7) */
-  .intro-card {
-    grid-column: span 7;
-    background-color: #FFFFFF;
+  .masthead-badge-row {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
   }
 
-  .status-pill {
+  .meta-sticker {
+    font-family: var(--font-neo-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background: var(--neo-black);
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  .status-indicator-pill {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     background: #FFFFFF;
     border: 1.5px solid var(--neo-black);
-    padding: 6px 14px;
+    padding: 4px 12px;
     border-radius: var(--neo-radius-pill);
     font-family: var(--font-neo-mono);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    margin-bottom: 20px;
-    box-shadow: var(--neo-shadow-sm);
-    width: fit-content;
+    box-shadow: var(--neo-shadow-xs);
   }
 
   .status-dot {
@@ -489,220 +466,55 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
     border: 1px solid var(--neo-black);
   }
 
-  .intro-headline {
-    font-size: clamp(2rem, 3.2vw, 2.75rem);
+  .gallery-main-title {
+    font-size: clamp(2.5rem, 4.5vw, 3.8rem);
     font-weight: 700;
     letter-spacing: -0.03em;
-    line-height: 1.12;
-    margin-bottom: 16px;
+    line-height: 1.05;
+    margin-bottom: 12px;
   }
 
-  .intro-body {
-    font-size: 1rem;
-    color: #333333;
+  .gallery-main-subtitle {
+    font-family: var(--font-neo-mono);
+    font-size: 0.95rem;
+    color: var(--neo-muted);
+    max-width: 700px;
     line-height: 1.6;
-    margin-bottom: 28px;
-    max-width: 90%;
-  }
-
-  .intro-btn-row {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-
-  /* Card 2: Portrait Card (Span 5) */
-  .portrait-card {
-    grid-column: span 5;
-    background-color: var(--neo-pink);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 32px 20px;
-  }
-
-  .portrait-crown-icon {
-    position: absolute;
-    top: 16px;
-    right: 20px;
-    font-size: 1.5rem;
-  }
-
-  .portrait-avatar-wrap {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    border: 3px solid var(--neo-black);
-    box-shadow: var(--neo-shadow);
-    overflow: hidden;
-    margin-bottom: 18px;
-    background: #FFFFFF;
-  }
-
-  .portrait-avatar {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .portrait-name {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-
-  .portrait-pill-sticker {
-    display: inline-block;
-    background-color: var(--neo-yellow);
-    border: 1.5px solid var(--neo-black);
-    box-shadow: var(--neo-shadow-sm);
-    padding: 4px 12px;
-    border-radius: var(--neo-radius-pill);
-    font-family: var(--font-neo-mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-  }
-
-  .portrait-subtext {
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
-
-  /* Smaller Bento Cards (Row 2) */
-  .blue-card {
-    grid-column: span 4;
-    background-color: var(--neo-blue);
-  }
-
-  .yellow-card {
-    grid-column: span 4;
-    background-color: var(--neo-yellow);
-  }
-
-  .green-card {
-    grid-column: span 2;
-    background-color: var(--neo-green);
-  }
-
-  .purple-card {
-    grid-column: span 2;
-    background-color: var(--neo-purple);
-  }
-
-  .mini-kicker {
-    font-family: var(--font-neo-mono);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    margin-bottom: 8px;
-  }
-
-  .card-feature-title {
-    font-size: 1.15rem;
-    font-weight: 700;
-    line-height: 1.25;
-    margin-bottom: 8px;
-  }
-
-  .card-status-line {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.8rem;
-    font-weight: 600;
-  }
-
-  .status-bullet.yellow {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: var(--neo-yellow);
-    border: 1px solid var(--neo-black);
-  }
-
-  .card-sub-info {
-    font-size: 0.8rem;
-    font-weight: 500;
-  }
-
-  .stat-number {
-    font-size: 2.4rem;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .stat-desc {
-    font-size: 0.75rem;
-    font-weight: 600;
-  }
-
-  .neo-quote {
-    font-size: 0.75rem;
-    font-style: italic;
-    line-height: 1.4;
   }
 
   /* ============================================================ */
-  /* NEOBRUTALIST ARTWORK GALLERY                                 */
+  /* COLLECTION FILTER TOOLBAR                                    */
   /* ============================================================ */
-  .neo-gallery-section {
-    margin-bottom: 64px;
-  }
-
-  .gallery-section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .section-tag {
-    font-family: var(--font-neo-mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-    background: var(--neo-black);
-    color: #ffffff;
-    padding: 3px 8px;
-    border-radius: 4px;
-    letter-spacing: 0.08em;
-  }
-
-  .section-main-title {
-    font-size: 2.2rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-top: 6px;
+  .neo-filters-bar {
+    margin-bottom: 32px;
+    overflow-x: auto;
+    padding-bottom: 8px;
   }
 
   .neo-filters {
     display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+    gap: 10px;
+    white-space: nowrap;
   }
 
   .neo-filter-pill {
     background: #FFFFFF;
     border: var(--neo-stroke);
-    box-shadow: var(--neo-shadow-sm);
-    padding: 8px 16px;
+    box-shadow: var(--neo-shadow-xs);
+    padding: 9px 18px;
     border-radius: var(--neo-radius-pill);
     font-family: var(--font-neo-mono);
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     font-weight: 700;
+    color: var(--neo-black);
     cursor: pointer;
-    transition: all 0.1s ease;
+    transition: all 0.12s ease;
   }
 
   .neo-filter-pill:hover {
-    background-color: var(--neo-bg);
+    background-color: #F8F5EE;
     transform: translate(-1px, -1px);
-    box-shadow: 3px 3px 0px var(--neo-black);
+    box-shadow: var(--neo-shadow-sm);
   }
 
   .neo-filter-pill.active {
@@ -711,11 +523,19 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
     box-shadow: 3px 3px 0px var(--neo-yellow);
   }
 
-  /* Bento Artwork Grid */
+  /* ============================================================ */
+  /* PURE BENTO ARTWORK GRID                                      */
+  /* ============================================================ */
   .neo-artwork-grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    gap: 24px;
+    gap: 28px;
+    margin-bottom: 64px;
+  }
+
+  /* CSS class-based filter utility to prevent CSS Grid collapse */
+  .neo-artwork-card.is-hidden {
+    display: none !important;
   }
 
   .neo-artwork-card {
@@ -731,10 +551,10 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
 
   .neo-artwork-card:hover {
     transform: translate(-3px, -3px);
-    box-shadow: 7px 7px 0px var(--neo-black);
+    box-shadow: var(--neo-shadow-hover);
   }
 
-  /* Spans for Bento Dynamics */
+  /* Bento Spans */
   .neo-hero {
     grid-column: span 7;
   }
@@ -754,7 +574,7 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
   .art-media-wrap {
     position: relative;
     width: 100%;
-    background-color: #EEE;
+    background-color: #EFECE5;
     border-bottom: var(--neo-stroke);
     overflow: hidden;
   }
@@ -780,11 +600,11 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s ease;
   }
 
   .neo-artwork-card:hover .art-img {
-    transform: scale(1.03);
+    transform: scale(1.025);
   }
 
   .art-year-badge {
@@ -793,7 +613,7 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
     right: 14px;
     background: var(--neo-yellow);
     border: 2px solid var(--neo-black);
-    box-shadow: 2px 2px 0px var(--neo-black);
+    box-shadow: var(--neo-shadow-xs);
     padding: 3px 10px;
     border-radius: var(--neo-radius-pill);
     font-family: var(--font-neo-mono);
@@ -802,7 +622,7 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
   }
 
   .art-content {
-    padding: 20px;
+    padding: 22px;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -811,8 +631,9 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
 
   .art-tag-row {
     display: flex;
+    align-items: center;
     gap: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     flex-wrap: wrap;
   }
 
@@ -821,46 +642,47 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
     font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
-    background: #F0EDE6;
-    border: 1px solid var(--neo-black);
+    background: #F4EFE6;
+    border: 1.5px solid var(--neo-black);
     padding: 2px 8px;
     border-radius: 4px;
+    letter-spacing: 0.04em;
   }
 
   .art-medium-chip {
     font-family: var(--font-neo-mono);
-    font-size: 0.7rem;
-    color: #555555;
-    padding: 2px 0;
+    font-size: 0.72rem;
+    color: var(--neo-muted);
   }
 
   .art-title {
     font-size: 1.35rem;
     font-weight: 700;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     letter-spacing: -0.01em;
+    line-height: 1.25;
   }
 
   .art-description {
     font-size: 0.88rem;
     color: #444444;
-    margin-bottom: 16px;
-    line-height: 1.5;
+    margin-bottom: 18px;
+    line-height: 1.55;
   }
 
   .art-footer-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1.5px dashed #CCC;
-    padding-top: 12px;
+    border-top: 1.5px dashed #D0CCC3;
+    padding-top: 14px;
     margin-top: auto;
   }
 
   .art-dims {
     font-family: var(--font-neo-mono);
     font-size: 0.75rem;
-    color: #555;
+    color: var(--neo-muted);
     font-weight: 600;
   }
 
@@ -872,6 +694,7 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
     text-decoration: none;
     border-bottom: 2px solid var(--neo-black);
     padding-bottom: 1px;
+    transition: all 0.15s ease;
   }
 
   .art-inquire-btn:hover {
@@ -880,29 +703,33 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
   }
 
   /* ============================================================ */
-  /* FOOTER CALLOUT                                               */
+  /* MINIMAL NEOBRUTALIST FOOTER CARD                             */
   /* ============================================================ */
   .neo-footer-card {
     background: #FFFFFF;
     border: var(--neo-stroke);
     box-shadow: var(--neo-shadow);
     border-radius: var(--neo-radius);
-    padding: 48px 24px;
+    padding: 48px 32px;
     text-align: center;
-    margin-top: 48px;
+    margin-top: 24px;
   }
 
   .footer-cta-title {
-    font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+    font-size: clamp(1.6rem, 2.8vw, 2.3rem);
     font-weight: 700;
     letter-spacing: -0.02em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
 
   .footer-cta-sub {
-    font-size: 1rem;
-    color: #555;
+    font-size: 0.95rem;
+    color: var(--neo-muted);
     margin-bottom: 24px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
   }
 
   .footer-btn-row {
@@ -913,47 +740,64 @@ const featuredPiece = sampleArtworks.find(a => a._id === 'art-1') || sampleArtwo
     margin-bottom: 32px;
   }
 
-  .footer-copyright {
+  .footer-meta-line {
     font-family: var(--font-neo-mono);
     font-size: 0.75rem;
-    color: #888;
+    color: #888888;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .footer-meta-line .sep {
+    color: #CCCCCC;
   }
 
   /* ============================================================ */
-  /* RESPONSIVE BREAKPOINTS                                       */
+  /* RESPONSIVE LAYOUT BREAKPOINTS                                */
   /* ============================================================ */
-  @media (max-width: 900px) {
-    .intro-card {
+  @media (max-width: 992px) {
+    .neo-hero, .neo-wide {
       grid-column: span 12;
     }
-    .portrait-card {
-      grid-column: span 12;
-    }
-    .blue-card, .yellow-card {
+    .neo-tall, .neo-square {
       grid-column: span 6;
     }
-    .green-card, .purple-card {
-      grid-column: span 6;
+    .neo-header {
+      padding: 10px 20px;
     }
-    .neo-hero, .neo-tall, .neo-square, .neo-wide {
+  }
+
+  @media (max-width: 680px) {
+    .neo-tall, .neo-square {
       grid-column: span 12;
     }
     .neo-header {
-      flex-wrap: wrap;
-      border-radius: var(--neo-radius);
-    }
-  }
-
-  @media (max-width: 600px) {
-    .blue-card, .yellow-card, .green-card, .purple-card {
-      grid-column: span 12;
-    }
-    .gallery-section-header {
       flex-direction: column;
-      align-items: flex-start;
+      border-radius: var(--neo-radius);
+      padding: 16px;
+      gap: 14px;
     }
     .neo-nav {
-      gap: 12px;
+      width: 100%;
+      justify-content: space-around;
+      gap: 8px;
+    }
+    .neo-header-cta {
+      width: 100%;
+    }
+    .neo-header-cta .neo-btn {
+      width: 100%;
+    }
+    .gallery-main-title {
+      font-size: 2.2rem;
+    }
+    .top-bar-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
     }
   }
 </style>
