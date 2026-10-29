@@ -1,0 +1,1067 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { sampleArtworks } from '../data/sampleArtworks';
+
+// Default to Variant A unless specified via URL query param
+const url = new URL(Astro.request.url);
+const currentVariant = (url.searchParams.get('variant') || 'A').toUpperCase();
+
+const heroArtwork = sampleArtworks.find(a => a._id === 'art-1') || sampleArtworks[0];
+const spread1Artwork = sampleArtworks.find(a => a._id === 'art-6') || sampleArtworks[5];
+const spread2Artwork = sampleArtworks.find(a => a._id === 'art-2') || sampleArtworks[1];
+const spread3Artwork = sampleArtworks.find(a => a._id === 'art-3') || sampleArtworks[2];
+---
+
+<Layout 
+  title="Prototype: Full-Bleed Editorial Story — Lindsay"
+  description="Interactive prototype exploring full-bleed editorial layouts for Lindsay's homepage."
+>
+  <div class="prototype-container" data-active-variant={currentVariant}>
+
+    <!-- ============================================================= -->
+    <!-- VARIANT A: Cinematic Full-Bleed Editorial Story               -->
+    <!-- ============================================================= -->
+    <section id="variant-A" class={`variant-section ${currentVariant === 'A' ? 'active' : ''}`}>
+      
+      <!-- Full-Bleed Hero -->
+      <header class="bleed-hero">
+        <div class="bleed-hero-media">
+          <img 
+            src={heroArtwork.imageUrl} 
+            alt={heroArtwork.alt} 
+            class="bleed-hero-img" 
+            loading="eager"
+          />
+          <div class="bleed-hero-overlay"></div>
+        </div>
+        <div class="bleed-hero-caption">
+          <div class="hero-tag">Selected Works • 2024–2026</div>
+          <h1 class="hero-headline">Light, Form & The Quiet Architecture of Space</h1>
+          <p class="hero-subtext">Original paintings and botanical studies by Lindsay exploring stillness, organic forms, and natural pigments on Belgian linen.</p>
+          <div class="hero-actions">
+            <a href="/portfolio" class="cta-pill primary">Explore Portfolio</a>
+            <a href="#spread-1" class="cta-pill secondary">Read Story ↓</a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Editorial Spreads -->
+      <main class="editorial-story-flow">
+        
+        <!-- Spread 1: Nocturne -->
+        <article id="spread-1" class="story-spread spread-left">
+          <div class="spread-media full-bleed-wrapper">
+            <img src={spread1Artwork.imageUrl} alt={spread1Artwork.alt} class="spread-img" />
+            <div class="spread-overlay-gradient"></div>
+          </div>
+          <div class="spread-card">
+            <span class="card-series-tag">Landscapes & Botanicals</span>
+            <h2 class="card-title">{spread1Artwork.title}</h2>
+            <p class="card-narrative">
+              Observed during twilight hours when natural illumination collapses into sharp silhouettes. 
+              The application of layered ultramarine and raw umber exposes the fragile geometry of nocturnal blooms.
+            </p>
+            <div class="card-metadata">
+              <span>{spread1Artwork.medium}</span>
+              <span>•</span>
+              <span>{spread1Artwork.dimensions}</span>
+            </div>
+            <a href="/portfolio?collection=landscapes" class="spread-link">
+              View in Landscapes & Botanicals Collection <span class="arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Curatorial Quote Callout -->
+        <section class="story-interlude">
+          <blockquote class="interlude-quote">
+            “The canvas does not record nature; it holds a quiet dialogue with its light.”
+          </blockquote>
+          <cite class="interlude-cite">— Lindsay, Studio Notes, Autumn 2025</cite>
+        </section>
+
+        <!-- Spread 2: Botanical Reverie -->
+        <article class="story-spread spread-right">
+          <div class="spread-media full-bleed-wrapper">
+            <img src={spread2Artwork.imageUrl} alt={spread2Artwork.alt} class="spread-img" />
+            <div class="spread-overlay-gradient"></div>
+          </div>
+          <div class="spread-card">
+            <span class="card-series-tag">Organic Studies</span>
+            <h2 class="card-title">{spread2Artwork.title}</h2>
+            <p class="card-narrative">
+              Layered dry pigments and gouache on unbleached cotton rag. Each botanical study deconstructs 
+              the tension between seasonal decay and vibrant botanical rebirth.
+            </p>
+            <div class="card-metadata">
+              <span>{spread2Artwork.medium}</span>
+              <span>•</span>
+              <span>{spread2Artwork.dimensions}</span>
+            </div>
+            <a href="/portfolio?collection=landscapes" class="spread-link">
+              Explore Botanical Series <span class="arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Spread 3: Abstract Cadmium -->
+        <article class="story-spread spread-left">
+          <div class="spread-media full-bleed-wrapper">
+            <img src={spread3Artwork.imageUrl} alt={spread3Artwork.alt} class="spread-img" />
+            <div class="spread-overlay-gradient"></div>
+          </div>
+          <div class="spread-card">
+            <span class="card-series-tag">Abstract Studies</span>
+            <h2 class="card-title">{spread3Artwork.title}</h2>
+            <p class="card-narrative">
+              Dense impasto with marble dust creates tactile relief against unprimed linen. 
+              A meditation on stillness, gravity, and the weight of pure red pigments.
+            </p>
+            <div class="card-metadata">
+              <span>{spread3Artwork.medium}</span>
+              <span>•</span>
+              <span>{spread3Artwork.dimensions}</span>
+            </div>
+            <a href="/portfolio?collection=abstracts" class="spread-link">
+              View Abstract Studies <span class="arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Collections Spotlight -->
+        <section class="collections-spotlight">
+          <div class="spotlight-header">
+            <span class="section-kicker">Curated Series</span>
+            <h2 class="spotlight-title">Collections in the Studio</h2>
+          </div>
+
+          <div class="spotlight-grid">
+            <a href="/portfolio?collection=landscapes" class="spotlight-card">
+              <div class="card-thumb-wrap">
+                <img src={spread1Artwork.imageUrl} alt="Landscapes Series" class="card-thumb" />
+              </div>
+              <div class="spotlight-info">
+                <h3>Landscapes & Botanicals</h3>
+                <p>3 Selected Works</p>
+                <span class="card-action">View Series →</span>
+              </div>
+            </a>
+
+            <a href="/portfolio?collection=abstracts" class="spotlight-card">
+              <div class="card-thumb-wrap">
+                <img src={spread3Artwork.imageUrl} alt="Abstract Studies" class="card-thumb" />
+              </div>
+              <div class="spotlight-info">
+                <h3>Abstract Studies</h3>
+                <p>2 Selected Works</p>
+                <span class="card-action">View Series →</span>
+              </div>
+            </a>
+
+            <a href="/portfolio?collection=new-works" class="spotlight-card">
+              <div class="card-thumb-wrap">
+                <img src={heroArtwork.imageUrl} alt="New Works Series" class="card-thumb" />
+              </div>
+              <div class="spotlight-info">
+                <h3>New Works (2026)</h3>
+                <p>1 Selected Work</p>
+                <span class="card-action">View Series →</span>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <!-- Closing Invitation -->
+        <section class="closing-invitation">
+          <div class="invitation-inner">
+            <h2 class="invitation-heading">Discover the Complete Catalog</h2>
+            <p class="invitation-subtext">Browse all original paintings, dimensions, and curatorial details in the dedicated Bento gallery.</p>
+            <div class="invitation-buttons">
+              <a href="/portfolio" class="cta-pill primary large">Enter Full Portfolio (6 Works) →</a>
+              <a href="/about" class="cta-pill secondary">Read Artist Bio</a>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </section>
+
+
+    <!-- ============================================================= -->
+    <!-- VARIANT B: Edge-to-Edge Minimalist Visual Scroll              -->
+    <!-- ============================================================= -->
+    <section id="variant-B" class={`variant-section ${currentVariant === 'B' ? 'active' : ''}`}>
+      <div class="minimal-scroll-container">
+        <header class="minimal-intro-bar">
+          <span class="minimal-brand">LINDSAY</span>
+          <span class="minimal-subtitle">Selected Works Scroll • 2024–2026</span>
+          <a href="/portfolio" class="minimal-archive-link">Full Archive ↗</a>
+        </header>
+
+        {sampleArtworks.map((art, index) => (
+          <div class="minimal-artwork-slide" id={`slide-${index + 1}`}>
+            <div class="slide-media">
+              <img src={art.imageUrl} alt={art.alt} class="slide-image" />
+            </div>
+            <div class="slide-floating-badge">
+              <div class="badge-index">0{index + 1} / 0{sampleArtworks.length}</div>
+              <h2 class="badge-title">{art.title}</h2>
+              <div class="badge-meta">{art.medium} • {art.dimensions} ({art.year})</div>
+              <a href={`/portfolio?collection=${art.collection}`} class="badge-link">
+                View in Portfolio Collection ↗
+              </a>
+            </div>
+          </div>
+        ))}
+
+        <footer class="minimal-footer-cta">
+          <h2 class="minimal-footer-title">End of Selected Works</h2>
+          <p class="minimal-footer-sub">Explore exhibitions, studio portrait, and representation details.</p>
+          <div class="minimal-footer-links">
+            <a href="/portfolio" class="cta-pill primary">Complete Bento Portfolio</a>
+            <a href="/about" class="cta-pill secondary">About Lindsay</a>
+            <a href="/contact" class="cta-pill secondary">Contact Studio</a>
+          </div>
+        </footer>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- FLOATING PROTOTYPE SWITCHER (UI.md Step 4)                   -->
+  <!-- ============================================================= -->
+  <aside class="prototype-bar" aria-label="Prototype Variant Switcher">
+    <div class="prototype-bar-inner">
+      <div class="bar-header">
+        <span class="prototype-badge">PROTOTYPE</span>
+        <span class="bar-caption">Compare Full-Bleed Directions</span>
+      </div>
+
+      <div class="bar-controls">
+        <button type="button" class="bar-nav-btn prev-btn" id="prevVariant" aria-label="Previous Variant">
+          ←
+        </button>
+
+        <div class="variant-chips">
+          <button 
+            type="button" 
+            class={`variant-chip ${currentVariant === 'A' ? 'active' : ''}`}
+            data-variant="A"
+          >
+            Variant A: Cinematic Editorial
+          </button>
+          <button 
+            type="button" 
+            class={`variant-chip ${currentVariant === 'B' ? 'active' : ''}`}
+            data-variant="B"
+          >
+            Variant B: Edge-to-Edge Minimal
+          </button>
+        </div>
+
+        <button type="button" class="bar-nav-btn next-btn" id="nextVariant" aria-label="Next Variant">
+          →
+        </button>
+      </div>
+
+      <div class="bar-hotkey-hint">Press <kbd>←</kbd> or <kbd>→</kbd> on your keyboard to switch</div>
+    </div>
+  </aside>
+
+</Layout>
+
+<script>
+  // Prototype Interactive Switcher Logic
+  const container = document.querySelector('.prototype-container') as HTMLElement;
+  const sections = document.querySelectorAll('.variant-section');
+  const chips = document.querySelectorAll('.variant-chip');
+  const prevBtn = document.getElementById('prevVariant');
+  const nextBtn = document.getElementById('nextVariant');
+
+  const variants = ['A', 'B'];
+
+  function switchVariant(targetVariant: string, updateUrl = true) {
+    const v = targetVariant.toUpperCase();
+    if (!variants.includes(v)) return;
+
+    if (container) {
+      container.dataset.activeVariant = v;
+    }
+
+    sections.forEach((sec) => {
+      if (sec.id === `variant-${v}`) {
+        sec.classList.add('active');
+      } else {
+        sec.classList.remove('active');
+      }
+    });
+
+    chips.forEach((chip) => {
+      const btn = chip as HTMLButtonElement;
+      if (btn.dataset.variant === v) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    if (updateUrl) {
+      const newUrl = new URL(window.location.href);
+      newUrl.searchParams.set('variant', v);
+      window.history.replaceState({}, '', newUrl.toString());
+    }
+
+    // Smooth scroll back to top on variant flip
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const target = (chip as HTMLElement).dataset.variant;
+      if (target) switchVariant(target);
+    });
+  });
+
+  function cycleVariant(direction: number) {
+    const current = (container?.dataset.activeVariant || 'A').toUpperCase();
+    let idx = variants.indexOf(current);
+    if (idx === -1) idx = 0;
+    let nextIdx = (idx + direction + variants.length) % variants.length;
+    switchVariant(variants[nextIdx]);
+  }
+
+  prevBtn?.addEventListener('click', () => cycleVariant(-1));
+  nextBtn?.addEventListener('click', () => cycleVariant(1));
+
+  // Keyboard navigation
+  window.addEventListener('keydown', (e) => {
+    if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) return;
+    if (e.key === 'ArrowLeft') {
+      cycleVariant(-1);
+    } else if (e.key === 'ArrowRight') {
+      cycleVariant(1);
+    }
+  });
+</script>
+
+<style>
+  /* Base page override to allow true full-bleed outside layout max-width */
+  :global(.page-content) {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .prototype-container {
+    width: 100%;
+    min-height: 100vh;
+    padding-bottom: 120px; /* room for floating bar */
+  }
+
+  .variant-section {
+    display: none;
+    width: 100%;
+    animation: fadeIn 0.35s ease-out;
+  }
+
+  .variant-section.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ------------------------------------------------------------- */
+  /* VARIANT A: CINEMATIC EDITORIAL STORY STYLING                  */
+  /* ------------------------------------------------------------- */
+  .bleed-hero {
+    position: relative;
+    width: 100vw;
+    height: 88vh;
+    min-height: 600px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    background-color: var(--color-ink);
+  }
+
+  .bleed-hero-media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .bleed-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+
+  .bleed-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(23, 22, 21, 0.2) 0%,
+      rgba(23, 22, 21, 0.4) 50%,
+      rgba(23, 22, 21, 0.92) 100%
+    );
+  }
+
+  .bleed-hero-caption {
+    position: relative;
+    z-index: 10;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-xl) var(--space-3xl);
+    color: #ffffff;
+    width: 100%;
+  }
+
+  .hero-tag {
+    font-size: 0.8rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: var(--space-xs);
+    font-weight: 500;
+  }
+
+  .hero-headline {
+    font-family: var(--font-heading);
+    font-size: clamp(2.4rem, 5.5vw, 4.5rem);
+    line-height: 1.08;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    max-width: 860px;
+    margin-bottom: var(--space-md);
+    text-shadow: 0 2px 16px rgba(0,0,0,0.3);
+  }
+
+  .hero-subtext {
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 620px;
+    margin-bottom: var(--space-xl);
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: var(--space-md);
+    align-items: center;
+  }
+
+  /* CTA Pills */
+  .cta-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: var(--space-sm) var(--space-xl);
+    border-radius: 9999px;
+    transition: all var(--transition-smooth);
+    cursor: pointer;
+  }
+
+  .cta-pill.primary {
+    background-color: #ffffff;
+    color: var(--color-ink);
+  }
+
+  .cta-pill.primary:hover {
+    background-color: var(--color-bg);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  }
+
+  .cta-pill.secondary {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  .cta-pill.secondary:hover {
+    border-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .cta-pill.large {
+    padding: var(--space-md) var(--space-2xl);
+    font-size: 0.95rem;
+  }
+
+  /* Editorial Story Flow */
+  .editorial-story-flow {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xl);
+    padding-top: var(--space-3xl);
+  }
+
+  /* Story Spreads */
+  .story-spread {
+    position: relative;
+    width: 100vw;
+    min-height: 650px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .full-bleed-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .spread-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(0.95);
+  }
+
+  .spread-overlay-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(23, 22, 21, 0.75) 0%, rgba(23, 22, 21, 0.2) 60%, rgba(23, 22, 21, 0.5) 100%);
+  }
+
+  .spread-card {
+    position: relative;
+    z-index: 10;
+    max-width: 520px;
+    background: rgba(250, 249, 246, 0.94);
+    backdrop-filter: blur(12px);
+    padding: var(--space-2xl);
+    margin: var(--space-2xl);
+    border-radius: var(--radius-md);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.18);
+  }
+
+  .spread-left .spread-card {
+    margin-left: max(var(--space-xl), calc((100vw - var(--max-width)) / 2 + var(--space-lg)));
+  }
+
+  .spread-right {
+    justify-content: flex-end;
+  }
+
+  .spread-right .spread-overlay-gradient {
+    background: linear-gradient(270deg, rgba(23, 22, 21, 0.75) 0%, rgba(23, 22, 21, 0.2) 60%, rgba(23, 22, 21, 0.5) 100%);
+  }
+
+  .spread-right .spread-card {
+    margin-right: max(var(--space-xl), calc((100vw - var(--max-width)) / 2 + var(--space-lg)));
+  }
+
+  .card-series-tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: var(--space-2xs);
+  }
+
+  .card-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 2.5vw, 2.3rem);
+    line-height: 1.15;
+    color: var(--color-ink);
+    margin-bottom: var(--space-sm);
+  }
+
+  .card-narrative {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--color-ink-muted);
+    margin-bottom: var(--space-md);
+  }
+
+  .card-metadata {
+    display: flex;
+    gap: var(--space-xs);
+    font-size: 0.8rem;
+    color: var(--color-ink-light);
+    letter-spacing: 0.04em;
+    margin-bottom: var(--space-lg);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-xs);
+  }
+
+  .spread-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    border-bottom: 1.5px solid var(--color-ink);
+    padding-bottom: 2px;
+    transition: gap var(--transition-smooth);
+  }
+
+  .spread-link:hover .arrow {
+    transform: translateX(4px);
+  }
+
+  /* Curatorial Quote Interlude */
+  .story-interlude {
+    max-width: 900px;
+    margin: var(--space-xl) auto;
+    padding: var(--space-3xl) var(--space-xl);
+    text-align: center;
+  }
+
+  .interlude-quote {
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+    font-style: italic;
+    line-height: 1.35;
+    color: var(--color-ink);
+    margin-bottom: var(--space-md);
+  }
+
+  .interlude-cite {
+    font-size: 0.85rem;
+    font-style: normal;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
+  /* Collections Spotlight */
+  .collections-spotlight {
+    max-width: var(--max-width);
+    margin: var(--space-2xl) auto;
+    padding: 0 var(--space-xl);
+    width: 100%;
+  }
+
+  .spotlight-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .section-kicker {
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    font-weight: 500;
+  }
+
+  .spotlight-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    color: var(--color-ink);
+    margin-top: var(--space-2xs);
+  }
+
+  .spotlight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .spotlight-card {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.04);
+    transition: all var(--transition-smooth);
+  }
+
+  .spotlight-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+  }
+
+  .card-thumb-wrap {
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    background-color: #eee;
+  }
+
+  .card-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .spotlight-card:hover .card-thumb {
+    transform: scale(1.05);
+  }
+
+  .spotlight-info {
+    padding: var(--space-lg);
+  }
+
+  .spotlight-info h3 {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--color-ink);
+    margin-bottom: var(--space-3xs);
+  }
+
+  .spotlight-info p {
+    font-size: 0.85rem;
+    color: var(--color-ink-muted);
+    margin-bottom: var(--space-md);
+  }
+
+  .card-action {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+
+  /* Closing Invitation */
+  .closing-invitation {
+    background-color: var(--color-card-bg);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-3xl) var(--space-xl);
+    text-align: center;
+    margin-top: var(--space-2xl);
+  }
+
+  .invitation-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .invitation-heading {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    color: var(--color-ink);
+    margin-bottom: var(--space-xs);
+  }
+
+  .invitation-subtext {
+    font-size: 1.05rem;
+    color: var(--color-ink-muted);
+    margin-bottom: var(--space-xl);
+    line-height: 1.5;
+  }
+
+  .invitation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .closing-invitation .cta-pill.primary {
+    background-color: var(--color-ink);
+    color: #ffffff;
+  }
+
+  .closing-invitation .cta-pill.secondary {
+    border-color: var(--color-border);
+    color: var(--color-ink);
+  }
+
+  /* ------------------------------------------------------------- */
+  /* VARIANT B: EDGE-TO-EDGE MINIMALIST SCROLL STYLING             */
+  /* ------------------------------------------------------------- */
+  .minimal-scroll-container {
+    width: 100vw;
+  }
+
+  .minimal-intro-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-md) var(--space-2xl);
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 60px;
+    z-index: 40;
+    backdrop-filter: blur(8px);
+    background-color: rgba(250, 249, 246, 0.9);
+  }
+
+  .minimal-brand {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--color-ink);
+  }
+
+  .minimal-subtitle {
+    font-size: 0.8rem;
+    color: var(--color-ink-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .minimal-archive-link {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .minimal-artwork-slide {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    min-height: 700px;
+    background-color: #111110;
+    overflow: hidden;
+  }
+
+  .slide-media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .slide-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .slide-floating-badge {
+    position: absolute;
+    bottom: var(--space-2xl);
+    left: var(--space-2xl);
+    z-index: 10;
+    background: rgba(23, 22, 21, 0.78);
+    backdrop-filter: blur(14px);
+    color: #ffffff;
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--radius-md);
+    max-width: 440px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .badge-index {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: var(--space-3xs);
+  }
+
+  .badge-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
+    color: #ffffff;
+    margin-bottom: var(--space-3xs);
+  }
+
+  .badge-meta {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: var(--space-md);
+    letter-spacing: 0.04em;
+  }
+
+  .badge-link {
+    display: inline-flex;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    padding-bottom: 2px;
+  }
+
+  .badge-link:hover {
+    border-color: #ffffff;
+  }
+
+  .minimal-footer-cta {
+    background-color: var(--color-bg);
+    padding: var(--space-3xl) var(--space-xl);
+    text-align: center;
+  }
+
+  .minimal-footer-title {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    color: var(--color-ink);
+    margin-bottom: var(--space-xs);
+  }
+
+  .minimal-footer-sub {
+    font-size: 0.95rem;
+    color: var(--color-ink-muted);
+    margin-bottom: var(--space-xl);
+  }
+
+  .minimal-footer-links {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .minimal-footer-cta .cta-pill.primary {
+    background-color: var(--color-ink);
+    color: #ffffff;
+  }
+
+  .minimal-footer-cta .cta-pill.secondary {
+    border: 1px solid var(--color-border);
+    color: var(--color-ink);
+  }
+
+  /* ------------------------------------------------------------- */
+  /* FLOATING PROTOTYPE SWITCHER (UI.md Step 4)                   */
+  /* ------------------------------------------------------------- */
+  .prototype-bar {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    background: #171615;
+    color: #ffffff;
+    padding: 10px 16px;
+    border-radius: 9999px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .prototype-bar-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .bar-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-right: 8px;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .prototype-badge {
+    background-color: #e65100;
+    color: #ffffff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .bar-caption {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.04em;
+  }
+
+  .bar-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .bar-nav-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: #ffffff;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background var(--transition-fast);
+  }
+
+  .bar-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .variant-chips {
+    display: flex;
+    gap: 6px;
+  }
+
+  .variant-chip {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .variant-chip:hover {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .variant-chip.active {
+    background-color: #ffffff;
+    color: #171615;
+    border-color: #ffffff;
+    font-weight: 600;
+  }
+
+  .bar-hotkey-hint {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.5);
+    display: none;
+  }
+
+  kbd {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+
+  @media (min-width: 768px) {
+    .bar-hotkey-hint {
+      display: block;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .spotlight-grid {
+      grid-template-columns: 1fr;
+    }
+    .spread-card {
+      margin: var(--space-md);
+      max-width: 90%;
+    }
+  }
+</style>

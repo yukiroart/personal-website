@@ -1,0 +1,153 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ArtworkCard from '../components/ArtworkCard.astro';
+import { sampleArtworks } from '../data/sampleArtworks';
+
+const collections = [
+  { id: 'all', label: 'All Works' },
+  { id: 'new-works', label: 'New Works' },
+  { id: 'landscapes', label: 'Landscapes & Botanicals' },
+  { id: 'abstracts', label: 'Abstract Studies' },
+  { id: 'portraits', label: 'Portraiture' },
+];
+---
+
+<Layout 
+  title="Portfolio — Selected Works & Contemporary Art by Lindsay"
+  description="Explore the complete archive of original paintings, botanicals, and abstract studies by Lindsay."
+>
+  <header class="portfolio-header">
+    <h1 class="portfolio-title">Selected Works</h1>
+    <p class="portfolio-subtitle">Paintings, botanicals & abstract studies — 2024–2026</p>
+  </header>
+
+  <!-- Collection Filter Bar -->
+  <section class="gallery-toolbar" aria-label="Artwork Collections">
+    <div class="filter-pill-list">
+      {collections.map((col, index) => (
+        <button
+          type="button"
+          class={`filter-pill ${index === 0 ? 'active' : ''}`}
+          data-filter={col.id}
+        >
+          {col.label}
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <!-- Bento Box Artwork Showcase -->
+  <section class="gallery-section" aria-label="Artwork Gallery">
+    <div class="bento-grid" id="artworkGrid">
+      {sampleArtworks.map((art) => (
+        <ArtworkCard artwork={art} />
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Lightweight client-side collection filtering using CSS class toggles
+  const pills = document.querySelectorAll<HTMLButtonElement>('.filter-pill');
+  const cards = document.querySelectorAll<HTMLElement>('.artwork-card');
+
+  // Support URL query parameter like ?collection=abstracts
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialCollection = urlParams.get('collection');
+
+  function applyFilter(filterId: string) {
+    pills.forEach((p) => {
+      if (p.dataset.filter === filterId) {
+        p.classList.add('active');
+      } else {
+        p.classList.remove('active');
+      }
+    });
+
+    cards.forEach((card) => {
+      const matches = !filterId || filterId === 'all' || card.dataset.collection === filterId;
+      if (matches) {
+        card.classList.remove('is-hidden');
+      } else {
+        card.classList.add('is-hidden');
+      }
+    });
+  }
+
+  if (initialCollection) {
+    applyFilter(initialCollection);
+  }
+
+  pills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      const filter = pill.dataset.filter || 'all';
+      applyFilter(filter);
+    });
+  });
+</script>
+
+<style>
+  .portfolio-header {
+    margin-bottom: var(--space-xl);
+    padding-top: var(--space-md);
+  }
+
+  .portfolio-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    margin-bottom: var(--space-2xs);
+  }
+
+  .portfolio-subtitle {
+    font-size: 0.95rem;
+    color: var(--color-ink-muted);
+    letter-spacing: 0.04em;
+    font-weight: 400;
+  }
+
+  /* Gallery Toolbar */
+  .gallery-toolbar {
+    margin-bottom: var(--space-xl);
+    overflow-x: auto;
+    padding-bottom: var(--space-xs);
+  }
+
+  .filter-pill-list {
+    display: flex;
+    gap: var(--space-xs);
+    white-space: nowrap;
+  }
+
+  .filter-pill {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-ink-muted);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+  }
+
+  .filter-pill:hover {
+    border-color: var(--color-ink);
+    color: var(--color-ink);
+  }
+
+  .filter-pill.active {
+    background-color: var(--color-ink);
+    border-color: var(--color-ink);
+    color: #ffffff;
+  }
+
+  /* Gallery Section */
+  .gallery-section {
+    margin-bottom: var(--space-3xl);
+  }
+</style>

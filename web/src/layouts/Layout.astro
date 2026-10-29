@@ -11,7 +11,8 @@ const {
   description = 'Original paintings, botanicals, and abstract studies by Lindsay.',
 } = Astro.props;
 const currentPath = Astro.url.pathname;
-const isPortfolio = currentPath === '/' || currentPath === '/portfolio';
+const isHome = currentPath === '/';
+const isPortfolio = currentPath.startsWith('/portfolio');
 const isAbout = currentPath.startsWith('/about');
 const isContact = currentPath.startsWith('/contact');
 ---
@@ -44,7 +45,8 @@ const isContact = currentPath.startsWith('/contact');
 
         <nav class="main-nav" aria-label="Main Navigation">
           <ul class="nav-list">
-            <li><a href="/" class={`nav-link ${isPortfolio ? 'active' : ''}`}>PORTFOLIO</a></li>
+            <li><a href="/" class={`nav-link ${isHome ? 'active' : ''}`}>HOME</a></li>
+            <li><a href="/portfolio" class={`nav-link ${isPortfolio ? 'active' : ''}`}>PORTFOLIO</a></li>
             <li><a href="/about" class={`nav-link ${isAbout ? 'active' : ''}`}>ABOUT</a></li>
             <li><a href="/contact" class={`nav-link ${isContact ? 'active' : ''}`}>CONTACT</a></li>
           </ul>
