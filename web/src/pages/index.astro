@@ -32,18 +32,16 @@ const collections = [
   <section class="gallery-section" aria-label="Artwork Gallery">
     <div class="bento-grid" id="artworkGrid">
       {sampleArtworks.map((art) => (
-        <div data-collection={art.collection} class="gallery-cell">
-          <ArtworkCard artwork={art} />
-        </div>
+        <ArtworkCard artwork={art} />
       ))}
     </div>
   </section>
 </Layout>
 
 <script>
-  // Lightweight client-side collection filtering
+  // Lightweight client-side collection filtering using CSS class toggles
   const pills = document.querySelectorAll<HTMLButtonElement>('.filter-pill');
-  const cells = document.querySelectorAll<HTMLElement>('.gallery-cell');
+  const cards = document.querySelectorAll<HTMLElement>('.artwork-card');
 
   pills.forEach((pill) => {
     pill.addEventListener('click', () => {
@@ -51,11 +49,12 @@ const collections = [
       pill.classList.add('active');
 
       const filter = pill.dataset.filter;
-      cells.forEach((cell) => {
-        if (!filter || filter === 'all' || cell.dataset.collection === filter) {
-          cell.style.display = 'block';
+      cards.forEach((card) => {
+        const matches = !filter || filter === 'all' || card.dataset.collection === filter;
+        if (matches) {
+          card.classList.remove('is-hidden');
         } else {
-          cell.style.display = 'none';
+          card.classList.add('is-hidden');
         }
       });
     });
@@ -104,9 +103,5 @@ const collections = [
   /* Gallery Section */
   .gallery-section {
     margin-bottom: var(--space-3xl);
-  }
-
-  .gallery-cell {
-    display: contents;
   }
 </style>

@@ -140,3 +140,9 @@ h1, h2, h3, h4, h5, h6 {
     grid-row: span 1;
   }
 }
+
+/* Visibility helper for filtering that preserves Bento grid rules */
+.artwork-card.is-hidden {
+  display: none !important;
+}
+

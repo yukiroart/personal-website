@@ -9,7 +9,7 @@ const { artwork } = Astro.props;
 const spanClass = `bento-${artwork.bentoSpan}`;
 ---
 
-<article class={`bento-item ${spanClass} artwork-card`}>
+<article class={`bento-item ${spanClass} artwork-card`} data-collection={artwork.collection}>
   <div class="image-wrapper">
     <img
       src={artwork.imageUrl}
