@@ -29,10 +29,10 @@
 </script>
 
 <svelte:head>
-  <title>Lindsay — Contemporary Visual Art Portfolio</title>
+  <title>Yukiro — Contemporary Visual Art Portfolio</title>
   <meta
     name="description"
-    content="Original paintings, botanical studies, and textural mineral compositions by Lindsay."
+    content="Original paintings, botanical studies, and textural mineral compositions by Yukiro."
   />
 </svelte:head>
 

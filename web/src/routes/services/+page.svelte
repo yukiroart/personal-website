@@ -28,8 +28,8 @@
 </script>
 
 <svelte:head>
-  <title>Services — What Can I Do For You | Lindsay Art Portfolio</title>
-  <meta name="description" content="Explore bespoke artistic services by Lindsay: Full illustrations, 2D animations, conceptual sketching, and custom fine-art commissions." />
+  <title>Services — What Can I Do For You | Yukiro Art Portfolio</title>
+  <meta name="description" content="Explore bespoke artistic services by Yukiro: Full illustrations, 2D animations, conceptual sketching, and custom fine-art commissions." />
 </svelte:head>
 
 <!-- Masthead Header -->

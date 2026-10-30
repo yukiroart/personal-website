@@ -47,10 +47,10 @@
 </script>
 
 <svelte:head>
-  <title>Commission Queue — Lindsay Studio Workflow & Active Projects</title>
+  <title>Commission Queue — Yukiro Studio Workflow & Active Projects</title>
   <meta
     name="description"
-    content="Live studio commission queue and project status tracker for original fine art, illustrations, and motion by Lindsay."
+    content="Live studio commission queue and project status tracker for original fine art, illustrations, and motion by Yukiro."
   />
 </svelte:head>
 
@@ -119,7 +119,7 @@
     <div class="dispatch-header">
       <h2 class="dispatch-title">Request a Studio Commission</h2>
       <p class="dispatch-lead">
-        Lindsay accepts a limited number of bespoke original paintings,
+        Yukiro accepts a limited number of bespoke original paintings,
         editorial illustrations, and site-specific architectural installations
         per cycle. Inquiries are reviewed in the order received.
       </p>
@@ -136,7 +136,7 @@
           target="_blank"
           rel="noopener noreferrer"
           class="dispatch-icon-btn"
-          aria-label="Lindsay on X / Twitter"
+          aria-label="Yukiro on X / Twitter"
         >
           <svg
             class="social-svg"
@@ -156,7 +156,7 @@
           target="_blank"
           rel="noopener noreferrer"
           class="dispatch-icon-btn"
-          aria-label="Lindsay on Instagram"
+          aria-label="Yukiro on Instagram"
         >
           <svg
             class="social-svg"
@@ -176,7 +176,7 @@
           target="_blank"
           rel="noopener noreferrer"
           class="dispatch-icon-btn"
-          aria-label="Lindsay on ArtStation"
+          aria-label="Yukiro on ArtStation"
         >
           <svg
             class="social-svg"

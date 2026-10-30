@@ -55,10 +55,10 @@
 </script>
 
 <svelte:head>
-  <title>Portfolio — Selected Works & Contemporary Art by Lindsay</title>
+  <title>Portfolio — Selected Works & Contemporary Art by Yukiro</title>
   <meta
     name="description"
-    content="Explore the complete archive of original paintings, botanicals, and abstract studies by Lindsay."
+    content="Explore the complete archive of original paintings, botanicals, and abstract studies by Yukiro."
   />
 </svelte:head>
 
