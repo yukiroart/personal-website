@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { dev } from '$app/environment';
-	import { SvelteDevKit } from 'svelte-grab';
+  import { dev } from "$app/environment";
+  import { SvelteDevKit } from "svelte-grab";
   import "../styles/tokens.css";
   import { page } from "$app/state";
   import { onMount } from "svelte";
@@ -12,6 +12,7 @@
   );
   let isServices = $derived(page.url.pathname.startsWith("/services"));
   let isAbout = $derived(page.url.pathname.startsWith("/about"));
+  let isQueue = $derived(page.url.pathname.startsWith("/queue"));
   let isContact = $derived(page.url.pathname.startsWith("/contact"));
 
   let currentTheme = $state("dark");
@@ -80,6 +81,14 @@
         <span class="nav-label">ABOUT</span>
       </a>
       <a
+        href="/queue"
+        class="nav-item"
+        class:active={isQueue}
+        data-text="QUEUE"
+      >
+        <span class="nav-label">QUEUE</span>
+      </a>
+      <a
         href="/contact"
         class="nav-item"
         class:active={isContact}
@@ -120,6 +129,7 @@
           <li><a href="/" class="footer-link">PORTFOLIO</a></li>
           <li><a href="/services" class="footer-link">SERVICES</a></li>
           <li><a href="/about" class="footer-link">ABOUT</a></li>
+          <li><a href="/queue" class="footer-link">QUEUE</a></li>
           <li><a href="/contact" class="footer-link">CONTACT</a></li>
         </ul>
       </div>
@@ -214,7 +224,9 @@
   onclick={toggleTheme}
   class="neo-theme-toggle"
   type="button"
-  aria-label={currentTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+  aria-label={currentTheme === "dark"
+    ? "Switch to light mode"
+    : "Switch to dark mode"}
 >
   {#if currentTheme === "dark"}
     <!-- Sun icon for light mode affordance -->
@@ -258,6 +270,10 @@
     </svg>
   {/if}
 </button>
+
+{#if dev}
+  <SvelteDevKit />
+{/if}
 
 <style>
   /* Full-Sized Edge-to-Edge Navbar */
@@ -692,7 +708,3 @@
     }
   }
 </style>
-
-{#if dev}
-	<SvelteDevKit />
-{/if}

@@ -2,28 +2,24 @@
   const services = [
     {
       title: 'Full Illustrations',
-      tag: 'EDITORIAL & FINE ART',
       description: 'Bespoke high-resolution original paintings, cover art, and fine art commissions executed with rich physical textures, mineral pigments, and fine Belgian linen.',
       deliverables: ['Original high-res artwork', 'Print & commercial licensing', 'Custom color palettes'],
       cta: 'Commission Illustration',
     },
     {
       title: 'Visual Animation & Motion',
-      tag: '2D MOTION & ART LOOPS',
       description: 'Frame-by-frame and expressive 2D motion loops bringing painterly sketches, botanical forms, and abstract compositions into dynamic living motion.',
       deliverables: ['Seamless 4K video loops', 'Social media motion reels', 'Interactive web motion assets'],
       cta: 'Inquire About Motion',
     },
     {
       title: 'Concept Sketching & Ideation',
-      tag: 'CHARCOAL & INK STUDIES',
       description: 'Rapid ideation studies, preliminary storyboards, architectural compositions, and textural line drawings for visual development and creative direction.',
       deliverables: ['Exploratory sketchbooks', 'Compositional thumbnails', 'Raw pencil & ink scans'],
       cta: 'Book Concept Session',
     },
     {
       title: 'Site-Specific Murals & Installations',
-      tag: 'LARGE SCALE FORMATS',
       description: 'Custom large-format mural artworks and architectural canvas installations tailored for contemporary hospitality, modern residential spaces, and galleries.',
       deliverables: ['On-site physical painting', 'Scale maquettes & previews', 'Protective archival varnishing'],
       cta: 'Request Mural Proposal',
@@ -48,7 +44,6 @@
       <article class="neo-card service-card">
         <div class="service-header-row">
           <span class="service-index">0{index + 1}</span>
-          <span class="service-tag">{service.tag}</span>
         </div>
 
         <h2 class="service-title">{service.title}</h2>
@@ -134,19 +129,6 @@
     font-weight: 800;
     color: var(--color-ink);
     line-height: 1;
-  }
-
-  .service-tag {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    background: var(--color-yellow);
-    color: #121212;
-    border: 1.5px solid var(--color-ink);
-    padding: 3px 10px;
-    border-radius: var(--radius-neo-pill);
-    box-shadow: var(--shadow-neo-xs);
   }
 
   .service-title {
