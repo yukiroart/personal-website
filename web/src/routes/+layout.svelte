@@ -214,10 +214,49 @@
   onclick={toggleTheme}
   class="neo-theme-toggle"
   type="button"
-  aria-label="Toggle dark and light mode"
+  aria-label={currentTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
 >
-  <span class="theme-icon">{currentTheme === "dark" ? "☼" : "☾"}</span>
-  <span class="theme-label">{currentTheme === "dark" ? "LIGHT" : "DARK"}</span>
+  {#if currentTheme === "dark"}
+    <!-- Sun icon for light mode affordance -->
+    <svg
+      class="theme-svg"
+      viewBox="0 0 24 24"
+      width="20"
+      height="20"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  {:else}
+    <!-- Moon icon for dark mode affordance -->
+    <svg
+      class="theme-svg"
+      viewBox="0 0 24 24"
+      width="20"
+      height="20"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  {/if}
 </button>
 
 <style>
@@ -596,18 +635,17 @@
     bottom: 24px;
     left: 24px;
     z-index: 999;
+    width: 44px;
+    height: 44px;
+    padding: 0;
     background: var(--color-surface);
     color: var(--color-ink);
     border: var(--stroke-neo);
     box-shadow: var(--shadow-neo-sm);
     border-radius: var(--radius-neo-pill);
-    padding: 10px 18px;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    font-weight: 700;
+    justify-content: center;
     cursor: pointer;
     user-select: none;
     transition:
@@ -623,22 +661,34 @@
     color: #121212;
   }
 
+  :global(:root[data-theme="dark"]) .neo-theme-toggle:hover {
+    background-color: var(--color-border-subtle);
+    color: var(--color-ink);
+  }
+
   .neo-theme-toggle:active {
     transform: translate(2px, 2px);
     box-shadow: var(--shadow-neo-xs);
   }
 
-  .theme-icon {
-    font-size: 1rem;
-    line-height: 1;
+  .theme-svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
   }
 
   @media (max-width: 680px) {
     .neo-theme-toggle {
       bottom: 16px;
       left: 16px;
-      padding: 8px 14px;
-      font-size: 0.75rem;
+      width: 40px;
+      height: 40px;
+    }
+
+    .theme-svg {
+      width: 18px;
+      height: 18px;
     }
   }
 </style>
