@@ -34,10 +34,6 @@
   });
 
   let currentArt = $derived(artworks[currentIndex]);
-  let pad = (n: number) => String(n).padStart(2, "0");
-  let counterText = $derived(
-    `${pad(currentIndex + 1)} / ${pad(artworks.length)}`,
-  );
 
   $effect(() => {
     if (isOpen && artworks.length > 1) {
@@ -138,28 +134,6 @@
   }}
 >
   <div class="dialog-shell">
-    <!-- Top Utility Bar: Counter, Controls & Close -->
-    <header class="dialog-top-bar">
-      <div class="dialog-counter-badge" aria-live="polite">
-        {counterText}
-      </div>
-
-      <div class="dialog-top-actions">
-        <span class="dialog-hint-pill desktop-only"
-          >Click image to zoom • ← / → to cycle • Esc to close</span
-        >
-        <button
-          onclick={closeModal}
-          type="button"
-          class="dialog-btn dialog-close-btn"
-          aria-label="Close modal preview (Escape)"
-        >
-          ✕
-        </button>
-      </div>
-    </header>
-
-    <!-- Main Visual Stage: Prev Button, Image Viewport, Next Button -->
     <div
       class="dialog-stage"
       ontouchstart={handleTouchStart}
@@ -167,6 +141,17 @@
       role="region"
       aria-label="Artwork Viewport"
     >
+      <!-- Close Button (Minimal Floating Control) -->
+      <button
+        onclick={closeModal}
+        type="button"
+        class="dialog-btn dialog-close-btn"
+        aria-label="Close modal preview (Escape)"
+      >
+        ✕
+      </button>
+
+      <!-- Navigation Arrows -->
       <button
         onclick={() => step(-1)}
         type="button"
@@ -176,6 +161,7 @@
         ←
       </button>
 
+      <!-- Fixed Uniform Artwork Viewport -->
       <div class="dialog-viewport">
         <div class="dialog-zoom-track" class:is-zoomed={isZoomed}>
           {#if currentArt}
@@ -201,13 +187,6 @@
         →
       </button>
     </div>
-
-    <!-- Mobile Hint Bar -->
-    <footer class="dialog-bottom-bar mobile-only">
-      <span class="dialog-hint-pill"
-        >Swipe or tap arrows to cycle • Tap to zoom</span
-      >
-    </footer>
   </div>
 </dialog>
 
@@ -239,7 +218,7 @@
     }
   }
 
-  /* Sharp Neobrutalist Dialog Frame */
+  /* Sharp Neobrutalist Dialog Frame: Locked Consistent Dimensions */
   .dialog-shell {
     background: var(--color-surface);
     border: var(--stroke-neo);
@@ -247,9 +226,11 @@
     border-radius: 0;
     display: flex;
     flex-direction: column;
-    max-width: 95vw;
-    max-height: 94vh;
+    width: min(88vw, 960px, calc(84vh * (4 / 3)));
+    aspect-ratio: 4 / 3;
+    max-height: 84vh;
     overflow: hidden;
+    position: relative;
     animation: zoomInDialog 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
@@ -264,64 +245,47 @@
     }
   }
 
-  /* Top Bar */
-  .dialog-top-bar {
+  /* Main Visual Stage */
+  .dialog-stage {
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
-    background: var(--color-surface);
-    border-bottom: var(--stroke-neo);
-    gap: 16px;
-  }
-
-  .dialog-counter-badge {
-    font-family: var(--font-heading);
-    font-size: 0.82rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    padding: 5px 12px;
+    justify-content: center;
     background: var(--color-bg);
-    color: var(--color-ink);
-    border: var(--stroke-neo);
-    border-radius: 0;
-    box-shadow: var(--shadow-neo-xs);
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
-  .dialog-top-actions {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .dialog-hint-pill {
-    font-family: var(--font-body);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--color-muted);
-    text-transform: uppercase;
-  }
-
+  /* Minimal Action Buttons */
   .dialog-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     background: var(--color-surface);
     color: var(--color-ink);
     border: var(--stroke-neo);
     border-radius: 0;
     box-shadow: var(--shadow-neo-xs);
     font-family: var(--font-heading);
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     font-weight: 700;
     cursor: pointer;
     transition:
       transform 0.1s ease,
       box-shadow 0.1s ease,
       background 0.1s ease;
+  }
+
+  .dialog-close-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 20;
   }
 
   .dialog-btn:hover {
@@ -333,22 +297,11 @@
     box-shadow: 0px 0px 0px var(--color-ink);
   }
 
-  /* Main Visual Stage */
-  .dialog-stage {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-bg);
-    padding: 18px 24px;
-    overflow: hidden;
-  }
-
   .dialog-nav-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 10;
+    z-index: 15;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -370,11 +323,11 @@
   }
 
   .dialog-nav-btn.prev {
-    left: 16px;
+    left: 14px;
   }
 
   .dialog-nav-btn.next {
-    right: 16px;
+    right: 14px;
   }
 
   .dialog-nav-btn:hover {
@@ -386,11 +339,11 @@
     box-shadow: 0px 0px 0px var(--color-ink);
   }
 
-  /* Viewport & Image Zoom Track */
+  /* Consistent Image Viewport & Zoom Track */
   .dialog-viewport {
     position: relative;
-    max-width: min(84vw, 1100px);
-    max-height: 76vh;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -402,12 +355,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 100%;
-    max-height: 76vh;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
-    border: 2px solid var(--color-ink);
-    box-shadow: var(--shadow-neo);
-    background: var(--color-surface);
   }
 
   .dialog-zoom-track.is-zoomed {
@@ -416,10 +366,8 @@
 
   .dialog-img {
     display: block;
-    max-width: 100%;
-    max-height: 76vh;
-    width: auto;
-    height: auto;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     cursor: zoom-in;
     transition:
@@ -434,37 +382,23 @@
     transform: scale(1.85);
   }
 
-  /* Bottom Bar for Mobile */
-  .dialog-bottom-bar {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 14px;
-    background: var(--color-surface);
-    border-top: var(--stroke-neo);
-    text-align: center;
-  }
-
   /* Responsive Adjustments */
-  .desktop-only {
-    display: inline-block;
-  }
-
-  .mobile-only {
-    display: none;
-  }
-
   @media (max-width: 768px) {
-    .desktop-only {
-      display: none;
-    }
-
-    .mobile-only {
-      display: flex;
+    .dialog-shell {
+      width: 92vw;
+      max-height: 80vh;
     }
 
     .dialog-stage {
       padding: 12px;
+    }
+
+    .dialog-close-btn {
+      top: 8px;
+      right: 8px;
+      width: 36px;
+      height: 36px;
+      font-size: 0.95rem;
     }
 
     .dialog-nav-btn {
@@ -479,15 +413,6 @@
 
     .dialog-nav-btn.next {
       right: 8px;
-    }
-
-    .dialog-viewport {
-      max-width: 90vw;
-      max-height: 70vh;
-    }
-
-    .dialog-img {
-      max-height: 70vh;
     }
   }
 
