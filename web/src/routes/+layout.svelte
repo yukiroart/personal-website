@@ -70,19 +70,19 @@
 <svelte:window onclick={handleGlobalClick} />
 
 <svelte:head>
-  <title>Lindsay — Contemporary Visual Art Portfolio</title>
+  <title>Yukiro — Contemporary Visual Art Portfolio</title>
   <meta
     name="description"
-    content="Original paintings, botanicals, and abstract studies by Lindsay."
+    content="Original paintings, botanicals, and abstract studies by Yukiro."
   />
 </svelte:head>
 
 <!-- Minimal Neobrutalist Full-Width Masthead -->
 <header class="neo-header-wrapper">
   <div class="neo-header">
-    <a href="/" class="neo-brand" aria-label="Lindsay Home">
-      <span class="brand-badge">L</span>
-      <span class="brand-name">LINDSAY</span>
+    <a href="/" class="neo-brand" aria-label="Yukiro Home">
+      <span class="brand-badge">Y</span>
+      <span class="brand-name">YUKIRO</span>
     </a>
 
     <!-- 4-link Navigation -->
@@ -142,9 +142,9 @@
     <div class="footer-grid">
       <!-- Col 1: Brand & Studio Summary -->
       <div class="footer-col footer-col-brand">
-        <a href="/" class="neo-brand footer-brand" aria-label="Lindsay Home">
-          <span class="brand-badge">L</span>
-          <span class="brand-name">LINDSAY</span>
+        <a href="/" class="neo-brand footer-brand" aria-label="Yukiro Home">
+          <span class="brand-badge">Y</span>
+          <span class="brand-name">YUKIRO</span>
         </a>
         <p class="footer-bio">
           Contemporary fine art, botanical studies, and tactile visual
@@ -173,7 +173,7 @@
             target="_blank"
             rel="noopener noreferrer"
             class="footer-icon-btn"
-            aria-label="Lindsay on X / Twitter"
+            aria-label="Yukiro on X / Twitter"
           >
             <svg
               class="social-svg"
@@ -193,7 +193,7 @@
             target="_blank"
             rel="noopener noreferrer"
             class="footer-icon-btn"
-            aria-label="Lindsay on Instagram"
+            aria-label="Yukiro on Instagram"
           >
             <svg
               class="social-svg"
@@ -213,7 +213,7 @@
             target="_blank"
             rel="noopener noreferrer"
             class="footer-icon-btn"
-            aria-label="Lindsay on ArtStation"
+            aria-label="Yukiro on ArtStation"
           >
             <svg
               class="social-svg"
@@ -235,7 +235,7 @@
     <!-- Bottom Bar: Legal + Back to Top -->
     <div class="footer-bottom-bar">
       <div class="footer-legal">
-        <span>© {new Date().getFullYear()} Lindsay. All rights reserved.</span>
+        <span>© {new Date().getFullYear()} Yukiro. All rights reserved.</span>
       </div>
       <button
         onclick={scrollToTop}

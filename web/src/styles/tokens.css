@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LINDSAY ART PORTFOLIO — MINIMAL NEOBRUTALIST DESIGN SYSTEM
+   YUKIRO ART PORTFOLIO — MINIMAL NEOBRUTALIST DESIGN SYSTEM
    ========================================================================== */
 
 :root {
@@ -37,14 +37,14 @@
   --shadow-neo-xs: 2px 2px 0px var(--color-ink);
   --shadow-neo-hover: 7px 7px 0px var(--color-ink);
 
-  /* Neobrutalism Custom Cursors (1.5x Scaled 48px) */
-  --cursor-default: url('/cursors/arrow.png') 2 3, url('/cursors/arrow.cur') 1 2, auto;
-  --cursor-pointer: url('/cursors/hand.png') 9 3, url('/cursors/hand.cur') 6 2, pointer;
-  --cursor-text: url('/cursors/ibeam.png') 6 14, url('/cursors/ibeam.cur') 4 9, text;
-  --cursor-not-allowed: url('/cursors/no.png') 17 17, url('/cursors/no.cur') 11 11, not-allowed;
-  --cursor-help: url('/cursors/help.png') 2 3, url('/cursors/help.cur') 1 2, help;
-  --cursor-crosshair: url('/cursors/crosshair.png') 23 23, url('/cursors/crosshair.cur') 15 15, crosshair;
-  --cursor-move: url('/cursors/sizeall.png') 21 20, url('/cursors/sizeall.cur') 14 13, move;
+  /* Neobrutalism Custom Cursors (32px Native) */
+  --cursor-default: url('/cursors/arrow.png') 1 2, url('/cursors/arrow.cur') 1 2, auto;
+  --cursor-pointer: url('/cursors/hand.png') 6 2, url('/cursors/hand.cur') 6 2, pointer;
+  --cursor-text: url('/cursors/ibeam.png') 4 9, url('/cursors/ibeam.cur') 4 9, text;
+  --cursor-not-allowed: url('/cursors/no.png') 11 11, url('/cursors/no.cur') 11 11, not-allowed;
+  --cursor-help: url('/cursors/help.png') 1 2, url('/cursors/help.cur') 1 2, help;
+  --cursor-crosshair: url('/cursors/crosshair.png') 15 15, url('/cursors/crosshair.cur') 15 15, crosshair;
+  --cursor-move: url('/cursors/sizeall.png') 14 13, url('/cursors/sizeall.cur') 14 13, move;
 }
 
 /* Dark Mode Theme Tokens (Default) */

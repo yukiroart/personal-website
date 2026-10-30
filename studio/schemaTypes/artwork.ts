@@ -23,7 +23,7 @@ export default defineType({
       title: 'Primary Artwork Image',
       type: 'image',
       options: {
-        hotspot: true, // Lindsay can click the visual focal point!
+        hotspot: true, // Yukiro can click the visual focal point!
       },
       fields: [
         {

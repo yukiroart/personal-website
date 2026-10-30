@@ -9,7 +9,7 @@ export default defineType({
       name: 'artistName',
       title: 'Artist Name',
       type: 'string',
-      initialValue: 'Lindsay',
+      initialValue: 'Yukiro',
     }),
     defineField({
       name: 'tagline',
@@ -55,7 +55,7 @@ export default defineType({
       name: 'instagram',
       title: 'Instagram Handle',
       type: 'string',
-      placeholder: '@lindsay.art',
+      placeholder: '@yukiro.art',
     }),
     defineField({
       name: 'contactEmail',

@@ -12,13 +12,13 @@
 </script>
 
 <svelte:head>
-  <title>Contact Lindsay — Studio Inquiries, Commissions & Gallery Representation</title>
-  <meta name="description" content="Contact artist Lindsay for original artwork acquisitions, gallery exhibitions, studio visits, and commissions." />
+  <title>Contact Yukiro — Studio Inquiries, Commissions & Gallery Representation</title>
+  <meta name="description" content="Contact artist Yukiro for original artwork acquisitions, gallery exhibitions, studio visits, and commissions." />
 </svelte:head>
 
 <!-- Masthead Intro Header -->
 <section class="contact-masthead-section" aria-label="Contact Introduction">
-  <h1 class="contact-main-title">Contact Lindsay</h1>
+  <h1 class="contact-main-title">Contact Yukiro</h1>
 </section>
 
 <!-- Two-Column Contact Layout -->
@@ -29,8 +29,8 @@
     <div class="neo-card detail-card">
       <span class="detail-sticker">DIRECT EMAIL</span>
       <h2 class="detail-heading">Studio Correspondence</h2>
-      <a href="mailto:studio@lindsay-art.com" class="email-link">
-        studio@lindsay-art.com ↗
+      <a href="mailto:studio@yukiro-art.com" class="email-link">
+        studio@yukiro-art.com ↗
       </a>
       <p class="detail-desc">
         For general correspondence, private acquisitions, press, and curatorial requests.
@@ -51,7 +51,7 @@
 
       <form 
         class="inquiry-form" 
-        action="mailto:studio@lindsay-art.com" 
+        action="mailto:studio@yukiro-art.com" 
         method="post" 
         enctype="text/plain"
         onsubmit={handleSubmit}

@@ -42,16 +42,16 @@
 </script>
 
 <svelte:head>
-  <title>About Lindsay — Artist Statement, Biography & Exhibitions</title>
+  <title>About Yukiro — Artist Statement, Biography & Exhibitions</title>
   <meta
     name="description"
-    content="Learn about contemporary visual artist Lindsay, her painting practice, materials, and exhibition history."
+    content="Learn about contemporary visual artist Yukiro, her painting practice, materials, and exhibition history."
   />
 </svelte:head>
 
 <!-- Masthead Intro Header -->
 <section class="about-masthead-section" aria-label="About Introduction">
-  <h1 class="about-main-title">About Lindsay</h1>
+  <h1 class="about-main-title">About Yukiro</h1>
 </section>
 
 <!-- Two-Column Editorial Layout -->
@@ -103,7 +103,7 @@
       <h2 class="bio-heading">Practice & Technique</h2>
       <div class="bio-text">
         <p>
-          Lindsay is a contemporary painter whose work examines natural light,
+          Yukiro is a contemporary painter whose work examines natural light,
           organic geology, and botanical forms. Working predominantly with oil
           paints, natural chalks, and raw mineral pigments on hand-primed
           Belgian linen, her canvases capture the meditative stillness of
@@ -160,7 +160,7 @@
   }
 
   .portrait-card {
-    background: #faf6ee;
+    background: #FFFFFF;
     border: 2.5px solid #121212;
     border-radius: 0;
     padding: 16px 16px 56px 16px;
