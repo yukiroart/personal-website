@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
+	import { SvelteDevKit } from 'svelte-grab';
   import "../styles/tokens.css";
   import { page } from "$app/state";
   import { onMount } from "svelte";
@@ -640,3 +642,7 @@
     }
   }
 </style>
+
+{#if dev}
+	<SvelteDevKit />
+{/if}
