@@ -158,39 +158,6 @@
     box-shadow: 0 0 8px var(--color-green);
   }
 
-  .queue-meta-bar {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    color: var(--color-text-muted);
-    padding: 12px 18px;
-    background: var(--color-surface);
-    border: var(--stroke-neo);
-    box-shadow: var(--shadow-neo-xs);
-  }
-
-  .meta-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .meta-label {
-    font-weight: 700;
-    color: var(--color-ink);
-  }
-
-  .meta-value {
-    color: var(--color-text-muted);
-  }
-
-  .meta-divider {
-    color: var(--color-border-subtle);
-  }
-
   /* Kanban Board Track */
   .kanban-section {
     margin-bottom: 56px;
@@ -229,7 +196,6 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 6px;
   }
 
   .column-badge {
@@ -261,13 +227,6 @@
     background: var(--color-surface);
     border: 1.5px solid var(--color-ink);
     border-radius: 50%;
-  }
-
-  .column-desc {
-    font-size: 0.76rem;
-    color: var(--color-text-muted);
-    line-height: 1.35;
-    margin: 0;
   }
 
   /* Cards List */
@@ -461,16 +420,6 @@
   @media (max-width: 600px) {
     .queue-masthead {
       margin-bottom: 24px;
-    }
-
-    .queue-meta-bar {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
-    }
-
-    .meta-divider {
-      display: none;
     }
 
     .dispatch-cta-row {
