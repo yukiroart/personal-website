@@ -92,3 +92,4 @@ export const sampleArtworks: Artwork[] = [
     bentoSpan: 'tall',
   },
 ];
+
