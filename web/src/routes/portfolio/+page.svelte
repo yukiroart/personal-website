@@ -1,49 +1,49 @@
 <script lang="ts">
-  import { page } from '$app/state';
-  import { goto } from '$app/navigation';
-  import ArtworkCard from '#lib/components/ArtworkCard.svelte';
-  import ArtworkModal from '#lib/components/ArtworkModal.svelte';
-  import { sampleArtworks } from '#lib/data/sampleArtworks';
+  import { page } from "$app/state";
+  import { goto } from "$app/navigation";
+  import ArtworkCard from "#lib/components/ArtworkCard.svelte";
+  import ArtworkModal from "#lib/components/ArtworkModal.svelte";
+  import { sampleArtworks } from "#lib/data/sampleArtworks";
 
   const collections = [
-    { id: 'all', label: 'All Works' },
-    { id: 'new-works', label: 'New Works' },
-    { id: 'landscapes', label: 'Landscapes & Botanicals' },
-    { id: 'abstracts', label: 'Abstract Studies' },
-    { id: 'portraits', label: 'Portraiture' },
+    { id: "all", label: "All Works" },
+    { id: "new-works", label: "New Works" },
+    { id: "landscapes", label: "Landscapes & Botanicals" },
+    { id: "abstracts", label: "Abstract Studies" },
+    { id: "portraits", label: "Portraiture" },
   ];
 
-  let selectedFilter = $state('all');
+  let selectedFilter = $state("all");
   let isModalOpen = $state(false);
   let activeModalIndex = $state(0);
 
   $effect(() => {
-    const colParam = page.url.searchParams.get('collection');
+    const colParam = page.url.searchParams.get("collection");
     if (colParam && collections.some((c) => c.id === colParam)) {
       selectedFilter = colParam;
     } else if (!colParam) {
-      selectedFilter = 'all';
+      selectedFilter = "all";
     }
   });
 
   let filteredArtworks = $derived(
-    selectedFilter === 'all'
+    selectedFilter === "all"
       ? sampleArtworks
-      : sampleArtworks.filter((art) => art.collection === selectedFilter)
+      : sampleArtworks.filter((art) => art.collection === selectedFilter),
   );
 
   function selectCollection(id: string) {
     selectedFilter = id;
     const url = new URL(window.location.href);
-    if (id === 'all') {
-      url.searchParams.delete('collection');
+    if (id === "all") {
+      url.searchParams.delete("collection");
     } else {
-      url.searchParams.set('collection', id);
+      url.searchParams.set("collection", id);
     }
     goto(url.search ? url.pathname + url.search : url.pathname, {
       replaceState: true,
       keepFocus: true,
-      noScroll: true
+      noScroll: true,
     });
   }
 
@@ -56,7 +56,10 @@
 
 <svelte:head>
   <title>Portfolio — Selected Works & Contemporary Art by Lindsay</title>
-  <meta name="description" content="Explore the complete archive of original paintings, botanicals, and abstract studies by Lindsay." />
+  <meta
+    name="description"
+    content="Explore the complete archive of original paintings, botanicals, and abstract studies by Lindsay."
+  />
 </svelte:head>
 
 <!-- Gallery Header -->
@@ -136,9 +139,13 @@
     font-size: 0.82rem;
     font-weight: 700;
     color: var(--color-ink);
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     user-select: none;
-    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease, color 0.15s ease;
+    transition:
+      transform 0.1s ease,
+      box-shadow 0.1s ease,
+      background-color 0.15s ease,
+      color 0.15s ease;
   }
 
   .neo-filter-pill:hover {

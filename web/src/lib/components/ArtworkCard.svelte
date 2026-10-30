@@ -41,15 +41,30 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     transition:
-      transform 0.15s ease,
-      box-shadow 0.15s ease;
+      transform var(--duration-fast, 120ms)
+        var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+      box-shadow var(--duration-fast, 120ms)
+        var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
   }
 
-  .neo-artwork-card:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: var(--shadow-neo-hover);
+  /* Only apply lift on desktop pointers to avoid sticky touch states */
+  @media (hover: hover) and (pointer: fine) {
+    .neo-artwork-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: var(--shadow-neo-hover);
+    }
+
+    .neo-artwork-card:hover .art-img {
+      transform: scale(1.025);
+    }
+  }
+
+  /* Tactile press feedback on click / tap */
+  .neo-artwork-card:active {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-neo-sm);
   }
 
   /* Bento Spans */
@@ -98,11 +113,8 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.4s ease;
-  }
-
-  .neo-artwork-card:hover .art-img {
-    transform: scale(1.025);
+    transition: transform var(--duration-normal, 220ms)
+      var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
   }
 
   /* Responsive Spans */
@@ -121,6 +133,18 @@
     .neo-tall,
     .neo-square {
       grid-column: span 12;
+    }
+  }
+
+  /* Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .neo-artwork-card,
+    .neo-artwork-card:hover,
+    .neo-artwork-card:active,
+    .art-img,
+    .neo-artwork-card:hover .art-img {
+      transform: none !important;
+      transition: none !important;
     }
   }
 </style>

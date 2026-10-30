@@ -63,7 +63,7 @@
 
         <div class="service-footer">
           <a href="/contact" class="neo-btn neo-btn-pink sm service-cta">
-            {service.cta} ↗
+            {service.cta} <span class="cta-arrow">↗</span>
           </a>
         </div>
       </article>
@@ -105,12 +105,21 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition:
+      transform var(--duration-fast, 120ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+      box-shadow var(--duration-fast, 120ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
   }
 
-  .service-card:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: var(--shadow-neo-hover);
+  @media (hover: hover) and (pointer: fine) {
+    .service-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-neo-hover);
+    }
+  }
+
+  .service-card:active {
+    transform: translate(0px, 0px);
+    box-shadow: var(--shadow-neo);
   }
 
   .service-header-row {
@@ -185,6 +194,16 @@
     height: 6px;
     background: var(--color-ink);
     flex-shrink: 0;
+    transition:
+      background-color var(--duration-fast, 120ms) ease,
+      transform var(--duration-fast, 120ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .service-card:hover .bullet-dot {
+      background-color: var(--color-pink);
+      transform: scale(1.2);
+    }
   }
 
   /* Footer Button */
@@ -196,6 +215,17 @@
 
   .service-cta {
     width: 100%;
+  }
+
+  .cta-arrow {
+    display: inline-block;
+    transition: transform var(--duration-fast, 120ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .service-cta:hover .cta-arrow {
+      transform: translate(3px, -3px);
+    }
   }
 
   /* Responsive */
@@ -212,6 +242,19 @@
   @media (max-width: 680px) {
     .services-main-title {
       font-size: 2.2rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-card,
+    .service-card:hover,
+    .service-card:active,
+    .bullet-dot,
+    .cta-arrow,
+    .service-card:hover .bullet-dot,
+    .service-cta:hover .cta-arrow {
+      transform: none !important;
+      transition: none !important;
     }
   }
 </style>

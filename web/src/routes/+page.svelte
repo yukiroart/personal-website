@@ -113,11 +113,13 @@
     font-size: 0.82rem;
     font-weight: 700;
     color: var(--color-ink);
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     user-select: none;
     transition:
-      transform 0.1s ease,
-      box-shadow 0.1s ease,
+      transform var(--duration-fast, 120ms)
+        var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+      box-shadow var(--duration-fast, 120ms)
+        var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
       background-color 0.15s ease,
       color 0.15s ease;
   }
@@ -141,6 +143,22 @@
   .neo-filter-pill.active:hover {
     background-color: var(--color-ink);
     color: var(--color-bg);
+  }
+
+  .neo-filter-pill.active:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .neo-filter-pill,
+    .neo-filter-pill:active,
+    .neo-filter-pill.active:active {
+      transform: none !important;
+      transition:
+        background-color 0.15s ease,
+        color 0.15s ease !important;
+    }
   }
 
   .neo-filter-pill.active:active {

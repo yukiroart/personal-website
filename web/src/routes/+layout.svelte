@@ -16,6 +16,10 @@
   let isContact = $derived(page.url.pathname.startsWith("/contact"));
 
   let currentTheme = $state("dark");
+  let clickSound: HTMLAudioElement | null = null;
+
+  const INTERACTIVE_SELECTOR =
+    'button, a, [role="button"], input[type="submit"], input[type="button"], input[type="reset"], input[type="checkbox"], input[type="radio"], summary, label[for]';
 
   onMount(() => {
     const saved =
@@ -24,7 +28,32 @@
       "dark";
     currentTheme = saved;
     document.documentElement.setAttribute("data-theme", saved);
+
+    clickSound = new Audio("/sounds/click.wav");
+    clickSound.preload = "auto";
   });
+
+  function handleGlobalClick(event: MouseEvent) {
+    if (!clickSound) return;
+    const target = event.target as HTMLElement | null;
+    if (!target) return;
+
+    const interactive = target.closest(INTERACTIVE_SELECTOR) as HTMLElement | null;
+    if (!interactive) return;
+
+    if (
+      interactive.matches(":disabled") ||
+      interactive.getAttribute("aria-disabled") === "true" ||
+      interactive.classList.contains("disabled")
+    ) {
+      return;
+    }
+
+    clickSound.currentTime = 0;
+    clickSound.play().catch(() => {
+      // Ignore browser autoplay policy errors if triggered programmatically
+    });
+  }
 
   function toggleTheme() {
     const nextTheme = currentTheme === "dark" ? "light" : "dark";
@@ -37,6 +66,8 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 </script>
+
+<svelte:window onclick={handleGlobalClick} />
 
 <svelte:head>
   <title>Lindsay — Contemporary Visual Art Portfolio</title>
@@ -505,7 +536,7 @@
     border: var(--stroke-neo);
     border-radius: var(--radius-neo-pill);
     box-shadow: var(--shadow-neo-xs);
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     text-decoration: none;
     transition:
       transform 0.1s ease,
@@ -565,7 +596,7 @@
     background: var(--color-surface);
     color: var(--color-ink);
     box-shadow: var(--shadow-neo-xs);
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -662,7 +693,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     user-select: none;
     transition:
       transform 0.12s ease,

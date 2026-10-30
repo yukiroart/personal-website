@@ -1,8 +1,8 @@
 <script lang="ts">
   let name = $state('');
   let email = $state('');
-  let inquiryType = $state('acquisition');
   let message = $state('');
+  let acceptedTerms = $state(false);
   let isSubmitted = $state(false);
 
   function handleSubmit(e: SubmitEvent) {
@@ -83,19 +83,6 @@
         </div>
 
         <div class="form-group">
-          <label for="inquiryType" class="form-label">INQUIRY TYPE</label>
-          <div class="select-wrap">
-            <select id="inquiryType" name="inquiryType" class="neo-select" bind:value={inquiryType}>
-              <option value="acquisition">Artwork Acquisition / Availability</option>
-              <option value="exhibition">Exhibition / Curatorial Proposal</option>
-              <option value="commission">Custom Commission Request</option>
-              <option value="press">Press & Publication</option>
-              <option value="studio-visit">Private Studio Visit</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group">
           <label for="message" class="form-label">MESSAGE</label>
           <textarea
             id="message"
@@ -106,6 +93,30 @@
             placeholder="Share details about the work you are interested in or your project proposal..."
             bind:value={message}
           ></textarea>
+        </div>
+
+        <div class="terms-group">
+          <label class="terms-checkbox-label">
+            <input
+              type="checkbox"
+              id="terms"
+              name="terms"
+              required
+              class="neo-checkbox"
+              bind:checked={acceptedTerms}
+            />
+            <span class="terms-text">
+              I've read the <a
+                href="#terms-modal"
+                class="terms-link"
+                onclick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  (document.getElementById('terms-modal') as HTMLDialogElement)?.showModal();
+                }}
+              >terms and service</a>
+            </span>
+          </label>
         </div>
 
         <div class="form-submit-row">
@@ -120,6 +131,34 @@
     </div>
   </section>
 </div>
+
+<!-- Terms and Service Modal (Placeholder for user-provided terms) -->
+<dialog
+  id="terms-modal"
+  class="terms-dialog"
+  onclick={(e) => {
+    if (e.target === e.currentTarget) (e.currentTarget as HTMLDialogElement).close();
+  }}
+>
+  <div class="terms-modal-card">
+    <div class="terms-modal-header">
+      <h3 class="terms-modal-title">Terms & Service</h3>
+      <button
+        type="button"
+        class="terms-close-btn"
+        onclick={() => (document.getElementById('terms-modal') as HTMLDialogElement)?.close()}
+        aria-label="Close terms modal"
+      >
+        ✕
+      </button>
+    </div>
+    <div class="terms-modal-body">
+      <p class="terms-placeholder-text">
+        Studio terms and service details will be provided here.
+      </p>
+    </div>
+  </div>
+</dialog>
 
 <style>
   /* Contact Masthead */
@@ -256,7 +295,7 @@
     color: var(--color-ink);
   }
 
-  .neo-input, .neo-select, .neo-textarea {
+  .neo-input, .neo-textarea {
     width: 100%;
     font-family: var(--font-body);
     font-size: 0.95rem;
@@ -270,15 +309,10 @@
     outline: none;
   }
 
-  .neo-input:focus, .neo-select:focus, .neo-textarea:focus {
+  .neo-input:focus, .neo-textarea:focus {
     background: var(--color-surface);
     box-shadow: var(--shadow-neo-sm);
     transform: translate(-1px, -1px);
-  }
-
-  .neo-select option {
-    background-color: var(--color-surface);
-    color: var(--color-ink);
   }
 
   .neo-textarea {
@@ -287,8 +321,74 @@
     line-height: 1.5;
   }
 
-  .select-wrap {
+  /* Terms Checkbox */
+  .terms-group {
+    display: flex;
+    align-items: center;
+    padding: 6px 0;
+  }
+
+  .terms-checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    cursor: var(--cursor-pointer);
+    user-select: none;
+  }
+
+  .neo-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--color-ink);
+    background: var(--color-surface);
+    border-radius: 4px;
+    box-shadow: var(--shadow-neo-xs);
+    cursor: var(--cursor-pointer);
+    display: grid;
+    place-items: center;
     position: relative;
+    transition: all 0.12s ease;
+    flex-shrink: 0;
+  }
+
+  .neo-checkbox:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-neo-sm);
+  }
+
+  .neo-checkbox:checked {
+    background-color: var(--color-pink);
+  }
+
+  .neo-checkbox:checked::after {
+    content: "✓";
+    font-size: 14px;
+    font-weight: 800;
+    color: #121212;
+    display: block;
+    line-height: 1;
+  }
+
+  .terms-text {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-ink);
+    letter-spacing: 0.01em;
+  }
+
+  .terms-link {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1.5px;
+    transition: color 0.12s ease;
+  }
+
+  .terms-link:hover {
+    color: var(--color-pink);
   }
 
   .form-submit-row {
@@ -313,6 +413,73 @@
     .form-card {
       padding: 24px;
     }
+  }
+
+  /* Terms and Service Dialog */
+  .terms-dialog {
+    border: none;
+    background: transparent;
+    padding: 0;
+    max-width: min(90vw, 540px);
+    width: 100%;
+    margin: auto;
+  }
+
+  .terms-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+  }
+
+  .terms-modal-card {
+    background: var(--color-surface);
+    border: var(--stroke-neo);
+    box-shadow: var(--shadow-neo);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .terms-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--color-border-subtle);
+    padding-bottom: 12px;
+  }
+
+  .terms-modal-title {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-ink);
+    margin: 0;
+  }
+
+  .terms-close-btn {
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid var(--color-ink);
+    background: var(--color-bg);
+    color: var(--color-ink);
+    border-radius: 50%;
+    font-weight: 700;
+    cursor: var(--cursor-pointer);
+    display: grid;
+    place-items: center;
+    transition: all 0.12s ease;
+  }
+
+  .terms-close-btn:hover {
+    background: var(--color-pink);
+    color: #121212;
+  }
+
+  .terms-placeholder-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-muted);
+    margin: 0;
   }
 </style>
 

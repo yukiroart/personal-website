@@ -1,16 +1,52 @@
 <script lang="ts">
+  const tools = [
+    { name: "Toonboom", icon: "/icons/tools/toonboom.png" },
+    { name: "IbisPaint", icon: "/icons/tools/ibispaint.svg" },
+    { name: "Adobe Photoshop", icon: "/icons/tools/photoshop.svg" },
+    { name: "Adobe Premiere", icon: "/icons/tools/premiere.svg" },
+    { name: "Adobe After Effects", icon: "/icons/tools/aftereffects.svg" },
+  ];
+
   const exhibitions = [
-    { year: 2026, title: 'Luminescence', gallery: 'Gallery Meridian', location: 'New York, USA' },
-    { year: 2025, title: 'Mineral & Void', gallery: 'Studio Oberlin', location: 'London, UK' },
-    { year: 2024, title: 'New Botanical Form', gallery: 'Pacific Contemporary', location: 'San Francisco, USA' },
-    { year: 2023, title: 'Studies in Cadmium', gallery: 'Atelier Marais', location: 'Paris, France' },
-    { year: 2022, title: 'Coastal Strata', gallery: 'North Light Gallery', location: 'Melbourne, Australia' },
+    {
+      year: 2026,
+      title: "Luminescence",
+      gallery: "Gallery Meridian",
+      location: "New York, USA",
+    },
+    {
+      year: 2025,
+      title: "Mineral & Void",
+      gallery: "Studio Oberlin",
+      location: "London, UK",
+    },
+    {
+      year: 2024,
+      title: "New Botanical Form",
+      gallery: "Pacific Contemporary",
+      location: "San Francisco, USA",
+    },
+    {
+      year: 2023,
+      title: "Studies in Cadmium",
+      gallery: "Atelier Marais",
+      location: "Paris, France",
+    },
+    {
+      year: 2022,
+      title: "Coastal Strata",
+      gallery: "North Light Gallery",
+      location: "Melbourne, Australia",
+    },
   ];
 </script>
 
 <svelte:head>
   <title>About Lindsay — Artist Statement, Biography & Exhibitions</title>
-  <meta name="description" content="Learn about contemporary visual artist Lindsay, her painting practice, materials, and exhibition history." />
+  <meta
+    name="description"
+    content="Learn about contemporary visual artist Lindsay, her painting practice, materials, and exhibition history."
+  />
 </svelte:head>
 
 <!-- Masthead Intro Header -->
@@ -22,65 +58,70 @@
 <div class="about-editorial-grid">
   <!-- Left Column: Portrait & Quick Facts -->
   <aside class="about-sidebar">
-    <!-- Portrait Card -->
+    <!-- Portrait Card (Instax Mini Polaroid) -->
     <div class="neo-card portrait-card">
-      <div class="portrait-media-wrap">
-        <img
-          src="/artworks/lindsay-portrait.jpg"
-          alt="Artist Lindsay in her painting studio surrounded by canvases and pigments"
-          class="portrait-img"
-          loading="eager"
-        />
-        <span class="portrait-badge">STUDIO 2026</span>
-      </div>
-      <div class="portrait-caption-wrap">
-        <p class="portrait-caption">
-          Lindsay in her natural light studio, coastal California & Pacific Northwest.
-        </p>
-      </div>
+      <div
+        class="portrait-media-wrap"
+        role="img"
+        aria-label="Artist portrait placeholder"
+      ></div>
     </div>
 
-    <!-- Quick Facts Card -->
-    <div class="neo-card facts-card">
-      <span class="facts-sticker">STUDIO PROFILE</span>
-      
-      <div class="fact-item">
-        <h2 class="fact-title">Location</h2>
-        <p class="fact-desc">Coastal California & Pacific Northwest</p>
-      </div>
+    <!-- Education Card -->
+    <div class="neo-card education-card">
+      <h2 class="education-heading">Education</h2>
 
-      <div class="fact-item">
-        <h2 class="fact-title">Primary Focus</h2>
-        <p class="fact-desc">Oil, Dry Mineral Pigments, Hand-primed Belgian Linen</p>
-      </div>
-
-      <div class="fact-item">
-        <h2 class="fact-title">Gallery Representation</h2>
-        <p class="fact-desc">Gallery Meridian (New York) · Studio Oberlin (London)</p>
+      <div class="education-item">
+        <h3 class="education-school">De La Salle Benilde</h3>
+        <p class="education-program">Art & Animation</p>
       </div>
     </div>
   </aside>
 
   <!-- Right Column: Bio Narrative -->
   <article class="about-content-main">
+    <!-- Tools Section -->
+    <div class="neo-card tools-card">
+      <h2 class="tools-heading">Tools</h2>
+      <div class="tools-grid">
+        {#each tools as tool}
+          <div class="tool-item-card">
+            <img
+              src={tool.icon}
+              alt="{tool.name} logo"
+              class="tool-icon"
+              loading="lazy"
+            />
+            <span class="tool-name">{tool.name}</span>
+          </div>
+        {/each}
+      </div>
+    </div>
+
     <!-- Bio Narrative Card -->
     <div class="neo-card bio-card">
       <h2 class="bio-heading">Practice & Technique</h2>
       <div class="bio-text">
         <p>
-          Lindsay is a contemporary painter whose work examines natural light, organic geology, and botanical forms.
-          Working predominantly with oil paints, natural chalks, and raw mineral pigments on hand-primed Belgian linen,
-          her canvases capture the meditative stillness of coastal landscapes and native flora.
+          Lindsay is a contemporary painter whose work examines natural light,
+          organic geology, and botanical forms. Working predominantly with oil
+          paints, natural chalks, and raw mineral pigments on hand-primed
+          Belgian linen, her canvases capture the meditative stillness of
+          coastal landscapes and native flora.
         </p>
         <p>
-          Her creative process is slow and layered. Beginning with thin washes of earth-toned glazes, each composition
-          gradually accumulates structural weight through heavy impasto strokes, palette knife marks, and dry pigments.
-          The resulting surfaces possess tactile depth—drawing viewers close to inspect micro-textures before stepping back
-          to take in the harmonious expanse of the whole piece.
+          Her creative process is slow and layered. Beginning with thin washes
+          of earth-toned glazes, each composition gradually accumulates
+          structural weight through heavy impasto strokes, palette knife marks,
+          and dry pigments. The resulting surfaces possess tactile depth—drawing
+          viewers close to inspect micro-textures before stepping back to take
+          in the harmonious expanse of the whole piece.
         </p>
         <p>
-          Her works are held in private collections across North America, Europe, and Australia, and she regularly
-          exhibits with contemporary galleries focusing on abstract landscapes and experimental botanical still life.
+          Her works are held in private collections across North America,
+          Europe, and Australia, and she regularly exhibits with contemporary
+          galleries focusing on abstract landscapes and experimental botanical
+          still life.
         </p>
       </div>
     </div>
@@ -119,7 +160,10 @@
   }
 
   .portrait-card {
+    background: #faf6ee;
+    border: 2.5px solid #121212;
     border-radius: 0;
+    padding: 16px 16px 56px 16px;
   }
 
   /* Sidebar */
@@ -132,89 +176,41 @@
   .portrait-media-wrap {
     position: relative;
     width: 100%;
-    aspect-ratio: 4/5;
-    background-color: var(--color-surface);
-    border-bottom: var(--stroke-neo);
+    aspect-ratio: 3 / 4;
+    background-color: var(--color-green);
+    border: 2px solid #121212;
     overflow: hidden;
   }
 
-  .portrait-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+  .education-card {
+    padding: 32px;
   }
 
-  .portrait-badge {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    background: var(--color-yellow);
-    color: #121212;
-    border: 2px solid var(--color-ink);
-    box-shadow: var(--shadow-neo-xs);
-    padding: 3px 10px;
-    border-radius: var(--radius-neo-pill);
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
+  .education-heading {
+    font-size: 1.5rem;
     font-weight: 700;
+    margin: 0 0 18px 0;
   }
 
-  .portrait-caption-wrap {
-    padding: 16px 20px;
+  .education-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 
-  .portrait-caption {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--color-muted);
-    line-height: 1.5;
-  }
-
-  .facts-card {
-    padding: 24px;
-  }
-
-  .facts-sticker {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
+  .education-school {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
     font-weight: 700;
-    letter-spacing: 0.05em;
-    background: var(--color-yellow);
-    color: #121212;
-    border: 1.5px solid var(--color-ink);
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-bottom: 18px;
-  }
-
-  .fact-item {
-    margin-bottom: 16px;
-    padding-bottom: 16px;
-    border-bottom: 1.5px dashed var(--color-border-subtle);
-  }
-
-  .fact-item:last-child {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: none;
-  }
-
-  .fact-title {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--color-muted);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 4px;
-  }
-
-  .fact-desc {
-    font-size: 0.92rem;
-    font-weight: 600;
     color: var(--color-ink);
+    line-height: 1.3;
+  }
+
+  .education-program {
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--color-muted);
     line-height: 1.4;
   }
 
@@ -223,6 +219,53 @@
     display: flex;
     flex-direction: column;
     gap: 28px;
+  }
+
+  /* Tools Card */
+  .tools-card {
+    padding: 32px;
+  }
+
+  .tools-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 18px 0;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 12px;
+  }
+
+  .tool-item-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--color-surface);
+    border: var(--stroke-neo);
+    border-radius: var(--radius-neo-sm);
+    padding: 10px 14px;
+    box-shadow: none;
+  }
+
+  .tool-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
+    border-radius: 4px;
+  }
+
+  .tool-name {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-ink);
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .bio-card {
@@ -257,4 +300,3 @@
     }
   }
 </style>
-

@@ -50,9 +50,24 @@
     }
   });
 
+  let isClosing = $state(false);
+
   function closeModal() {
-    isOpen = false;
-    onclose?.();
+    if (isClosing) return;
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      isOpen = false;
+      onclose?.();
+      return;
+    }
+    isClosing = true;
+    setTimeout(() => {
+      isOpen = false;
+      isClosing = false;
+      onclose?.();
+    }, 150);
   }
 
   function step(direction: number) {
@@ -123,13 +138,19 @@
 <dialog
   bind:this={dialogEl}
   class="neo-art-dialog"
+  class:is-closing={isClosing}
   aria-modal="true"
   aria-label="Artwork Preview"
+  oncancel={(e) => {
+    e.preventDefault();
+    closeModal();
+  }}
   onclick={(e) => {
     if (e.target === dialogEl) closeModal();
   }}
   onclose={() => {
     isOpen = false;
+    isClosing = false;
     onclose?.();
   }}
 >
@@ -274,7 +295,7 @@
     font-family: var(--font-heading);
     font-size: 1.05rem;
     font-weight: 700;
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     transition:
       transform 0.1s ease,
       box-shadow 0.1s ease,
@@ -315,7 +336,7 @@
     font-family: var(--font-heading);
     font-size: 1.25rem;
     font-weight: 700;
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     transition:
       transform 0.1s ease,
       box-shadow 0.1s ease,
