@@ -30,17 +30,6 @@
   let isAbout = $derived(page.url.pathname.startsWith("/about"));
   let isError = $derived(page.status >= 400 || !!page.error);
 
-  let scrollY = $state(0);
-  let isScrolled = $state(false);
-
-  $effect(() => {
-    if (scrollY > 5 && !isScrolled) {
-      isScrolled = true;
-    } else if (scrollY <= 0 && isScrolled) {
-      isScrolled = false;
-    }
-  });
-
   let currentTheme = $state("dark");
   let clickSound: HTMLAudioElement | null = null;
 
@@ -162,11 +151,7 @@
   }
 </script>
 
-<svelte:window
-  bind:scrollY
-  onclick={handleGlobalClick}
-  onkeydown={handleWindowKeydown}
-/>
+<svelte:window onclick={handleGlobalClick} onkeydown={handleWindowKeydown} />
 
 <svelte:head>
   <title>Yukiro — Digital Illustration Portfolio</title>
@@ -178,7 +163,7 @@
 
 {#if !isError}
   <!-- Minimal Neobrutalist Full-Width Masthead -->
-  <header class="neo-header-wrapper" class:is-scrolled={isScrolled}>
+  <header class="neo-header-wrapper">
     <div class="neo-header">
       <a
         href="/"
@@ -628,34 +613,25 @@
     align-items: center;
     text-decoration: none;
     color: var(--color-ink);
-    height: 48px;
-    width: 140px;
-    position: relative;
   }
 
   .brand-logo {
-    height: 44px;
+    height: 46px;
     width: auto;
     display: block;
     object-fit: contain;
-    transform-origin: left center;
-    will-change: transform;
     /* Light mode: black graffiti lettering with crisp white contour stroke */
     filter: drop-shadow(1.5px 0 0 #ffffff) drop-shadow(-1.5px 0 0 #ffffff)
       drop-shadow(0 1.5px 0 #ffffff) drop-shadow(0 -1.5px 0 #ffffff);
-    transform: scale(2.2);
     transition:
-      transform var(--duration-normal, 220ms) cubic-bezier(0.16, 1, 0.3, 1),
+      transform var(--duration-fast, 120ms) var(--ease-out),
       filter var(--duration-fast, 120ms) var(--ease-out);
   }
 
   .brand-logo:hover {
+    transform: scale(1.03);
     filter: drop-shadow(2px 0 0 #ffffff) drop-shadow(-2px 0 0 #ffffff)
       drop-shadow(0 2px 0 #ffffff) drop-shadow(0 -2px 0 #ffffff);
-  }
-
-  .neo-header-wrapper.is-scrolled .brand-logo {
-    transform: scale(1);
   }
 
   .footer-logo {
@@ -1267,13 +1243,8 @@
     }
 
     .brand-logo {
-      height: 36px;
-      transform: scale(1.6);
+      height: 38px;
       max-width: calc(100vw - 84px);
-    }
-
-    .neo-header-wrapper.is-scrolled .brand-logo {
-      transform: scale(1);
     }
 
     .desktop-nav {
