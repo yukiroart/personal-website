@@ -231,7 +231,7 @@
         </a>
       </nav>
 
-      <!-- Tactile Hamburger Button (Mobile <= 768px) -->
+      <!-- Tactile Hamburger Button (Mobile & Tablet <= 1024px) -->
       <button
         type="button"
         class="hamburger-btn"
@@ -820,7 +820,7 @@
     border-left: 2.5px solid var(--color-ink);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .page-checker-ribbon {
       display: none !important;
     }
@@ -1252,19 +1252,13 @@
   }
 
   /* Responsive Masthead */
-  @media (max-width: 992px) {
+  @media (max-width: 1024px) {
     .neo-header {
       padding: 14px 20px;
     }
-  }
-
-  @media (max-width: 768px) {
-    .neo-header {
-      padding: 14px 16px;
-    }
 
     .neo-header-wrapper.is-scrolled .neo-header {
-      padding: 8px 16px;
+      padding: 8px 20px;
     }
 
     .brand-logo {
@@ -1282,6 +1276,16 @@
 
     .hamburger-btn {
       display: inline-flex;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .neo-header {
+      padding: 14px 16px;
+    }
+
+    .neo-header-wrapper.is-scrolled .neo-header {
+      padding: 8px 16px;
     }
 
     .neo-main {
