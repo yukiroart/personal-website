@@ -10,10 +10,10 @@
   let isPortfolio = $derived(
     page.url.pathname === "/" || page.url.pathname === "/portfolio",
   );
-  let isServices = $derived(page.url.pathname.startsWith("/services"));
-  let isAbout = $derived(page.url.pathname.startsWith("/about"));
+  let isCommissions = $derived(page.url.pathname.startsWith("/commissions"));
   let isQueue = $derived(page.url.pathname.startsWith("/queue"));
   let isContact = $derived(page.url.pathname.startsWith("/contact"));
+  let isAbout = $derived(page.url.pathname.startsWith("/about"));
 
   let currentTheme = $state("dark");
   let clickSound: HTMLAudioElement | null = null;
@@ -85,7 +85,7 @@
       <span class="brand-name">YUKIRO</span>
     </a>
 
-    <!-- 4-link Navigation -->
+    <!-- 5-link Navigation -->
     <nav class="neo-nav" aria-label="Main Navigation">
       <a
         href="/"
@@ -96,20 +96,12 @@
         <span class="nav-label">PORTFOLIO</span>
       </a>
       <a
-        href="/services"
+        href="/commissions"
         class="nav-item"
-        class:active={isServices}
-        data-text="SERVICES"
+        class:active={isCommissions}
+        data-text="COMMISSIONS"
       >
-        <span class="nav-label">SERVICES</span>
-      </a>
-      <a
-        href="/about"
-        class="nav-item"
-        class:active={isAbout}
-        data-text="ABOUT"
-      >
-        <span class="nav-label">ABOUT</span>
+        <span class="nav-label">COMMISSIONS</span>
       </a>
       <a
         href="/queue"
@@ -126,6 +118,14 @@
         data-text="CONTACT"
       >
         <span class="nav-label">CONTACT</span>
+      </a>
+      <a
+        href="/about"
+        class="nav-item"
+        class:active={isAbout}
+        data-text="ABOUT"
+      >
+        <span class="nav-label">ABOUT</span>
       </a>
     </nav>
   </div>
@@ -158,10 +158,10 @@
         <h3 class="footer-heading">NAVIGATION</h3>
         <ul class="footer-links">
           <li><a href="/" class="footer-link">PORTFOLIO</a></li>
-          <li><a href="/services" class="footer-link">SERVICES</a></li>
-          <li><a href="/about" class="footer-link">ABOUT</a></li>
+          <li><a href="/commissions" class="footer-link">COMMISSIONS</a></li>
           <li><a href="/queue" class="footer-link">QUEUE</a></li>
           <li><a href="/contact" class="footer-link">CONTACT</a></li>
+          <li><a href="/about" class="footer-link">ABOUT</a></li>
         </ul>
       </div>
 

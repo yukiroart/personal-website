@@ -7,7 +7,8 @@ export interface Artwork {
   medium: string;
   dimensions: string;
   year: number;
-  collection: 'new-works' | 'landscapes' | 'abstracts' | 'portraits';
+  collection: 'bust' | 'half-body' | 'full-body';
+  tags: string[];
   description?: string;
   bentoSpan: 'hero' | 'tall' | 'wide' | 'square';
 }
@@ -22,7 +23,8 @@ export const sampleArtworks: Artwork[] = [
     medium: 'Oil on Belgian linen',
     dimensions: '36 × 48 in (91 × 122 cm)',
     year: 2026,
-    collection: 'new-works',
+    collection: 'full-body',
+    tags: ['Full Body', 'Original', 'Ochre', 'Fine Art'],
     description: 'An exploration of early Mediterranean dawn filtering through stone architecture.',
     bentoSpan: 'hero',
   },
@@ -35,7 +37,8 @@ export const sampleArtworks: Artwork[] = [
     medium: 'Gouache & dry pigment on cotton rag',
     dimensions: '18 × 24 in (46 × 61 cm)',
     year: 2025,
-    collection: 'landscapes',
+    collection: 'bust',
+    tags: ['Bust', 'Botanical', 'Gouache', 'Flora'],
     description: 'Layered botanical forms observed in the sub-alpine forest understory.',
     bentoSpan: 'tall',
   },
@@ -48,7 +51,8 @@ export const sampleArtworks: Artwork[] = [
     medium: 'Mixed media & marble dust on linen',
     dimensions: '20 × 20 in (51 × 51 cm)',
     year: 2026,
-    collection: 'abstracts',
+    collection: 'half-body',
+    tags: ['Half Body', 'Study', 'Cadmium', 'Impasto'],
     description: 'Dense impasto texture balancing vibrant cadmium red with serene negative space.',
     bentoSpan: 'square',
   },
@@ -61,7 +65,8 @@ export const sampleArtworks: Artwork[] = [
     medium: 'Oil & tempera on panel',
     dimensions: '24 × 36 in (61 × 91 cm)',
     year: 2025,
-    collection: 'portraits',
+    collection: 'half-body',
+    tags: ['Half Body', 'Figurative', 'Atmospheric', 'Nocturne'],
     description: 'Intimate portrait capturing the quiet intimacy of late-evening reading.',
     bentoSpan: 'wide',
   },
@@ -74,7 +79,8 @@ export const sampleArtworks: Artwork[] = [
     medium: 'Encaustic & raw earth pigments',
     dimensions: '24 × 30 in (61 × 76 cm)',
     year: 2026,
-    collection: 'abstracts',
+    collection: 'full-body',
+    tags: ['Full Body', 'Concept', 'Earth Pigments', 'Strata'],
     description: 'Hot beeswax and earth pigments fused to evoke ancient weathered sandstone.',
     bentoSpan: 'square',
   },
@@ -87,7 +93,8 @@ export const sampleArtworks: Artwork[] = [
     medium: 'Oil on hand-stretched canvas',
     dimensions: '30 × 40 in (76 × 102 cm)',
     year: 2025,
-    collection: 'landscapes',
+    collection: 'bust',
+    tags: ['Bust', 'Night Flowers', 'Oil Painting', 'Flora'],
     description: 'Night flora captured under sharp side illumination.',
     bentoSpan: 'tall',
   },

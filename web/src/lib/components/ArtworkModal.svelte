@@ -199,6 +199,19 @@
         </div>
       </div>
 
+      <!-- Tags Under Photo -->
+      {#if currentArt?.tags && currentArt.tags.length > 0}
+        <div
+          class="modal-tags-bar"
+          class:is-hidden={isZoomed}
+          aria-label="Artwork tags"
+        >
+          {#each currentArt.tags as tag}
+            <span class="modal-tag-chip">#{tag}</span>
+          {/each}
+        </div>
+      {/if}
+
       <button
         onclick={() => step(1)}
         type="button"
@@ -403,6 +416,55 @@
     transform: scale(1.85);
   }
 
+  /* Minimal Tags Display Under Photo */
+  .modal-tags-bar {
+    position: absolute;
+    bottom: 16px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 0 64px;
+    z-index: 15;
+    pointer-events: none;
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease;
+  }
+
+  .modal-tags-bar.is-hidden {
+    opacity: 0;
+    transform: translateY(6px);
+    pointer-events: none;
+  }
+
+  .modal-tag-chip {
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    border: 1.5px solid var(--color-ink);
+    box-shadow: var(--shadow-neo-xs);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    user-select: text;
+    transition:
+      transform 0.1s ease,
+      box-shadow 0.1s ease;
+  }
+
+  .modal-tag-chip:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-neo-sm);
+  }
+
   /* Responsive Adjustments */
   @media (max-width: 768px) {
     .dialog-shell {
@@ -412,6 +474,17 @@
 
     .dialog-stage {
       padding: 12px;
+    }
+
+    .modal-tags-bar {
+      bottom: 10px;
+      padding: 0 48px;
+      gap: 6px;
+    }
+
+    .modal-tag-chip {
+      font-size: 0.7rem;
+      padding: 3px 8px;
     }
 
     .dialog-close-btn {
@@ -445,7 +518,9 @@
 
     .dialog-img,
     .dialog-btn,
-    .dialog-nav-btn {
+    .dialog-nav-btn,
+    .modal-tags-bar,
+    .modal-tag-chip {
       transition: none !important;
     }
   }

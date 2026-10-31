@@ -6,11 +6,10 @@
   import { sampleArtworks } from "#lib/data/sampleArtworks";
 
   const collections = [
-    { id: "all", label: "All Works" },
-    { id: "new-works", label: "New Works" },
-    { id: "landscapes", label: "Landscapes & Botanicals" },
-    { id: "abstracts", label: "Abstract Studies" },
-    { id: "portraits", label: "Portraiture" },
+    { id: "all", label: "All Illustrations" },
+    { id: "bust", label: "Bust" },
+    { id: "half-body", label: "Half Body" },
+    { id: "full-body", label: "Full Body" },
   ];
 
   let selectedFilter = $state("all");
@@ -55,7 +54,7 @@
 </script>
 
 <svelte:head>
-  <title>Portfolio — Selected Works & Contemporary Art by Yukiro</title>
+  <title>Portfolio</title>
   <meta
     name="description"
     content="Explore the complete archive of original paintings, botanicals, and abstract studies by Yukiro."
@@ -64,7 +63,7 @@
 
 <!-- Gallery Header -->
 <section class="gallery-masthead-section" aria-label="Portfolio Introduction">
-  <h1 class="gallery-main-title">Selected Works</h1>
+  <h1 class="gallery-main-title">Portfolio</h1>
 </section>
 
 <!-- Bento Box Artwork Showcase -->

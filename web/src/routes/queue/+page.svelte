@@ -10,40 +10,6 @@
   function getItemsByStage(stage: QueueStage) {
     return queueItems.filter((item) => item.stage === stage);
   }
-
-  const faqs = [
-    {
-      question: "How does the commission queue work?",
-      answer:
-        'Once your project scope is approved and the booking deposit is received, your commission enters the queue under "Approved". You can monitor live studio milestones as the artwork progresses through Sketching, Lineart, Coloring, and final Completion.',
-    },
-    {
-      question: "What is the typical turnaround time for a custom piece?",
-      answer:
-        "Turnaround times generally range from 4 to 6 weeks depending on scale, medium, and drying times for oil layers. Editorial illustrations and digital commissions can often be accommodated on accelerated timelines.",
-    },
-    {
-      question: "What payment schedule and deposit do you require?",
-      answer:
-        "A 50% non-refundable deposit is required to lock in your active queue slot. The remaining 50% balance, along with insured archival shipping costs, is settled upon final photographic approval prior to dispatch.",
-    },
-    {
-      question: "Can I request revisions during the creation process?",
-      answer:
-        "Yes. Two iterative review rounds are included during the initial composition and sketching stage. Once physical lineart and permanent pigment layers begin, structural alterations are limited.",
-    },
-    {
-      question: "How is physical artwork packaged and shipped?",
-      answer:
-        "All physical works on canvas and cradled wood panel are packed in custom museum-grade archival wooden crates with corner guards and climate moisture barriers, insured and shipped via specialized fine-art couriers.",
-    },
-  ];
-
-  let openFaq = $state<number | null>(0);
-
-  function toggleFaq(index: number) {
-    openFaq = openFaq === index ? null : index;
-  }
 </script>
 
 <svelte:head>
@@ -59,8 +25,8 @@
   <h1 class="queue-main-title">Commission Queue</h1>
 </section>
 
-<!-- 5-Column Fitted Kanban Board -->
-<section class="kanban-section" aria-label="5-Column Fitted Project Board">
+<!-- 4-Column Fitted Kanban Board -->
+<section class="kanban-section" aria-label="4-Column Fitted Project Board">
   <div class="fitted-kanban-board">
     {#each QUEUE_COLUMNS as column}
       {@const itemsInColumn = getItemsByStage(column.id)}
@@ -119,9 +85,9 @@
     <div class="dispatch-header">
       <h2 class="dispatch-title">Request a Studio Commission</h2>
       <p class="dispatch-lead">
-        Yukiro accepts a limited number of bespoke original paintings,
-        editorial illustrations, and site-specific architectural installations
-        per cycle. Inquiries are reviewed in the order received.
+        Yukiro accepts a limited number of bespoke original paintings, editorial
+        illustrations, and site-specific architectural installations per cycle.
+        Inquiries are reviewed in the order received.
       </p>
     </div>
 
@@ -196,45 +162,6 @@
   </div>
 </section>
 
-<!-- Commission FAQ Section -->
-<section class="queue-faq-section" aria-label="Frequently Asked Questions">
-  <div class="neo-card faq-card">
-    <div class="faq-header">
-      <h2 class="faq-title">Commission FAQ</h2>
-    </div>
-
-    <div class="faq-accordion">
-      {#each faqs as faq, i}
-        <div class="faq-item" class:is-open={openFaq === i}>
-          <button
-            type="button"
-            class="faq-trigger"
-            onclick={() => toggleFaq(i)}
-            aria-expanded={openFaq === i}
-            aria-controls="faq-answer-{i}"
-            id="faq-question-{i}"
-          >
-            <span class="faq-question-text">{faq.question}</span>
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </button>
-
-          <div
-            id="faq-answer-{i}"
-            class="faq-body"
-            role="region"
-            aria-labelledby="faq-question-{i}"
-            inert={openFaq !== i}
-          >
-            <div class="faq-body-inner">
-              <p class="faq-answer-text">{faq.answer}</p>
-            </div>
-          </div>
-        </div>
-      {/each}
-    </div>
-  </div>
-</section>
-
 <style>
   /* Masthead */
   .queue-masthead {
@@ -248,15 +175,15 @@
     line-height: 1.05;
   }
 
-  /* 5-Column Fitted Kanban Board */
+  /* 4-Column Fitted Kanban Board */
   .kanban-section {
     margin-bottom: 56px;
   }
 
   .fitted-kanban-board {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
     width: 100%;
     align-items: stretch;
   }
@@ -495,9 +422,9 @@
   }
 
   /* Responsive Breakpoints */
-  @media (max-width: 1100px) {
+  @media (max-width: 1024px) {
     .fitted-kanban-board {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
@@ -507,15 +434,13 @@
     }
   }
 
-  @media (max-width: 760px) {
-    .fitted-kanban-board {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
   @media (max-width: 600px) {
     .queue-masthead {
       margin-bottom: 24px;
+    }
+
+    .fitted-kanban-board {
+      grid-template-columns: 1fr;
     }
 
     .dispatch-cta-row {
@@ -526,165 +451,6 @@
       width: 100%;
       text-align: center;
       justify-content: center;
-    }
-  }
-
-  @media (max-width: 520px) {
-    .fitted-kanban-board {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* Commission FAQ Section */
-  .queue-faq-section {
-    margin-bottom: 32px;
-  }
-
-  .faq-card {
-    padding: 36px;
-    background: var(--color-surface);
-    border: var(--stroke-neo);
-    box-shadow: var(--shadow-neo);
-  }
-
-  .faq-header {
-    margin-bottom: 24px;
-  }
-
-  .faq-title {
-    font-size: clamp(1.8rem, 3.2vw, 2.5rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin: 0;
-  }
-
-  .faq-accordion {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .faq-item {
-    border: 2px dashed var(--color-ink);
-    background: var(--color-bg);
-    box-shadow: 0 0 0 var(--color-ink);
-    transition:
-      background-color var(--duration-normal, 220ms) ease,
-      box-shadow var(--duration-normal, 220ms)
-        var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
-  }
-
-  .faq-item.is-open {
-    background: var(--color-surface);
-    box-shadow: var(--shadow-neo-xs);
-  }
-
-  .faq-trigger {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 18px 20px;
-    background: transparent;
-    border: none;
-    cursor: var(--cursor-pointer);
-    text-align: left;
-    transition: background-color 0.12s ease;
-  }
-
-  .faq-trigger:hover {
-    background: rgba(0, 0, 0, 0.03);
-  }
-
-  :global(:root[data-theme="dark"]) .faq-trigger:hover {
-    background: rgba(255, 255, 255, 0.04);
-  }
-
-  .faq-question-text {
-    font-family: var(--font-heading);
-    font-size: 1.12rem;
-    font-weight: 700;
-    color: var(--color-ink);
-    line-height: 1.35;
-  }
-
-  .faq-icon {
-    font-family: var(--font-mono);
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--color-ink);
-    width: 28px;
-    height: 28px;
-    display: grid;
-    place-items: center;
-    border: 1.5px solid var(--color-ink);
-    border-radius: 50%;
-    background: var(--color-surface);
-    flex-shrink: 0;
-    line-height: 1;
-    transition: transform var(--duration-normal, 220ms)
-      var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
-  }
-
-  .faq-item.is-open .faq-icon {
-    transform: rotate(45deg);
-  }
-
-  .faq-body {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows var(--duration-normal, 220ms)
-      var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
-  }
-
-  .faq-item.is-open .faq-body {
-    grid-template-rows: 1fr;
-  }
-
-  .faq-body-inner {
-    min-height: 0;
-    overflow: hidden;
-  }
-
-  .faq-answer-text {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--color-text-muted);
-    margin: 0 20px 20px;
-    padding-top: 14px;
-    border-top: 1px dashed var(--color-border-subtle);
-    opacity: 0;
-    transition: opacity var(--duration-fast, 120ms) ease;
-  }
-
-  .faq-item.is-open .faq-answer-text {
-    opacity: 1;
-    transition: opacity var(--duration-normal, 220ms) ease 60ms;
-  }
-
-  @media (max-width: 600px) {
-    .faq-card {
-      padding: 24px 20px;
-    }
-
-    .faq-trigger {
-      padding: 14px 16px;
-    }
-
-    .faq-question-text {
-      font-size: 1rem;
-    }
-
-    .faq-answer-text {
-      margin: 0 16px 16px;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .faq-body,
-    .faq-icon {
-      transition: none !important;
     }
   }
 </style>
