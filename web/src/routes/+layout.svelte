@@ -231,7 +231,7 @@
         </a>
       </nav>
 
-      <!-- Tactile Hamburger Button (Mobile & Tablet <= 1024px) -->
+      <!-- Tactile Hamburger Button (Mobile & Tablet <= 1200px) -->
       <button
         type="button"
         class="hamburger-btn"
@@ -820,7 +820,7 @@
     border-left: 2.5px solid var(--color-ink);
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1200px) {
     .page-checker-ribbon {
       display: none !important;
     }
@@ -1252,7 +1252,7 @@
   }
 
   /* Responsive Masthead */
-  @media (max-width: 1024px) {
+  @media (max-width: 1200px) {
     .neo-header {
       padding: 14px 20px;
     }

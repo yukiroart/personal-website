@@ -3,6 +3,10 @@
   command = "npm run build && npm --prefix ../studio ci && npm --prefix ../studio run build && cp -r ../studio/dist ./dist/studio"
   publish = "dist"
 
+  # Enable Netlify Blobs for your site functions
+[blobs]
+  store = "artworks"
+
 [build.environment]
   NODE_VERSION = "22"
 
