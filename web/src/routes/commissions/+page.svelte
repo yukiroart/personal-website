@@ -227,12 +227,12 @@
 
       <!-- X -->
       <a
-        href="https://x.com/YUKIR0_arts"
+        href="https://x.com/yukir0_art"
         target="_blank"
         rel="noopener noreferrer"
         class="dm-icon-btn"
         aria-label="Direct message on X"
-        title="X: @YUKIR0_arts"
+        title="X: @yukir0_art"
       >
         <svg class="dm-svg" viewBox="0 0 24 24" role="img" aria-hidden="true">
           <path

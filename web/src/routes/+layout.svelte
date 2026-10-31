@@ -368,12 +368,12 @@
           <div class="footer-social-row">
             <!-- X / Twitter -->
             <a
-              href="https://x.com/YUKIR0_arts"
+              href="https://x.com/yukir0_art"
               target="_blank"
               rel="noopener noreferrer"
               class="footer-icon-btn"
               aria-label="Yukiro on X"
-              title="X (Twitter): @YUKIR0_arts"
+              title="X (Twitter): @yukir0_art"
             >
               <svg
                 class="social-svg"

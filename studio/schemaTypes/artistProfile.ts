@@ -41,7 +41,7 @@ export default defineType({
       fields: [
         { name: 'discord', title: 'Discord Username', type: 'string', initialValue: 'yuk1r0' },
         { name: 'email', title: 'Inquiry Email', type: 'string', initialValue: 'yukiroart19@gmail.com' },
-        { name: 'twitter', title: 'Twitter / X URL', type: 'url', initialValue: 'https://x.com/YUKIR0_arts' },
+        { name: 'twitter', title: 'Twitter / X URL', type: 'url', initialValue: 'https://x.com/yukir0_art' },
       ],
     }),
   ],

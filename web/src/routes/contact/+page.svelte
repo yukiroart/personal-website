@@ -91,7 +91,7 @@
       <!-- X item -->
       <div class="contact-item">
         <a
-          href="https://x.com/YUKIR0_arts"
+          href="https://x.com/yukir0_art"
           target="_blank"
           rel="noopener noreferrer"
           class="contact-link-row"
@@ -103,7 +103,7 @@
             class="contact-icon icon-monochrome"
             loading="lazy"
           />
-          <span class="contact-label">YUKIR0_arts</span>
+          <span class="contact-label">yukir0_art</span>
         </a>
       </div>
     </div>
