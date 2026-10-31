@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { fly, fade } from "svelte/transition";
+
   // State for COMMS FAQ accordion
   let openFaq = $state<number | null>(null);
 
@@ -13,31 +15,39 @@
     termsOpen = !termsOpen;
   }
 
-  // COMMS FAQ items (descs and numbers ready to edit)
+  let copiedDiscord = $state(false);
+  let copyTimeout: ReturnType<typeof setTimeout>;
+
+  async function copyDiscord() {
+    try {
+      await navigator.clipboard.writeText("yuk1r0");
+      copiedDiscord = true;
+      clearTimeout(copyTimeout);
+      copyTimeout = setTimeout(() => {
+        copiedDiscord = false;
+      }, 2200);
+    } catch (err) {
+      console.error("Failed to copy Discord username:", err);
+    }
+  }
+
+  // COMMS FAQ items
   const faqItems = [
     {
       id: 1,
-      question: "FAQ #1 — What information should I include in my first message?",
-      answer:
-        "A brief description of what you have in mind (character, mood, visual references) or simply say hello and request a commission! We can discuss and refine the details together.",
+      question:
+        'What are your <strong class="faq-accent">RATES</strong> for commissions?',
+      paragraphs: [
+        "Depends on the complexity of the piece. Please don't hesitate to DM me for more details.",
+      ],
     },
     {
       id: 2,
-      question: "FAQ #2 — What is the typical turnaround time?",
-      answer:
-        "Standard turnaround is usually 2 to 4 weeks depending on the complexity of the piece and current queue workload. Priority rush turnaround can be arranged upon request.",
-    },
-    {
-      id: 3,
-      question: "FAQ #3 — What payment methods do you accept?",
-      answer:
-        "Payments are primarily processed via PayPal or invoice. Work begins once the deposit (50% or full milestone payment) is confirmed.",
-    },
-    {
-      id: 4,
-      question: "FAQ #4 — Do you provide commercial rights?",
-      answer:
-        "Standard commissions are for personal display only. Commercial licensing (VTuber assets, merchandise, book covers, album art) can be arranged with an added commercial agreement.",
+      question: "Once I purchase a commission, when is the expected date?",
+      paragraphs: [
+        '<strong class="faq-accent">If the artwork is needed to be completed at an immediate date, rates may increase.</strong>',
+        "I will be sending weekly updates of the progress!",
+      ],
     },
   ];
 
@@ -87,28 +97,33 @@
 </script>
 
 <svelte:head>
-  <title>Commissions — Yukiro Art Portfolio</title>
+  <title>Commissions — Yukiro Custom Art & Rates</title>
   <meta
     name="description"
-    content="Direct message Yukiro to request custom art commissions, view comms FAQ, and read terms & conditions."
+    content="Direct message Yukiro to request character art commissions, view rates FAQ, and read terms of service."
   />
 </svelte:head>
 
 <div class="comm-page-container">
   <!-- Masthead Title -->
-  <header class="comm-masthead">
-    <h1 class="comm-page-title">COMMISSIONS</h1>
-  </header>
+  <section class="comm-masthead-section" aria-label="Commissions Introduction">
+    <h1 class="comm-main-title">Commissions</h1>
+  </section>
 
   <!-- 1st Container: DM FOR A COMMISSION -->
-  <section class="neo-card dm-card" aria-label="Direct Message for a Commission">
+  <section
+    class="neo-card dm-card"
+    aria-label="Direct Message for a Commission"
+  >
     <div class="dm-header">
       <span class="dm-badge">DM FOR A COMMISSION</span>
     </div>
 
     <p class="dm-copy">
-      Hey There! Please don't be afraid to send me a direct message on any of these platforms.
-      A simple <em>"Hello, I would like to request a commission."</em> will suffice!
+      Hey There! Please don't be afraid to send me a direct message on any of
+      these platforms. A simple <em
+        >"Hello, I would like to request a commission."</em
+      > will suffice!
     </p>
 
     <!-- Subtle Text-Only Terms & Conditions Dropdown -->
@@ -147,7 +162,9 @@
             {#each termsBullets as bullet}
               <li class="dm-terms-bullet">
                 <span class="bullet-dot" aria-hidden="true">•</span>
-                <span class="bullet-text"><strong>{bullet.title}:</strong> {bullet.text}</span>
+                <span class="bullet-text"
+                  ><strong>{bullet.title}:</strong> {bullet.text}</span
+                >
               </li>
             {/each}
           </ul>
@@ -155,31 +172,50 @@
       </div>
     </div>
 
-    <!-- Social / Contact Icons: Discord, Gmail, X, Facebook -->
-    <div class="dm-icons-row" role="group" aria-label="Direct message contact channels">
+    <!-- Social / Contact Icons: Discord, Gmail, X -->
+    <div
+      class="dm-icons-row"
+      role="group"
+      aria-label="Direct message contact channels"
+    >
       <!-- Discord -->
-      <a
-        href="https://discord.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="dm-icon-btn"
-        aria-label="Direct message on Discord"
-        title="Discord"
-      >
-        <svg class="dm-svg" viewBox="0 0 24 24" role="img" aria-hidden="true">
-          <path
-            fill="currentColor"
-            d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"
-          />
-        </svg>
-      </a>
+      <div class="comm-discord-wrap">
+        <button
+          type="button"
+          class="dm-icon-btn discord-icon-btn"
+          onclick={copyDiscord}
+          aria-label="Copy Discord username (yuk1r0)"
+          title="Click to copy yuk1r0"
+        >
+          <svg class="dm-svg" viewBox="0 0 24 24" role="img" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"
+            />
+          </svg>
+        </button>
+
+        <div class="toast-anchor">
+          {#if copiedDiscord}
+            <div
+              class="toast-popup"
+              role="status"
+              aria-live="polite"
+              in:fly={{ y: 6, duration: 180 }}
+              out:fade={{ duration: 150 }}
+            >
+              Copied discord username!
+            </div>
+          {/if}
+        </div>
+      </div>
 
       <!-- Gmail -->
       <a
-        href="mailto:yukiroart@gmail.com"
+        href="mailto:yukiroart19@gmail.com"
         class="dm-icon-btn"
         aria-label="Send direct message via Gmail"
-        title="Gmail"
+        title="Gmail: yukiroart19@gmail.com"
       >
         <svg class="dm-svg" viewBox="0 0 24 24" role="img" aria-hidden="true">
           <path
@@ -191,12 +227,12 @@
 
       <!-- X -->
       <a
-        href="https://x.com"
+        href="https://x.com/YUKIR0_arts"
         target="_blank"
         rel="noopener noreferrer"
         class="dm-icon-btn"
         aria-label="Direct message on X"
-        title="X"
+        title="X: @YUKIR0_arts"
       >
         <svg class="dm-svg" viewBox="0 0 24 24" role="img" aria-hidden="true">
           <path
@@ -205,28 +241,14 @@
           />
         </svg>
       </a>
-
-      <!-- Facebook -->
-      <a
-        href="https://facebook.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="dm-icon-btn"
-        aria-label="Direct message on Facebook"
-        title="Facebook"
-      >
-        <svg class="dm-svg" viewBox="0 0 24 24" role="img" aria-hidden="true">
-          <path
-            fill="currentColor"
-            d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"
-          />
-        </svg>
-      </a>
     </div>
   </section>
 
   <!-- 2nd Container: COMMS FAQ -->
-  <section class="neo-card comms-faq-card" aria-label="Commissions Frequently Asked Questions">
+  <section
+    class="neo-card comms-faq-card"
+    aria-label="Commissions Frequently Asked Questions"
+  >
     <div class="faq-header">
       <h2 class="faq-title">COMMS FAQ</h2>
     </div>
@@ -241,9 +263,17 @@
             aria-controls="comms-faq-ans-{item.id}"
             onclick={() => toggleFaq(index)}
           >
-            <span class="faq-question-text">{item.question}</span>
+            <span class="faq-question-text">{@html item.question}</span>
             <span class="faq-toggle-icon" aria-hidden="true">
-              <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <svg
+                class="chevron-svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg>
             </span>
@@ -255,7 +285,11 @@
             inert={openFaq !== index}
           >
             <div class="faq-body-inner">
-              <p class="faq-answer-text">{item.answer}</p>
+              <div class="faq-content-wrap">
+                {#each item.paragraphs as para}
+                  <p class="faq-answer-text">{@html para}</p>
+                {/each}
+              </div>
             </div>
           </div>
         </article>
@@ -274,16 +308,16 @@
   }
 
   /* Masthead */
-  .comm-masthead {
-    margin-bottom: 4px;
+  .comm-masthead-section {
+    margin-bottom: 0;
   }
 
-  .comm-page-title {
+  .comm-main-title {
     font-family: var(--font-heading);
-    font-size: clamp(2.4rem, 6vw, 3.8rem);
-    font-weight: 800;
+    font-size: clamp(2.5rem, 4.5vw, 3.8rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
     line-height: 1.05;
-    letter-spacing: -0.02em;
     color: var(--color-ink);
     margin: 0;
   }
@@ -355,8 +389,8 @@
     justify-content: center;
     width: 52px;
     height: 52px;
-    background-color: var(--color-bg);
-    color: var(--color-ink);
+    background-color: #121212;
+    color: #ffffff;
     border: var(--stroke-neo);
     box-shadow: var(--shadow-neo-xs);
     cursor: var(--cursor-pointer);
@@ -366,6 +400,12 @@
       box-shadow var(--duration-fast) var(--ease-out),
       background-color var(--duration-fast) var(--ease-out),
       color var(--duration-fast) var(--ease-out);
+  }
+
+  :global(:root[data-theme="dark"]) .dm-icon-btn {
+    background-color: #121212;
+    color: #ffffff;
+    border-color: var(--color-border-subtle);
   }
 
   .dm-svg {
@@ -382,9 +422,70 @@
     }
   }
 
+  :global(:root[data-theme="dark"]) .dm-icon-btn:hover {
+    background-color: var(--color-yellow);
+    color: #121212;
+  }
+
   .dm-icon-btn:active {
-    transform: translate(2px, 2px);
+    transform: translate(2px, 2px) scale(0.96);
     box-shadow: 0px 0px 0px transparent;
+  }
+
+  /* Commissions Discord Wrap & Toast */
+  .comm-discord-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .comm-discord-wrap .toast-anchor {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+  }
+
+  .comm-discord-wrap .toast-popup {
+    position: relative;
+    background: var(--color-yellow);
+    color: #121212;
+    border: 2px solid #121212;
+    box-shadow: var(--shadow-neo-xs);
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    padding: 6px 14px;
+    white-space: nowrap;
+    border-radius: 0;
+  }
+
+  .comm-discord-wrap .toast-popup::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #121212 transparent transparent transparent;
+  }
+
+  @media (max-width: 680px) {
+    .comm-discord-wrap .toast-anchor {
+      left: 0;
+      transform: none;
+    }
+
+    .comm-discord-wrap .toast-popup::after {
+      left: 26px;
+    }
   }
 
   /* ----------------------------------------------------
@@ -499,6 +600,7 @@
     display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows var(--duration-normal) var(--ease-out);
+    overflow: hidden;
   }
 
   .faq-item.open .faq-body {
@@ -510,15 +612,32 @@
     overflow: hidden;
   }
 
+  .faq-content-wrap {
+    padding: 14px 20px 20px 20px;
+    border-top: 1px solid var(--color-border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
   .faq-answer-text {
     font-family: var(--font-body);
     font-size: 0.98rem;
     line-height: 1.6;
     color: var(--color-ink);
     margin: 0;
-    padding: 14px 20px 20px 20px;
-    border-top: 1px solid var(--color-border-subtle);
     opacity: 0.9;
+  }
+
+  .faq-question-text :global(.faq-accent),
+  .faq-answer-text :global(.faq-accent) {
+    color: #e02e53;
+    font-weight: 800;
+  }
+
+  :global(:root[data-theme="dark"]) .faq-question-text :global(.faq-accent),
+  :global(:root[data-theme="dark"]) .faq-answer-text :global(.faq-accent) {
+    color: var(--color-pink);
   }
 
   /* ----------------------------------------------------
@@ -535,7 +654,8 @@
   .dm-terms-trigger {
     background: transparent;
     border: none;
-    padding: 4px 0;
+    padding: 6px 0;
+    min-height: 44px;
     display: inline-flex;
     align-items: center;
     gap: 6px;

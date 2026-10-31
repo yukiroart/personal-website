@@ -10,6 +10,7 @@ build/
 .astro/
 .plans
 .agents
+.sanity/
 # Environment and secrets
 .env
 .env.local

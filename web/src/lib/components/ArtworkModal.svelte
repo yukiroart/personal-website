@@ -184,31 +184,58 @@
 
       <!-- Fixed Uniform Artwork Viewport -->
       <div class="dialog-viewport">
-        <div class="dialog-zoom-track" class:is-zoomed={isZoomed}>
-          {#if currentArt}
-            <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-            <img
-              src={currentArt.imageUrl}
-              alt={currentArt.alt}
-              class="dialog-img"
-              draggable="false"
-              onclick={toggleZoom}
-              style:transform-origin={zoomOrigin}
-            />
-          {/if}
-        </div>
+        {#if isOpen && currentArt?.youtubeEmbedUrl}
+          <div class="dialog-iframe-wrap">
+            <iframe
+              src={currentArt.youtubeEmbedUrl}
+              title={currentArt.title}
+              class="dialog-iframe"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          </div>
+        {:else}
+          <div class="dialog-zoom-track" class:is-zoomed={isZoomed}>
+            {#if currentArt}
+              <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+              <img
+                src={currentArt.imageUrl}
+                alt={currentArt.alt}
+                class="dialog-img"
+                draggable="false"
+                onclick={toggleZoom}
+                style:transform-origin={zoomOrigin}
+              />
+            {/if}
+          </div>
+        {/if}
       </div>
 
-      <!-- Tags Under Photo -->
-      {#if currentArt?.tags && currentArt.tags.length > 0}
+      <!-- Tags & Action Chips Under Photo / Video -->
+      {#if currentArt}
         <div
           class="modal-tags-bar"
           class:is-hidden={isZoomed}
-          aria-label="Artwork tags"
+          aria-label="Artwork metadata and links"
         >
-          {#each currentArt.tags as tag}
-            <span class="modal-tag-chip">#{tag}</span>
-          {/each}
+          {#if currentArt.tags && currentArt.tags.length > 0}
+            {#each currentArt.tags as tag}
+              <span class="modal-tag-chip">#{tag}</span>
+            {/each}
+          {/if}
+          {#if currentArt.youtubeUrl}
+            <a
+              href={currentArt.youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="modal-tag-chip modal-youtube-chip"
+              aria-label="Watch {currentArt.title} on YouTube (opens in new tab)"
+            >
+              Watch on YouTube ↗
+            </a>
+          {/if}
         </div>
       {/if}
 
@@ -234,6 +261,7 @@
     overflow: visible;
     max-width: 95vw;
     max-height: 94vh;
+    max-height: 94dvh;
   }
 
   .neo-art-dialog::backdrop {
@@ -261,8 +289,10 @@
     display: flex;
     flex-direction: column;
     width: min(88vw, 960px, calc(84vh * (4 / 3)));
+    width: min(88vw, 960px, calc(84dvh * (4 / 3)));
     aspect-ratio: 4 / 3;
     max-height: 84vh;
+    max-height: 84dvh;
     overflow: hidden;
     position: relative;
     animation: zoomInDialog 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -416,6 +446,28 @@
     transform: scale(1.85);
   }
 
+  /* Embedded Video Iframe Viewport */
+  .dialog-iframe-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 0;
+  }
+
+  .dialog-iframe {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 100%;
+    border: var(--stroke-neo);
+    box-shadow: var(--shadow-neo-xs);
+    display: block;
+    background: #000000;
+  }
+
   /* Minimal Tags Display Under Photo */
   .modal-tags-bar {
     position: absolute;
@@ -465,11 +517,24 @@
     box-shadow: var(--shadow-neo-sm);
   }
 
+  .modal-youtube-chip {
+    background: var(--color-yellow, #FFD166);
+    color: #121212 !important;
+    text-decoration: none;
+    cursor: var(--cursor-pointer);
+  }
+
+  .modal-youtube-chip:hover {
+    background: var(--color-surface);
+    color: var(--color-ink) !important;
+  }
+
   /* Responsive Adjustments */
   @media (max-width: 768px) {
     .dialog-shell {
       width: 92vw;
       max-height: 80vh;
+      max-height: 80dvh;
     }
 
     .dialog-stage {
@@ -490,15 +555,15 @@
     .dialog-close-btn {
       top: 8px;
       right: 8px;
-      width: 36px;
-      height: 36px;
-      font-size: 0.95rem;
+      width: 44px;
+      height: 44px;
+      font-size: 1.05rem;
     }
 
     .dialog-nav-btn {
-      width: 38px;
-      height: 38px;
-      font-size: 1.1rem;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
     }
 
     .dialog-nav-btn.prev {

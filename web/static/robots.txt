@@ -1,0 +1,64 @@
+# robots.txt for Yukiro Art Portfolio (https://yukiroart.com)
+
+# Search engines: full indexing allowed
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+# AI dataset and training scrapers: scraping disallowed to protect original artwork
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Cohere-ai
+Disallow: /
+
+User-agent: OmiliBot
+Disallow: /
+
+# General web crawlers: allow portfolio pages, restrict build artifacts
+User-agent: *
+Allow: /
+Disallow: /_app/
+Disallow: /api/
+
