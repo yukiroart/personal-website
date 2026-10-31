@@ -1,4 +1,17 @@
 [build]
   base = "web"
-  command = "npm ci --include=dev && npm run build"
+  command = "npm run build && npm --prefix ../studio ci && npm --prefix ../studio run build && cp -r ../studio/dist ./dist/studio"
   publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[redirects]]
+  from = "/studio"
+  to = "/studio/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/studio/*"
+  to = "/studio/index.html"
+  status = 200

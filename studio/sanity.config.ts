@@ -5,6 +5,7 @@ import { schemaTypes } from './schemaTypes';
 export default defineConfig({
   name: 'default',
   title: 'Yukiro Art Portfolio',
+  basePath: '/studio',
 
   projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'y0rudiy0',
   dataset: process.env.SANITY_STUDIO_DATASET || 'production',
