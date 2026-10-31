@@ -25,10 +25,9 @@ export default defineType({
       options: {
         list: [
           { title: '01 Approved', value: 'approved' },
-          { title: '02 Sketching', value: 'sketching' },
-          { title: '03 Lineart', value: 'lineart' },
-          { title: '04 Coloring', value: 'coloring' },
-          { title: '05 Completed', value: 'completed' },
+          { title: '02 Payment', value: 'payment' },
+          { title: '03 In Progress', value: 'in-progress' },
+          { title: '04 Done', value: 'done' },
         ],
         layout: 'radio',
       },

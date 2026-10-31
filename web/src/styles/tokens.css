@@ -3,10 +3,11 @@
    ========================================================================== */
 
 :root {
-  /* Typography — Syne (Headings & Expressive Brand) + Epilogue (Humanist Body & Technical Stickers) */
+  /* Typography — Syne (Headings & Expressive Brand) + Epilogue (Humanist Body & Technical Stickers) + Caveat (Handwritten Notes) */
   --font-heading: 'Syne', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-body: 'Epilogue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'Epilogue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-handwriting: 'Caveat', cursive, -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Color Palette — Tactile Paper Canvas with Punchy Monochrome & Pastel Accents */
   --color-bg: #FAF6EE;
@@ -25,6 +26,8 @@
   /* Marigold yellow badge & active highlight */
   --color-green: #06D6A0;
   /* Emerald availability dot indicator */
+  --color-orange-soft: #FFB370;
+  /* Soft warm pastel orange */
   --color-border: #121212;
   /* Neobrutalist border stroke */
   --color-border-subtle: #D0CCC3;
@@ -62,6 +65,8 @@ html[data-theme="dark"] {
   /* Readable technical text */
   --color-border: #F4EFE6;
   --color-border-subtle: #2E2E33;
+  --color-orange-soft: #E08736;
+  /* Muted warm terracotta orange */
 
   /* Neobrutalist Strokes & Accent Drop Shadows */
   --stroke-neo: 2.5px solid var(--color-ink);

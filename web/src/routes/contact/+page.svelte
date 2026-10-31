@@ -1,185 +1,138 @@
 <script lang="ts">
-  let name = $state('');
-  let email = $state('');
-  let message = $state('');
-  let acceptedTerms = $state(false);
-  let isSubmitted = $state(false);
+  import { fly, fade } from "svelte/transition";
 
-  function handleSubmit(e: SubmitEvent) {
-    // Form submits via mailto or action
-    // In Svelte, we can also give feedback
+  let copied = $state(false);
+  let copyTimeout: ReturnType<typeof setTimeout>;
+
+  async function copyDiscord() {
+    try {
+      await navigator.clipboard.writeText("yuk1r0");
+      copied = true;
+      clearTimeout(copyTimeout);
+      copyTimeout = setTimeout(() => {
+        copied = false;
+      }, 2200);
+    } catch (err) {
+      console.error("Failed to copy Discord username:", err);
+    }
   }
 </script>
 
 <svelte:head>
-  <title>Contact Yukiro — Studio Inquiries, Commissions & Gallery Representation</title>
-  <meta name="description" content="Contact artist Yukiro for original artwork acquisitions, gallery exhibitions, studio visits, and commissions." />
+  <title>Contact — Yukiro Business Inquiries & Channels</title>
+  <meta
+    name="description"
+    content="Direct contact channels for business inquiries and illustration projects: Discord, Gmail, and X."
+  />
 </svelte:head>
 
-<!-- Masthead Intro Header -->
-<section class="contact-masthead-section" aria-label="Contact Introduction">
-  <h1 class="contact-main-title">Contact Yukiro</h1>
-</section>
+<div class="contact-page-container">
+  <!-- Masthead Intro Header -->
+  <section class="contact-masthead-section" aria-label="Contact Introduction">
+    <h1 class="contact-main-title">Contact</h1>
+  </section>
 
-<!-- Two-Column Contact Layout -->
-<div class="contact-editorial-grid">
-  <!-- Left Column: Direct Email Details -->
-  <aside class="contact-sidebar">
-    <!-- Direct Email Card -->
-    <div class="neo-card detail-card">
-      <span class="detail-sticker">DIRECT EMAIL</span>
-      <h2 class="detail-heading">Studio Correspondence</h2>
-      <a href="mailto:studio@yukiro-art.com" class="email-link">
-        studio@yukiro-art.com ↗
-      </a>
-      <p class="detail-desc">
-        For general correspondence, private acquisitions, press, and curatorial requests.
-      </p>
+  <!-- Central Contact Card -->
+  <section class="neo-card contact-card" aria-label="Contacts">
+    <div class="contact-header">
+      <span class="contact-badge">CONTACTS</span>
     </div>
-  </aside>
 
-  <!-- Right Column: Interactive Inquiry Form -->
-  <section class="contact-form-main">
-    <div class="neo-card form-card">
-      <div class="form-card-header">
-        <span class="meta-sticker">INQUIRY DISPATCH</span>
-        <h2 class="form-title">Send a Studio Message</h2>
-        <p class="form-lead">
-          Please fill out the form below. Inquiries are reviewed and answered within 2–3 business days.
-        </p>
+    <!-- Contact Items: Text with Icons -->
+    <div class="contact-items-list">
+      <!-- Discord item (click to copy) -->
+      <div class="contact-item discord-item-wrap">
+        <button
+          type="button"
+          class="contact-link-row discord-btn"
+          onclick={copyDiscord}
+          aria-label="Copy Discord username yuk1r0"
+          title="Click to copy yuk1r0"
+        >
+          <img
+            src="/icons/contacts/discord.svg"
+            alt="Discord"
+            class="contact-icon icon-monochrome"
+            loading="lazy"
+          />
+          <span class="contact-label">yuk1r0</span>
+        </button>
+
+        {#if copied}
+          <div
+            class="toast-popup"
+            role="status"
+            aria-live="polite"
+            in:fly={{ x: -8, duration: 180 }}
+            out:fade={{ duration: 150 }}
+          >
+            Copied discord username!
+          </div>
+        {/if}
       </div>
 
-      <form 
-        class="inquiry-form" 
-        action="mailto:studio@yukiro-art.com" 
-        method="post" 
-        enctype="text/plain"
-        onsubmit={handleSubmit}
-      >
-        <div class="form-group">
-          <label for="name" class="form-label">YOUR NAME</label>
-          <input 
-            type="text" 
-            id="name" 
-            name="name" 
-            required 
-            class="neo-input" 
-            placeholder="e.g. Eleanor Vance"
-            bind:value={name}
+      <!-- Gmail item -->
+      <div class="contact-item">
+        <a
+          href="mailto:yukiroart19@gmail.com"
+          class="contact-link-row"
+          title="Send email to yukiroart19@gmail.com"
+        >
+          <img
+            src="/icons/contacts/gmail.svg"
+            alt="Gmail"
+            class="contact-icon icon-monochrome"
+            loading="lazy"
           />
-        </div>
+          <span class="contact-label">yukiroart19@gmail.com</span>
+        </a>
+      </div>
 
-        <div class="form-group">
-          <label for="email" class="form-label">EMAIL ADDRESS</label>
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            required 
-            class="neo-input" 
-            placeholder="eleanor@example.com"
-            bind:value={email}
+      <!-- X item -->
+      <div class="contact-item">
+        <a
+          href="https://x.com/YUKIR0_arts"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="contact-link-row"
+          title="Yukiro on X"
+        >
+          <img
+            src="/icons/contacts/x.svg"
+            alt="X"
+            class="contact-icon icon-monochrome"
+            loading="lazy"
           />
-        </div>
-
-        <div class="form-group">
-          <label for="message" class="form-label">MESSAGE</label>
-          <textarea
-            id="message"
-            name="message"
-            rows="5"
-            required
-            class="neo-textarea"
-            placeholder="Share details about the work you are interested in or your project proposal..."
-            bind:value={message}
-          ></textarea>
-        </div>
-
-        <div class="terms-group">
-          <label class="terms-checkbox-label">
-            <input
-              type="checkbox"
-              id="terms"
-              name="terms"
-              required
-              class="neo-checkbox"
-              bind:checked={acceptedTerms}
-            />
-            <span class="terms-text">
-              I've read the <a
-                href="#terms-modal"
-                class="terms-link"
-                onclick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  (document.getElementById('terms-modal') as HTMLDialogElement)?.showModal();
-                }}
-              >terms and service</a>
-            </span>
-          </label>
-        </div>
-
-        <div class="form-submit-row">
-          <button type="submit" class="neo-btn neo-btn-pink">
-            SEND STUDIO INQUIRY ✦
-          </button>
-          <span class="form-privacy-note">
-            Direct connection to studio inbox. No spam.
-          </span>
-        </div>
-      </form>
+          <span class="contact-label">YUKIR0_arts</span>
+        </a>
+      </div>
     </div>
   </section>
 </div>
 
-<!-- Terms and Service Modal (Placeholder for user-provided terms) -->
-<dialog
-  id="terms-modal"
-  class="terms-dialog"
-  onclick={(e) => {
-    if (e.target === e.currentTarget) (e.currentTarget as HTMLDialogElement).close();
-  }}
->
-  <div class="terms-modal-card">
-    <div class="terms-modal-header">
-      <h3 class="terms-modal-title">Terms & Service</h3>
-      <button
-        type="button"
-        class="terms-close-btn"
-        onclick={() => (document.getElementById('terms-modal') as HTMLDialogElement)?.close()}
-        aria-label="Close terms modal"
-      >
-        ✕
-      </button>
-    </div>
-    <div class="terms-modal-body">
-      <p class="terms-placeholder-text">
-        Studio terms and service details will be provided here.
-      </p>
-    </div>
-  </div>
-</dialog>
-
 <style>
-  /* Contact Masthead */
+  /* Layout Container */
+  .contact-page-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    min-height: calc(100vh - 100px);
+    min-height: calc(100dvh - 100px);
+    padding-bottom: 140px;
+  }
+
+  /* Masthead Intro Header */
   .contact-masthead-section {
     margin-bottom: 36px;
   }
 
   .contact-main-title {
+    font-family: var(--font-heading);
     font-size: clamp(2.5rem, 4.5vw, 3.8rem);
     font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1.05;
-    margin-bottom: 12px;
-  }
-
-  /* Two-Column Editorial Grid */
-  .contact-editorial-grid {
-    display: grid;
-    grid-template-columns: 400px 1fr;
-    gap: 32px;
-    align-items: start;
+    margin: 0;
   }
 
   /* Shared Neobrutalist Card */
@@ -187,299 +140,189 @@
     background: var(--color-surface);
     border: var(--stroke-neo);
     box-shadow: var(--shadow-neo);
-    border-radius: var(--radius-neo);
-    overflow: hidden;
+    border-radius: 0;
   }
 
-  /* Sidebar Details */
-  .contact-sidebar {
+  /* Central Contact Card */
+  .contact-card {
+    padding: 38px 40px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 28px;
   }
 
-  .detail-card {
-    padding: 24px;
+  .contact-header {
+    display: flex;
+    align-items: center;
   }
 
-  .detail-sticker {
+  .contact-badge {
     display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 700;
+    font-family: var(--font-heading);
+    font-size: 0.88rem;
+    font-weight: 800;
     letter-spacing: 0.05em;
+    padding: 6px 14px;
     background: var(--color-yellow);
     color: #121212;
-    border: 1.5px solid var(--color-ink);
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-bottom: 14px;
-  }
-
-  .detail-heading {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-  }
-
-  .email-link {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--color-ink);
-    background: var(--color-surface);
-    border: 1.5px solid var(--color-ink);
-    padding: 6px 12px;
-    border-radius: var(--radius-neo-sm);
-    box-shadow: var(--shadow-neo-xs);
-    margin-bottom: 12px;
-    transition: transform 0.12s ease;
-  }
-
-  .email-link:hover {
-    transform: translate(-1px, -1px);
-    background-color: var(--color-pink);
-    color: #121212;
-  }
-
-  .detail-desc {
-    font-size: 0.88rem;
-    color: var(--color-muted);
-    line-height: 1.55;
-  }
-
-  /* Form Column */
-  .contact-form-main {
-    width: 100%;
-  }
-
-  .form-card {
-    padding: 36px;
-  }
-
-  .form-card-header {
-    margin-bottom: 28px;
-  }
-
-  .form-title {
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin-top: 10px;
-    margin-bottom: 8px;
-  }
-
-  .form-lead {
-    font-size: 0.92rem;
-    color: var(--color-muted);
-    line-height: 1.55;
-  }
-
-  .inquiry-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .form-label {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    color: var(--color-ink);
-  }
-
-  .neo-input, .neo-textarea {
-    width: 100%;
-    font-family: var(--font-body);
-    font-size: 0.95rem;
-    padding: 12px 16px;
-    background: var(--color-surface);
     border: 2px solid var(--color-ink);
-    border-radius: var(--radius-neo-sm);
-    color: var(--color-ink);
     box-shadow: var(--shadow-neo-xs);
-    transition: all 0.12s ease;
-    outline: none;
   }
 
-  .neo-input:focus, .neo-textarea:focus {
-    background: var(--color-surface);
-    box-shadow: var(--shadow-neo-sm);
-    transform: translate(-1px, -1px);
-  }
-
-  .neo-textarea {
-    resize: vertical;
-    min-height: 130px;
-    line-height: 1.5;
-  }
-
-  /* Terms Checkbox */
-  .terms-group {
+  /* Contact Items List */
+  .contact-items-list {
     display: flex;
-    align-items: center;
-    padding: 6px 0;
+    flex-direction: column;
+    gap: 16px;
   }
 
-  .terms-checkbox-label {
+  .contact-item {
+    position: relative;
+    width: fit-content;
+  }
+
+  .discord-item-wrap {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    cursor: var(--cursor-pointer);
-    user-select: none;
+    gap: 14px;
+    position: relative;
+    width: fit-content;
   }
 
-  .neo-checkbox {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 22px;
-    height: 22px;
+  .contact-link-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--color-bg);
+    color: var(--color-ink);
     border: 2px solid var(--color-ink);
-    background: var(--color-surface);
-    border-radius: 4px;
-    box-shadow: var(--shadow-neo-xs);
+    box-shadow: var(--shadow-neo-sm);
+    padding: 12px 20px;
+    border-radius: var(--radius-neo-pill);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: clamp(1rem, 2.2vw, 1.15rem);
+    font-weight: 700;
     cursor: var(--cursor-pointer);
-    display: grid;
-    place-items: center;
-    position: relative;
-    transition: all 0.12s ease;
+    transition:
+      transform var(--duration-fast, 120ms)
+        var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+      box-shadow var(--duration-fast, 120ms)
+        var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+      background-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .contact-link-row:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-neo);
+      background-color: var(--color-yellow);
+      color: #121212;
+    }
+
+    :global(:root[data-theme="dark"]) .contact-link-row:hover {
+      background-color: var(--color-border-subtle);
+      color: var(--color-ink);
+    }
+
+    :global(:root[data-theme="dark"]) .contact-link-row:hover .icon-monochrome {
+      filter: invert(0);
+    }
+  }
+
+  .contact-link-row:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px var(--color-ink);
+  }
+
+  .contact-icon {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
     flex-shrink: 0;
   }
 
-  .neo-checkbox:hover {
-    transform: translate(-1px, -1px);
-    box-shadow: var(--shadow-neo-sm);
+  :global(:root[data-theme="dark"]) .icon-monochrome {
+    filter: invert(1);
   }
 
-  .neo-checkbox:checked {
-    background-color: var(--color-pink);
+  .contact-label {
+    line-height: 1.2;
+    word-break: break-all;
   }
 
-  .neo-checkbox:checked::after {
-    content: "✓";
-    font-size: 14px;
-    font-weight: 800;
+  /* Toast Notification */
+  .toast-popup {
+    position: relative;
+    background: var(--color-yellow);
     color: #121212;
-    display: block;
-    line-height: 1;
-  }
-
-  .terms-text {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--color-ink);
+    border: 2px solid #121212;
+    box-shadow: var(--shadow-neo-xs);
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 500;
     letter-spacing: 0.01em;
+    padding: 6px 14px;
+    white-space: nowrap;
+    z-index: 20;
+    pointer-events: none;
   }
 
-  .terms-link {
-    color: var(--color-ink);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    text-decoration-thickness: 1.5px;
-    transition: color 0.12s ease;
+  .toast-popup::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #121212 transparent transparent;
   }
 
-  .terms-link:hover {
-    color: var(--color-pink);
-  }
-
-  .form-submit-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-top: 8px;
-    flex-wrap: wrap;
-  }
-
-  .form-privacy-note {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--color-muted);
-  }
-
-  /* Responsive Breakpoints */
-  @media (max-width: 900px) {
-    .contact-editorial-grid {
-      grid-template-columns: 1fr;
+  /* Responsive Adjustments */
+  @media (max-width: 680px) {
+    .contact-card {
+      padding: 26px 20px;
+      gap: 20px;
     }
-    .form-card {
-      padding: 24px;
+
+    .contact-link-row {
+      padding: 10px 16px;
+      font-size: 0.95rem;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .contact-item {
+      width: 100%;
+    }
+
+    .discord-item-wrap {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .toast-popup::after {
+      top: auto;
+      bottom: 100%;
+      left: 24px;
+      right: auto;
+      margin-top: 0;
+      border-color: transparent transparent #121212 transparent;
+    }
+
+    .contact-icon {
+      width: 22px;
+      height: 22px;
     }
   }
 
-  /* Terms and Service Dialog */
-  .terms-dialog {
-    border: none;
-    background: transparent;
-    padding: 0;
-    max-width: min(90vw, 540px);
-    width: 100%;
-    margin: auto;
-  }
-
-  .terms-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(4px);
-  }
-
-  .terms-modal-card {
-    background: var(--color-surface);
-    border: var(--stroke-neo);
-    box-shadow: var(--shadow-neo);
-    padding: 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .terms-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px dashed var(--color-border-subtle);
-    padding-bottom: 12px;
-  }
-
-  .terms-modal-title {
-    font-family: var(--font-heading);
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--color-ink);
-    margin: 0;
-  }
-
-  .terms-close-btn {
-    width: 32px;
-    height: 32px;
-    border: 1.5px solid var(--color-ink);
-    background: var(--color-bg);
-    color: var(--color-ink);
-    border-radius: 50%;
-    font-weight: 700;
-    cursor: var(--cursor-pointer);
-    display: grid;
-    place-items: center;
-    transition: all 0.12s ease;
-  }
-
-  .terms-close-btn:hover {
-    background: var(--color-pink);
-    color: #121212;
-  }
-
-  .terms-placeholder-text {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--color-muted);
-    margin: 0;
+  @media (prefers-reduced-motion: reduce) {
+    .contact-link-row {
+      transition: none !important;
+    }
   }
 </style>
-

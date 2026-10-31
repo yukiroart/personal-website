@@ -1,4 +1,4 @@
-export type QueueStage = 'approved' | 'sketching' | 'lineart' | 'coloring' | 'completed';
+export type QueueStage = 'approved' | 'payment' | 'in-progress' | 'done';
 
 export interface QueueColumn {
   id: QueueStage;
@@ -29,67 +29,29 @@ export const QUEUE_COLUMNS: QueueColumn[] = [
     title: 'Approved',
     badge: '01',
     color: 'var(--color-yellow)',
-    description: 'Contract confirmed & palette agreed'
+    description: 'Scope confirmed & commission approved'
   },
   {
-    id: 'sketching',
-    title: 'Sketching',
+    id: 'payment',
+    title: 'Payment',
     badge: '02',
     color: 'var(--color-pink)',
-    description: 'Composition thumbnails & charcoal studies'
+    description: 'Deposit invoice sent & awaiting settlement'
   },
   {
-    id: 'lineart',
-    title: 'Lineart',
+    id: 'in-progress',
+    title: 'In Progress',
     badge: '03',
     color: 'var(--color-green)',
-    description: 'Structural ink contours & geometry'
+    description: 'Active production & rendering in studio'
   },
   {
-    id: 'coloring',
-    title: 'Coloring',
+    id: 'done',
+    title: 'Done',
     badge: '04',
-    color: '#8338EC',
-    description: 'Pigment layering, glazes & textures'
-  },
-  {
-    id: 'completed',
-    title: 'Completed',
-    badge: '05',
     color: '#3A86FF',
-    description: 'Varnished, dried & prepared for shipment'
+    description: 'Final artwork completed & dispatched'
   }
 ];
 
-export const SAMPLE_QUEUE_ITEMS: CommissionItem[] = [
-  {
-    id: 'comm-01',
-    client: 'Eleanor Vance',
-    description: '30 × 40 in oil and mineral pigments on raw linen. Botanical flora landscape with muted ochre undertones.',
-    stage: 'approved',
-  },
-  {
-    id: 'comm-02',
-    client: 'Horizon Press & Media',
-    description: 'Editorial cover art in mixed gouache and digital ink with atmospheric twilight palette.',
-    stage: 'sketching',
-  },
-  {
-    id: 'comm-03',
-    client: 'Marcus & Clara T.',
-    description: '24 × 36 in architectural polyptych on wood panel using India ink and acrylic wash.',
-    stage: 'lineart',
-  },
-  {
-    id: 'comm-04',
-    client: 'Atelier S. Gallery',
-    description: '48 × 60 in layered oil on heavy linen with luminous translucent color glazes.',
-    stage: 'coloring',
-  },
-  {
-    id: 'comm-05',
-    client: 'Dr. Evelyn Hayes',
-    description: '20 × 24 in private portraiture study in oil on cradled birch panel.',
-    stage: 'completed',
-  }
-];
+export const SAMPLE_QUEUE_ITEMS: CommissionItem[] = [];

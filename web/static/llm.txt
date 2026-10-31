@@ -1,0 +1,32 @@
+# Yukiro (Lindsay) — Digital Illustrator & Character Designer
+
+> Official website and portfolio of Yukiro (Lindsay), a digital illustrator specializing in original character design, vibrant digital artwork, and creative personal commissions.
+
+## Overview
+- **Artist**: Lindsay (Yukiro)
+- **Specialty**: Character design, digital illustration, diverse styles
+- **Tools**: Toon Boom Harmony, IbisPaint, Adobe Photoshop, Premiere Pro, After Effects
+- **Education**: De La Salle Benilde (Art & Animation)
+- **Location**: Philippines
+- **Portfolio URL**: https://yukiroart.com
+
+## Site Structure & Pages
+- **[Portfolio](/portfolio)**: Complete archive of original illustrations and character studies, categorized by framing (Bust, Half Body, Full Body).
+- **[Commissions](/commissions)**: Direct creative commissions, workflow guidelines, and Terms of Service.
+- **[Commission Queue](/queue)**: Real-time 4-stage Kanban tracking board for active client commission slots (Pending Review, In Progress, Reviewing, Completed).
+- **[Contact](/contact)**: Direct business inquiries, Discord copy trigger, and verified handles.
+- **[About](/about)**: Artist biography, polaroid portrait, education background, and studio toolset.
+
+## Commission Terms & Guidelines
+- **Rates**: Determined by the scope and complexity of the requested artwork. Clients are invited to direct message for tailored quotes.
+- **Progress**: Weekly progress updates are provided to commissioners throughout the workflow.
+- **Deadlines**: Rush deliveries may incur an increased rate.
+- **Usage**: Personal use only (avatars, banners, personal wallpapers, private prints) unless a commercial license has been explicitly purchased.
+- **Copyright**: The artist retains copyright and promotional rights to display created artwork in portfolios and art books.
+- **Payment**: Work commences once the agreed upfront deposit (50% minimum) or full payment is received.
+
+## Verified Channels & Contacts
+- **Discord**: `yuk1r0`
+- **Email**: `yukiroart19@gmail.com`
+- **X (Twitter)**: [@YUKIR0_arts](https://x.com/YUKIR0_arts)
+

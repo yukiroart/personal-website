@@ -42,10 +42,10 @@
 </script>
 
 <svelte:head>
-  <title>About Yukiro — Artist Statement, Biography & Exhibitions</title>
+  <title>About Yukiro — Artist Bio, Tools & Background</title>
   <meta
     name="description"
-    content="Learn about contemporary visual artist Yukiro, her painting practice, materials, and exhibition history."
+    content="Get to know digital illustrator Yukiro: character design focus, artistic background, and creative software suite."
   />
 </svelte:head>
 
@@ -60,11 +60,14 @@
   <aside class="about-sidebar">
     <!-- Portrait Card (Instax Mini Polaroid) -->
     <div class="neo-card portrait-card">
-      <div
-        class="portrait-media-wrap"
-        role="img"
-        aria-label="Artist portrait placeholder"
-      ></div>
+      <div class="portrait-media-wrap">
+        <img
+          src="/artworks/yukiro-portrait.jpg"
+          alt="Portrait of Lindsay (Yukiro)"
+          class="portrait-img"
+          loading="eager"
+        />
+      </div>
     </div>
 
     <!-- Education Card -->
@@ -90,6 +93,7 @@
               src={tool.icon}
               alt="{tool.name} logo"
               class="tool-icon"
+              class:tool-icon-toonboom={tool.name === "Toonboom"}
               loading="lazy"
             />
             <span class="tool-name">{tool.name}</span>
@@ -100,30 +104,23 @@
 
     <!-- Bio Narrative Card -->
     <div class="neo-card bio-card">
-      <h2 class="bio-heading">Practice & Technique</h2>
-      <div class="bio-text">
-        <p>
-          Yukiro is a contemporary painter whose work examines natural light,
-          organic geology, and botanical forms. Working predominantly with oil
-          paints, natural chalks, and raw mineral pigments on hand-primed
-          Belgian linen, her canvases capture the meditative stillness of
-          coastal landscapes and native flora.
-        </p>
-        <p>
-          Her creative process is slow and layered. Beginning with thin washes
-          of earth-toned glazes, each composition gradually accumulates
-          structural weight through heavy impasto strokes, palette knife marks,
-          and dry pigments. The resulting surfaces possess tactile depth—drawing
-          viewers close to inspect micro-textures before stepping back to take
-          in the harmonious expanse of the whole piece.
-        </p>
-        <p>
-          Her works are held in private collections across North America,
-          Europe, and Australia, and she regularly exhibits with contemporary
-          galleries focusing on abstract landscapes and experimental botanical
-          still life.
-        </p>
-      </div>
+      <h2 class="bio-heading">Bio</h2>
+      <ul class="bio-list">
+        <li>
+          Salutations! Thank you for stumbling upon my website. My name is
+          Lindsay, and I go by Yukiro as my username.
+        </li>
+        <li>
+          I am a digital illustrator, who enjoys character design! I can also do
+          diverse art styles if need be.
+        </li>
+        <li>
+          I love indulging in my hobbies such as wotagei (a unique japanese art
+          form where you dance with lightsticks), as I am in a wotagei dance
+          group called Zappu!
+        </li>
+        <li>I also like skateboarding and video games.</li>
+      </ul>
     </div>
   </article>
 </div>
@@ -135,11 +132,13 @@
   }
 
   .about-main-title {
+    font-family: var(--font-heading);
     font-size: clamp(2.5rem, 4.5vw, 3.8rem);
     font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1.05;
-    margin-bottom: 12px;
+    color: var(--color-ink);
+    margin: 0;
   }
 
   /* Editorial Grid */
@@ -155,12 +154,12 @@
     background: var(--color-surface);
     border: var(--stroke-neo);
     box-shadow: var(--shadow-neo);
-    border-radius: var(--radius-neo);
+    border-radius: 0;
     overflow: hidden;
   }
 
   .portrait-card {
-    background: #FFFFFF;
+    background: #ffffff;
     border: 2.5px solid #121212;
     border-radius: 0;
     padding: 16px 16px 56px 16px;
@@ -177,9 +176,17 @@
     position: relative;
     width: 100%;
     aspect-ratio: 3 / 4;
-    background-color: var(--color-green);
+    background-color: #121212;
     border: 2px solid #121212;
     overflow: hidden;
+  }
+
+  .portrait-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
   }
 
   .education-card {
@@ -244,7 +251,7 @@
     gap: 10px;
     background: var(--color-surface);
     border: var(--stroke-neo);
-    border-radius: var(--radius-neo-sm);
+    border-radius: 0;
     padding: 10px 14px;
     box-shadow: none;
   }
@@ -255,6 +262,15 @@
     object-fit: contain;
     flex-shrink: 0;
     border-radius: 4px;
+  }
+
+  .tool-icon-toonboom {
+    filter: invert(1);
+    transition: filter 0.15s ease;
+  }
+
+  :global(:root[data-theme="dark"]) .tool-icon-toonboom {
+    filter: invert(0);
   }
 
   .tool-name {
@@ -278,16 +294,21 @@
     margin-bottom: 18px;
   }
 
-  .bio-text p {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--color-ink);
-    opacity: 0.92;
-    margin-bottom: 16px;
+  .bio-list {
+    list-style: disc;
+    padding-left: 20px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
   }
 
-  .bio-text p:last-child {
-    margin-bottom: 0;
+  .bio-list li {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-ink);
+    opacity: 0.94;
   }
 
   /* Responsive Breakpoints */
@@ -297,6 +318,28 @@
     }
     .portrait-card {
       max-width: 480px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .education-card,
+    .tools-card,
+    .bio-card {
+      padding: 22px 18px;
+    }
+
+    .tools-grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+    }
+
+    .tool-item-card {
+      padding: 8px 10px;
+      min-height: 44px;
+    }
+
+    .about-editorial-grid {
+      gap: 20px;
     }
   }
 </style>

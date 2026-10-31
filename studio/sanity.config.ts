@@ -6,7 +6,7 @@ export default defineConfig({
   name: 'default',
   title: 'Yukiro Art Portfolio',
 
-  projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'your_project_id',
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'y0rudiy0',
   dataset: process.env.SANITY_STUDIO_DATASET || 'production',
 
   plugins: [structureTool()],

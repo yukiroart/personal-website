@@ -3,20 +3,67 @@
   import { SvelteDevKit } from "svelte-grab";
   import "../styles/tokens.css";
   import { page } from "$app/state";
+  import { onNavigate } from "$app/navigation";
   import { onMount } from "svelte";
+  import { fly, fade } from "svelte/transition";
 
   let { children } = $props();
+
+  onNavigate((navigation) => {
+    if (!document.startViewTransition) return;
+    if (navigation.to?.url.pathname === navigation.from?.url.pathname) return;
+
+    return new Promise((resolve) => {
+      document.startViewTransition(async () => {
+        resolve();
+        await navigation.complete;
+      });
+    });
+  });
 
   let isPortfolio = $derived(
     page.url.pathname === "/" || page.url.pathname === "/portfolio",
   );
-  let isServices = $derived(page.url.pathname.startsWith("/services"));
-  let isAbout = $derived(page.url.pathname.startsWith("/about"));
+  let isCommissions = $derived(page.url.pathname.startsWith("/commissions"));
   let isQueue = $derived(page.url.pathname.startsWith("/queue"));
   let isContact = $derived(page.url.pathname.startsWith("/contact"));
+  let isAbout = $derived(page.url.pathname.startsWith("/about"));
+  let isError = $derived(page.status >= 400 || !!page.error);
+
+  let scrollY = $state(0);
+  let isScrolled = $derived(scrollY > 25);
 
   let currentTheme = $state("dark");
   let clickSound: HTMLAudioElement | null = null;
+
+  let copiedDiscord = $state(false);
+  let copyTimeout: ReturnType<typeof setTimeout>;
+
+  async function copyDiscord() {
+    try {
+      await navigator.clipboard.writeText("yuk1r0");
+      copiedDiscord = true;
+      clearTimeout(copyTimeout);
+      copyTimeout = setTimeout(() => {
+        copiedDiscord = false;
+      }, 2200);
+    } catch (err) {
+      console.error("Failed to copy Discord username:", err);
+    }
+  }
+
+  let isSoundMuted = $state(false);
+
+  function toggleSound() {
+    isSoundMuted = !isSoundMuted;
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem("sound_muted", String(isSoundMuted));
+    }
+    if (!isSoundMuted && clickSound) {
+      clickSound.currentTime = 0;
+      clickSound.play().catch(() => {});
+    }
+  }
 
   const INTERACTIVE_SELECTOR =
     'button, a, [role="button"], input[type="submit"], input[type="button"], input[type="reset"], input[type="checkbox"], input[type="radio"], summary, label[for]';
@@ -29,16 +76,23 @@
     currentTheme = saved;
     document.documentElement.setAttribute("data-theme", saved);
 
+    const savedMuted = localStorage.getItem("sound_muted");
+    if (savedMuted !== null) {
+      isSoundMuted = savedMuted === "true";
+    }
+
     clickSound = new Audio("/sounds/click.wav");
     clickSound.preload = "auto";
   });
 
   function handleGlobalClick(event: MouseEvent) {
-    if (!clickSound) return;
+    if (!clickSound || isSoundMuted) return;
     const target = event.target as HTMLElement | null;
     if (!target) return;
 
-    const interactive = target.closest(INTERACTIVE_SELECTOR) as HTMLElement | null;
+    const interactive = target.closest(
+      INTERACTIVE_SELECTOR,
+    ) as HTMLElement | null;
     if (!interactive) return;
 
     if (
@@ -65,242 +119,469 @@
   function scrollToTop() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
+
+  // Mobile Hamburger Menu State
+  let isMobileMenuOpen = $state(false);
+
+  function toggleMobileMenu() {
+    isMobileMenuOpen = !isMobileMenuOpen;
+  }
+
+  function closeMobileMenu() {
+    isMobileMenuOpen = false;
+  }
+
+  $effect(() => {
+    // Automatically close mobile menu on route change
+    page.url.pathname;
+    isMobileMenuOpen = false;
+  });
+
+  $effect(() => {
+    if (typeof document !== "undefined") {
+      if (isMobileMenuOpen) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "";
+      }
+    }
+  });
+
+  function handleWindowKeydown(e: KeyboardEvent) {
+    if (e.key === "Escape" && isMobileMenuOpen) {
+      isMobileMenuOpen = false;
+    }
+  }
 </script>
 
-<svelte:window onclick={handleGlobalClick} />
+<svelte:window
+  bind:scrollY
+  onclick={handleGlobalClick}
+  onkeydown={handleWindowKeydown}
+/>
 
 <svelte:head>
-  <title>Yukiro — Contemporary Visual Art Portfolio</title>
+  <title>Yukiro — Digital Illustration Portfolio</title>
   <meta
     name="description"
-    content="Original paintings, botanicals, and abstract studies by Yukiro."
+    content="Contemporary digital illustration, character design, and visual art portfolio by Yukiro."
   />
 </svelte:head>
 
-<!-- Minimal Neobrutalist Full-Width Masthead -->
-<header class="neo-header-wrapper">
-  <div class="neo-header">
-    <a href="/" class="neo-brand" aria-label="Yukiro Home">
-      <span class="brand-badge">Y</span>
-      <span class="brand-name">YUKIRO</span>
-    </a>
-
-    <!-- 4-link Navigation -->
-    <nav class="neo-nav" aria-label="Main Navigation">
+{#if !isError}
+  <!-- Minimal Neobrutalist Full-Width Masthead -->
+  <header class="neo-header-wrapper" class:is-scrolled={isScrolled}>
+    <div class="neo-header">
       <a
         href="/"
-        class="nav-item"
-        class:active={isPortfolio}
-        data-text="PORTFOLIO"
+        class="neo-brand"
+        aria-label="Yukiro Home"
+        onclick={closeMobileMenu}
       >
-        <span class="nav-label">PORTFOLIO</span>
+        <img
+          src="/images/logo.png"
+          alt="Yukiro"
+          class="brand-logo"
+          width="334"
+          height="117"
+        />
       </a>
-      <a
-        href="/services"
-        class="nav-item"
-        class:active={isServices}
-        data-text="SERVICES"
+
+      <!-- 5-link Navigation (Desktop) -->
+      <nav class="neo-nav desktop-nav" aria-label="Main Navigation">
+        <a
+          href="/"
+          class="nav-item"
+          class:active={isPortfolio}
+          data-text="PORTFOLIO"
+        >
+          <span class="nav-label">PORTFOLIO</span>
+        </a>
+        <a
+          href="/commissions"
+          class="nav-item"
+          class:active={isCommissions}
+          data-text="COMMISSIONS"
+        >
+          <span class="nav-label">COMMISSIONS</span>
+        </a>
+        <a
+          href="/queue"
+          class="nav-item"
+          class:active={isQueue}
+          data-text="QUEUE"
+        >
+          <span class="nav-label">QUEUE</span>
+        </a>
+        <a
+          href="/contact"
+          class="nav-item"
+          class:active={isContact}
+          data-text="CONTACT"
+        >
+          <span class="nav-label">CONTACT</span>
+        </a>
+        <a
+          href="/about"
+          class="nav-item"
+          class:active={isAbout}
+          data-text="ABOUT"
+        >
+          <span class="nav-label">ABOUT</span>
+        </a>
+      </nav>
+
+      <!-- Tactile Hamburger Button (Mobile <= 768px) -->
+      <button
+        type="button"
+        class="hamburger-btn"
+        class:is-active={isMobileMenuOpen}
+        onclick={toggleMobileMenu}
+        aria-label={isMobileMenuOpen
+          ? "Close navigation menu"
+          : "Open navigation menu"}
+        aria-expanded={isMobileMenuOpen}
+        aria-controls="mobile-nav-drawer"
       >
-        <span class="nav-label">SERVICES</span>
-      </a>
-      <a
-        href="/about"
-        class="nav-item"
-        class:active={isAbout}
-        data-text="ABOUT"
-      >
-        <span class="nav-label">ABOUT</span>
-      </a>
-      <a
-        href="/queue"
-        class="nav-item"
-        class:active={isQueue}
-        data-text="QUEUE"
-      >
-        <span class="nav-label">QUEUE</span>
-      </a>
-      <a
-        href="/contact"
-        class="nav-item"
-        class:active={isContact}
-        data-text="CONTACT"
-      >
-        <span class="nav-label">CONTACT</span>
-      </a>
+        <span class="hamburger-bar top"></span>
+        <span class="hamburger-bar mid"></span>
+        <span class="hamburger-bar bot"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    {#if isMobileMenuOpen}
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <div
+        class="mobile-backdrop"
+        onclick={closeMobileMenu}
+        role="presentation"
+        aria-hidden="true"
+      ></div>
+    {/if}
+
+    <nav
+      id="mobile-nav-drawer"
+      class="mobile-nav-drawer"
+      class:is-open={isMobileMenuOpen}
+      aria-label="Mobile Navigation"
+      inert={!isMobileMenuOpen}
+    >
+      <div class="mobile-nav-links">
+        <a
+          href="/"
+          class="mobile-nav-item"
+          class:active={isPortfolio}
+          onclick={closeMobileMenu}
+        >
+          <span class="mobile-nav-index">01</span>
+          <span class="mobile-nav-label">PORTFOLIO</span>
+        </a>
+        <a
+          href="/commissions"
+          class="mobile-nav-item"
+          class:active={isCommissions}
+          onclick={closeMobileMenu}
+        >
+          <span class="mobile-nav-index">02</span>
+          <span class="mobile-nav-label">COMMISSIONS</span>
+        </a>
+        <a
+          href="/queue"
+          class="mobile-nav-item"
+          class:active={isQueue}
+          onclick={closeMobileMenu}
+        >
+          <span class="mobile-nav-index">03</span>
+          <span class="mobile-nav-label">QUEUE</span>
+        </a>
+        <a
+          href="/contact"
+          class="mobile-nav-item"
+          class:active={isContact}
+          onclick={closeMobileMenu}
+        >
+          <span class="mobile-nav-index">04</span>
+          <span class="mobile-nav-label">CONTACT</span>
+        </a>
+        <a
+          href="/about"
+          class="mobile-nav-item"
+          class:active={isAbout}
+          onclick={closeMobileMenu}
+        >
+          <span class="mobile-nav-index">05</span>
+          <span class="mobile-nav-label">ABOUT</span>
+        </a>
+      </div>
     </nav>
-  </div>
-</header>
+  </header>
+{/if}
 
 <!-- Main Page Content Slot -->
-<main class="neo-main">
+<main class="neo-main" class:error-main={isError}>
   {@render children?.()}
 </main>
 
-<!-- Full-Width Edge-to-Edge Big Footer -->
-<footer class="neo-footer-wrapper">
-  <div class="neo-footer">
-    <div class="footer-grid">
-      <!-- Col 1: Brand & Studio Summary -->
-      <div class="footer-col footer-col-brand">
-        <a href="/" class="neo-brand footer-brand" aria-label="Yukiro Home">
-          <span class="brand-badge">Y</span>
-          <span class="brand-name">YUKIRO</span>
-        </a>
-        <p class="footer-bio">
-          Contemporary fine art, botanical studies, and tactile visual
-          storytelling. Works available directly through the studio or
-          represented galleries.
-        </p>
-      </div>
+{#if !isError}
+  <!-- Soft Orange Checkerboard Side Ribbons -->
+  <div class="page-checker-ribbon left" aria-hidden="true"></div>
+  <div class="page-checker-ribbon right" aria-hidden="true"></div>
+{/if}
 
-      <!-- Col 2: Navigation Links -->
-      <div class="footer-col">
-        <h3 class="footer-heading">NAVIGATION</h3>
-        <ul class="footer-links">
-          <li><a href="/" class="footer-link">PORTFOLIO</a></li>
-          <li><a href="/services" class="footer-link">SERVICES</a></li>
-          <li><a href="/about" class="footer-link">ABOUT</a></li>
-          <li><a href="/queue" class="footer-link">QUEUE</a></li>
-          <li><a href="/contact" class="footer-link">CONTACT</a></li>
-        </ul>
-      </div>
+{#if !isError}
+  <!-- Full-Width Edge-to-Edge Big Footer -->
+  <footer class="neo-footer-wrapper">
+    <div class="neo-footer">
+      <div class="footer-grid">
+        <!-- Col 1: Brand & Studio Summary -->
+        <div class="footer-col footer-col-brand">
+          <a href="/" class="neo-brand footer-brand" aria-label="Yukiro Home">
+            <img
+              src="/images/logo.png"
+              alt="Yukiro"
+              class="brand-logo footer-logo"
+              width="334"
+              height="117"
+            />
+          </a>
+          <p class="footer-bio">
+            I am a digital illustrator, who enjoys character design! I can also
+            do diverse art styles if need be.
+          </p>
+        </div>
 
-      <!-- Col 3: Connect & Social -->
-      <div class="footer-col footer-col-social">
-        <div class="footer-social-row">
-          <a
-            href="https://twitter.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="footer-icon-btn"
-            aria-label="Yukiro on X / Twitter"
-          >
-            <svg
-              class="social-svg"
-              viewBox="0 0 24 24"
-              width="16"
-              height="16"
-              fill="currentColor"
-              aria-hidden="true"
+        <!-- Col 2: Navigation Links -->
+        <div class="footer-col">
+          <h3 class="footer-heading">NAVIGATION</h3>
+          <ul class="footer-links">
+            <li><a href="/" class="footer-link">PORTFOLIO</a></li>
+            <li><a href="/commissions" class="footer-link">COMMISSIONS</a></li>
+            <li><a href="/queue" class="footer-link">QUEUE</a></li>
+            <li><a href="/contact" class="footer-link">CONTACT</a></li>
+            <li><a href="/about" class="footer-link">ABOUT</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Connect & Social -->
+        <div class="footer-col footer-col-social">
+          <div class="footer-social-row">
+            <!-- X / Twitter -->
+            <a
+              href="https://x.com/YUKIR0_arts"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer-icon-btn"
+              aria-label="Yukiro on X"
+              title="X (Twitter): @YUKIR0_arts"
             >
-              <path
-                d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"
-              />
-            </svg>
-          </a>
-          <a
-            href="https://instagram.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="footer-icon-btn"
-            aria-label="Yukiro on Instagram"
-          >
-            <svg
-              class="social-svg"
-              viewBox="0 0 24 24"
-              width="16"
-              height="16"
-              fill="currentColor"
-              aria-hidden="true"
+              <svg
+                class="social-svg"
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"
+                />
+              </svg>
+            </a>
+
+            <!-- Gmail -->
+            <a
+              href="mailto:yukiroart19@gmail.com"
+              class="footer-icon-btn"
+              aria-label="Email Yukiro via Gmail"
+              title="Gmail: yukiroart19@gmail.com"
             >
-              <path
-                d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"
-              />
-            </svg>
-          </a>
-          <a
-            href="https://artstation.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="footer-icon-btn"
-            aria-label="Yukiro on ArtStation"
-          >
-            <svg
-              class="social-svg"
-              viewBox="0 0 24 24"
-              width="16"
-              height="16"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                d="M0 17.723l2.027 3.505h.001a2.424 2.424 0 0 0 2.164 1.333h13.457l-2.792-4.838H0zm24 .025c0-.484-.143-.935-.388-1.314L15.728 2.728a2.424 2.424 0 0 0-2.142-1.289H9.419L21.598 22.54l1.92-3.325c.378-.637.482-.919.482-1.467zm-11.129-3.462L7.428 4.858l-5.444 9.428h10.887z"
-              />
-            </svg>
-          </a>
+              <svg
+                class="social-svg"
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"
+                />
+              </svg>
+            </a>
+
+            <!-- Discord -->
+            <div class="footer-discord-wrap">
+              <button
+                type="button"
+                class="footer-icon-btn discord-icon-btn"
+                onclick={copyDiscord}
+                aria-label="Copy Discord username (yuk1r0)"
+                title="Click to copy yuk1r0"
+              >
+                <svg
+                  class="social-svg"
+                  viewBox="0 0 24 24"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"
+                  />
+                </svg>
+              </button>
+
+              <div class="toast-anchor">
+                {#if copiedDiscord}
+                  <div
+                    class="toast-popup"
+                    role="status"
+                    aria-live="polite"
+                    in:fly={{ y: 6, duration: 180 }}
+                    out:fade={{ duration: 150 }}
+                  >
+                    Copied discord username!
+                  </div>
+                {/if}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Bottom Bar: Legal + Back to Top -->
-    <div class="footer-bottom-bar">
-      <div class="footer-legal">
-        <span>© {new Date().getFullYear()} Yukiro. All rights reserved.</span>
+      <!-- Bottom Bar: Legal + Back to Top -->
+      <div class="footer-bottom-bar">
+        <div class="footer-legal">
+          <span>© {new Date().getFullYear()} Yukiro. All rights reserved.</span
+          >
+        </div>
+        <button
+          onclick={scrollToTop}
+          type="button"
+          class="back-to-top-btn"
+          aria-label="Back to top of page"
+        >
+          <span>BACK TO TOP</span>
+          <span class="arrow-up">↑</span>
+        </button>
       </div>
-      <button
-        onclick={scrollToTop}
-        type="button"
-        class="back-to-top-btn"
-        aria-label="Back to top of page"
-      >
-        <span>BACK TO TOP</span>
-        <span class="arrow-up">↑</span>
-      </button>
     </div>
-  </div>
-</footer>
+  </footer>
+{/if}
 
-<!-- Bottom-Left Floating Theme Toggle -->
-<button
-  onclick={toggleTheme}
-  class="neo-theme-toggle"
-  type="button"
-  aria-label={currentTheme === "dark"
-    ? "Switch to light mode"
-    : "Switch to dark mode"}
->
-  {#if currentTheme === "dark"}
-    <!-- Sun icon for light mode affordance -->
-    <svg
-      class="theme-svg"
-      viewBox="0 0 24 24"
-      width="20"
-      height="20"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2.2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="12" r="5"></circle>
-      <line x1="12" y1="1" x2="12" y2="3"></line>
-      <line x1="12" y1="21" x2="12" y2="23"></line>
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-      <line x1="1" y1="12" x2="3" y2="12"></line>
-      <line x1="21" y1="12" x2="23" y2="12"></line>
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-    </svg>
-  {:else}
-    <!-- Moon icon for dark mode affordance -->
-    <svg
-      class="theme-svg"
-      viewBox="0 0 24 24"
-      width="20"
-      height="20"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2.2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-    </svg>
-  {/if}
-</button>
+{#if !isError}
+  <!-- Floating Watermark Annotation above Netlify Badge -->
+  <aside class="watermark-annotation" aria-hidden="true">
+    (Ignore this watermark)
+  </aside>
+{/if}
+
+<!-- Bottom-Left Floating Quick Controls (Sound Mute & Theme) -->
+<div class="neo-floating-dock">
+  <button
+    onclick={toggleSound}
+    class="neo-floating-btn"
+    type="button"
+    aria-label={isSoundMuted ? "Unmute click sounds" : "Mute click sounds"}
+    title={isSoundMuted
+      ? "Click to unmute sound effects"
+      : "Click to mute sound effects"}
+  >
+    {#if isSoundMuted}
+      <!-- Volume Muted / Off Icon -->
+      <svg
+        class="control-svg"
+        viewBox="0 0 24 24"
+        width="20"
+        height="20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <line x1="23" y1="9" x2="17" y2="15"></line>
+        <line x1="17" y1="9" x2="23" y2="15"></line>
+      </svg>
+    {:else}
+      <!-- Volume Active / On Icon -->
+      <svg
+        class="control-svg"
+        viewBox="0 0 24 24"
+        width="20"
+        height="20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+      </svg>
+    {/if}
+  </button>
+
+  <button
+    onclick={toggleTheme}
+    class="neo-floating-btn neo-theme-toggle"
+    type="button"
+    aria-label={currentTheme === "dark"
+      ? "Switch to light mode"
+      : "Switch to dark mode"}
+    title={currentTheme === "dark"
+      ? "Switch to light mode"
+      : "Switch to dark mode"}
+  >
+    {#if currentTheme === "dark"}
+      <!-- Sun icon for light mode affordance -->
+      <svg
+        class="control-svg theme-svg"
+        viewBox="0 0 24 24"
+        width="20"
+        height="20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+    {:else}
+      <!-- Moon icon for dark mode affordance -->
+      <svg
+        class="control-svg theme-svg"
+        viewBox="0 0 24 24"
+        width="20"
+        height="20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    {/if}
+  </button>
+</div>
 
 {#if dev}
   <SvelteDevKit />
@@ -323,7 +604,7 @@
     width: 100%;
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 18px 24px;
+    padding: 20px 24px;
     background: transparent;
     border: none;
     box-shadow: none;
@@ -332,37 +613,52 @@
     align-items: center;
     justify-content: space-between;
     gap: 20px;
+    transition: padding var(--duration-normal, 220ms) var(--ease-out);
+  }
+
+  .neo-header-wrapper.is-scrolled .neo-header {
+    padding: 10px 24px;
   }
 
   .neo-brand {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 12px;
     text-decoration: none;
     color: var(--color-ink);
   }
 
-  .brand-badge {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: var(--color-yellow);
-    border: var(--stroke-neo);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    box-shadow: var(--shadow-neo-xs);
-    color: #121212;
+  .brand-logo {
+    height: 117px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+    /* Light mode: black graffiti lettering with crisp white contour stroke */
+    filter: drop-shadow(1.5px 0 0 #ffffff) drop-shadow(-1.5px 0 0 #ffffff)
+      drop-shadow(0 1.5px 0 #ffffff) drop-shadow(0 -1.5px 0 #ffffff);
+    transition:
+      height var(--duration-normal, 220ms) var(--ease-out),
+      filter var(--duration-fast, 120ms) var(--ease-out),
+      transform var(--duration-fast, 120ms) var(--ease-out);
   }
 
-  .brand-name {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 1.25rem;
-    letter-spacing: 0.02em;
+  .brand-logo:hover {
+    transform: scale(1.03);
+  }
+
+  .neo-header-wrapper.is-scrolled .brand-logo {
+    height: 36px;
+  }
+
+  .footer-logo {
+    height: 44px !important;
+    margin-bottom: 4px;
+  }
+
+  :global(:root[data-theme="dark"]) .brand-logo {
+    /* Dark mode: inverted to crisp white letters with deep dark outline stroke */
+    filter: invert(1) drop-shadow(1.5px 0 0 #000000)
+      drop-shadow(-1.5px 0 0 #000000) drop-shadow(0 1.5px 0 #000000)
+      drop-shadow(0 -1.5px 0 #000000);
   }
 
   .neo-nav {
@@ -402,8 +698,8 @@
     font-weight: 600;
     letter-spacing: 0.03em;
     transition:
-      font-weight 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-      letter-spacing 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      font-weight var(--duration-fast, 120ms) var(--ease-out),
+      letter-spacing var(--duration-fast, 120ms) var(--ease-out);
   }
 
   .nav-item:hover {
@@ -435,14 +731,105 @@
   }
 
   .neo-main {
+    position: relative;
+    z-index: 1;
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 36px 24px 64px;
     width: 100%;
+    view-transition-name: page-main;
+  }
+
+  .neo-main.error-main {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* View Transitions API (Hardware-Accelerated Composite Page Motion) */
+  @keyframes pageExit {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+  }
+
+  @keyframes pageEnter {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  :global(:root::view-transition-old(root)),
+  :global(:root::view-transition-new(root)) {
+    animation: none !important;
+  }
+
+  :global(:root::view-transition-old(page-main)),
+  :global(:root::view-transition-new(page-main)) {
+    mix-blend-mode: normal;
+  }
+
+  :global(:root::view-transition-old(page-main)) {
+    animation: pageExit 100ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1))
+      forwards;
+  }
+
+  :global(:root::view-transition-new(page-main)) {
+    animation: pageEnter 180ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1))
+      forwards;
+  }
+
+  /* Soft Orange Checkerboard Side Ribbons */
+  .page-checker-ribbon {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 48px;
+    z-index: 0;
+    pointer-events: none;
+    background: conic-gradient(
+      var(--color-orange-soft, #ffb370) 90deg,
+      transparent 90deg 180deg,
+      var(--color-orange-soft, #ffb370) 180deg 270deg,
+      transparent 270deg
+    );
+    background-size: 48px 48px;
+  }
+
+  .page-checker-ribbon.left {
+    left: 0;
+    border-right: 2.5px solid var(--color-ink);
+  }
+
+  .page-checker-ribbon.right {
+    right: 0;
+    border-left: 2.5px solid var(--color-ink);
+  }
+
+  @media (max-width: 768px) {
+    .page-checker-ribbon {
+      display: none !important;
+    }
   }
 
   /* Full-Width Edge-to-Edge Big Footer */
   .neo-footer-wrapper {
+    position: relative;
+    z-index: 50;
     width: 100%;
     background: var(--color-surface);
     border-top: var(--stroke-neo);
@@ -531,17 +918,18 @@
     justify-content: center;
     width: 38px;
     height: 38px;
-    background-color: var(--color-surface);
-    color: var(--color-ink);
+    background-color: #121212;
+    color: #ffffff;
     border: var(--stroke-neo);
     border-radius: var(--radius-neo-pill);
     box-shadow: var(--shadow-neo-xs);
     cursor: var(--cursor-pointer);
     text-decoration: none;
     transition:
-      transform 0.1s ease,
-      box-shadow 0.1s ease,
-      background-color 0.15s ease;
+      transform var(--duration-fast, 120ms) var(--ease-out),
+      box-shadow var(--duration-fast, 120ms) var(--ease-out),
+      background-color 0.15s ease,
+      color 0.15s ease;
   }
 
   .footer-icon-btn:hover {
@@ -551,18 +939,69 @@
     color: #121212;
   }
 
+  :global(:root[data-theme="dark"]) .footer-icon-btn {
+    background-color: #121212;
+    color: #ffffff;
+    border-color: var(--color-border-subtle);
+  }
+
   :global(:root[data-theme="dark"]) .footer-icon-btn:hover {
-    background-color: var(--color-border-subtle);
-    color: var(--color-ink);
+    background-color: var(--color-yellow);
+    color: #121212;
   }
 
   .footer-icon-btn:active {
-    transform: translate(2px, 2px);
+    transform: translate(2px, 2px) scale(0.96);
     box-shadow: 0px 0px 0px var(--color-ink);
   }
 
   .social-svg {
     display: block;
+  }
+
+  /* Footer Discord Wrap & Toast */
+  .footer-discord-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer-discord-wrap .toast-anchor {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer-discord-wrap .toast-popup {
+    position: relative;
+    background: var(--color-yellow);
+    color: #121212;
+    border: 2px solid #121212;
+    box-shadow: var(--shadow-neo-xs);
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    padding: 6px 14px;
+    white-space: nowrap;
+    border-radius: 0;
+  }
+
+  .footer-discord-wrap .toast-popup::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #121212 transparent transparent transparent;
   }
 
   /* Bottom Bar */
@@ -653,6 +1092,165 @@
     }
   }
 
+  /* Hamburger Menu Button */
+  .hamburger-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: var(--color-surface);
+    border: var(--stroke-neo);
+    box-shadow: var(--shadow-neo-xs);
+    border-radius: 0;
+    cursor: var(--cursor-pointer);
+    user-select: none;
+    transition:
+      transform var(--duration-fast, 120ms) var(--ease-out),
+      box-shadow var(--duration-fast, 120ms) var(--ease-out),
+      background-color 0.15s ease;
+  }
+
+  .hamburger-btn:hover {
+    background-color: var(--color-border-subtle);
+  }
+
+  .hamburger-btn:active {
+    transform: translate(2px, 2px) scale(0.96);
+    box-shadow: 0px 0px 0px var(--color-ink);
+  }
+
+  .hamburger-bar {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background-color: var(--color-ink);
+    border-radius: 2px;
+    transition:
+      transform var(--duration-normal, 220ms) var(--ease-out),
+      opacity var(--duration-fast, 120ms) var(--ease-out);
+  }
+
+  .hamburger-btn.is-active .hamburger-bar.top {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .hamburger-btn.is-active .hamburger-bar.mid {
+    opacity: 0;
+  }
+
+  .hamburger-btn.is-active .hamburger-bar.bot {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* Mobile Backdrop */
+  .mobile-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background: rgba(12, 12, 14, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 90;
+    animation: fadeInBackdrop 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Mobile Drawer Menu */
+  .mobile-nav-drawer {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--color-surface);
+    border-bottom: var(--stroke-neo);
+    box-shadow: var(--shadow-neo);
+    z-index: 95;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px) scaleY(0.98);
+    transform-origin: top center;
+    transition:
+      transform var(--duration-normal, 220ms) var(--ease-out),
+      opacity var(--duration-normal, 220ms) var(--ease-out),
+      visibility var(--duration-normal, 220ms);
+  }
+
+  .mobile-nav-drawer.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scaleY(1);
+  }
+
+  .mobile-nav-links {
+    padding: 18px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mobile-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    background: transparent;
+    border: 1.5px solid transparent;
+    border-radius: var(--radius-neo-sm);
+    text-decoration: none;
+    color: var(--color-ink);
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    min-height: 48px;
+    transition:
+      background-color 0.12s ease,
+      border-color 0.12s ease,
+      transform 0.1s ease;
+  }
+
+  .mobile-nav-index {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--color-muted);
+  }
+
+  .mobile-nav-label {
+    flex: 1;
+  }
+
+  .mobile-nav-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  :global(:root[data-theme="dark"]) .mobile-nav-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .mobile-nav-item.active {
+    background: var(--color-bg);
+    border-color: var(--color-ink);
+    box-shadow: var(--shadow-neo-xs);
+    font-weight: 800;
+  }
+
+  .mobile-nav-item.active .mobile-nav-index {
+    color: var(--color-pink);
+  }
+
+  :global(:root[data-theme="dark"]) .mobile-nav-item.active {
+    background: var(--color-surface);
+    border-color: var(--color-ink);
+  }
+
   /* Responsive Masthead */
   @media (max-width: 992px) {
     .neo-header {
@@ -660,28 +1258,70 @@
     }
   }
 
-  @media (max-width: 680px) {
+  @media (max-width: 768px) {
     .neo-header {
-      flex-direction: column;
       padding: 14px 16px;
-      gap: 12px;
     }
-    .neo-nav {
-      width: 100%;
-      justify-content: space-around;
-      gap: 6px;
+
+    .neo-header-wrapper.is-scrolled .neo-header {
+      padding: 8px 16px;
     }
+
+    .brand-logo {
+      height: 72px;
+      max-width: calc(100vw - 84px);
+    }
+
+    .neo-header-wrapper.is-scrolled .brand-logo {
+      height: 32px;
+    }
+
+    .desktop-nav {
+      display: none !important;
+    }
+
+    .hamburger-btn {
+      display: inline-flex;
+    }
+
     .neo-main {
       padding: 24px 16px 48px;
     }
   }
 
-  /* Floating Bottom-Left Theme Toggle */
-  .neo-theme-toggle {
+  @media (prefers-reduced-motion: reduce) {
+    .neo-header,
+    .brand-logo,
+    .hamburger-btn,
+    .hamburger-bar,
+    .mobile-backdrop,
+    .mobile-nav-drawer,
+    .mobile-nav-item,
+    .nav-item,
+    .nav-label {
+      transition: none !important;
+      animation: none !important;
+      transform: none !important;
+    }
+
+    :global(:root::view-transition-old(page-main)),
+    :global(:root::view-transition-new(page-main)) {
+      animation: none !important;
+    }
+  }
+
+  /* Bottom-Left Floating Quick Controls Dock */
+  .neo-floating-dock {
     position: fixed;
     bottom: 24px;
     left: 24px;
     z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .neo-floating-btn {
     width: 44px;
     height: 44px;
     padding: 0;
@@ -698,27 +1338,28 @@
     transition:
       transform 0.12s ease,
       box-shadow 0.12s ease,
-      background-color 0.15s ease;
+      background-color 0.15s ease,
+      color 0.15s ease;
   }
 
-  .neo-theme-toggle:hover {
+  .neo-floating-btn:hover {
     transform: translate(-2px, -2px);
     box-shadow: var(--shadow-neo);
     background-color: var(--color-yellow);
     color: #121212;
   }
 
-  :global(:root[data-theme="dark"]) .neo-theme-toggle:hover {
+  :global(:root[data-theme="dark"]) .neo-floating-btn:hover {
     background-color: var(--color-border-subtle);
     color: var(--color-ink);
   }
 
-  .neo-theme-toggle:active {
+  .neo-floating-btn:active {
     transform: translate(2px, 2px);
     box-shadow: var(--shadow-neo-xs);
   }
 
-  .theme-svg {
+  .control-svg {
     display: block;
     width: 20px;
     height: 20px;
@@ -726,16 +1367,45 @@
   }
 
   @media (max-width: 680px) {
-    .neo-theme-toggle {
+    .neo-floating-dock {
       bottom: 16px;
       left: 16px;
-      width: 40px;
-      height: 40px;
+      gap: 8px;
     }
 
-    .theme-svg {
-      width: 18px;
-      height: 18px;
+    .neo-floating-btn {
+      width: 42px;
+      height: 42px;
+    }
+
+    .control-svg {
+      width: 19px;
+      height: 19px;
+    }
+  }
+
+  /* Floating Watermark Annotation above Netlify Badge */
+  .watermark-annotation {
+    position: fixed;
+    bottom: 60px;
+    right: 18px;
+    z-index: 90;
+    pointer-events: none;
+    user-select: none;
+    font-family: var(--font-handwriting, "Caveat", cursive);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    transform: rotate(-3deg);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 680px) {
+    .watermark-annotation {
+      bottom: 56px;
+      right: 14px;
+      font-size: 1.05rem;
     }
   }
 </style>

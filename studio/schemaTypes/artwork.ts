@@ -6,6 +6,13 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
+      name: 'order',
+      title: 'Display Order',
+      type: 'number',
+      description: 'Numeric sort order (e.g. 0, 1, 4.1, 15). Lower numbers appear first.',
+      initialValue: 0,
+    }),
+    defineField({
       name: 'title',
       title: 'Artwork Title',
       type: 'string',
@@ -22,9 +29,6 @@ export default defineType({
       name: 'mainImage',
       title: 'Primary Artwork Image',
       type: 'image',
-      options: {
-        hotspot: true, // Yukiro can click the visual focal point!
-      },
       fields: [
         {
           name: 'alt',
@@ -36,64 +40,61 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'galleryImages',
-      title: 'Detail & In-Situ Views',
-      description: 'Close-up texture shots, framing angles, or wall-hanging mockups',
+      name: 'collection',
+      title: 'Illustration Framing Type',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Illustration', value: 'illustration' },
+          { title: 'Animation', value: 'animation' },
+          { title: 'Bust', value: 'bust' },
+          { title: 'Half Body', value: 'half-body' },
+          { title: 'Full Body', value: 'full-body' },
+          { title: 'Chibi', value: 'chibi' },
+          { title: 'Comic', value: 'comic' },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'tags',
+      title: 'Artwork Tags',
+      description: 'Select one or more style/category tags for filtering and modal display',
       type: 'array',
-      of: [{ type: 'image', options: { hotspot: true } }],
+      of: [{ type: 'string' }],
+      options: {
+        list: [
+          { title: 'Original', value: 'Original' },
+          { title: 'Fan Art', value: 'Fan Art' },
+          { title: 'Commission', value: 'Commission' },
+          { title: 'Reference Sheet', value: 'Reference Sheet' },
+        ],
+      },
+    }),
+    defineField({
+      name: 'videoUrl',
+      title: 'Preview Video URL / Path',
+      type: 'string',
+      description: 'Optional path or URL to looping MP4 for autoplaying bento card preview',
+      placeholder: '/artworks/fansa-animation.mp4',
+    }),
+    defineField({
+      name: 'youtubeEmbedUrl',
+      title: 'YouTube Embed URL',
+      type: 'url',
+      description: 'Embed URL for lightbox modal player (e.g., https://www.youtube.com/embed/...)',
+    }),
+    defineField({
+      name: 'youtubeUrl',
+      title: 'YouTube Watch Link',
+      type: 'url',
+      description: 'External link to watch full video on YouTube (e.g., https://www.youtube.com/watch?v=...)',
     }),
     defineField({
       name: 'year',
       title: 'Year Created',
       type: 'number',
       initialValue: new Date().getFullYear(),
-    }),
-    defineField({
-      name: 'medium',
-      title: 'Medium / Materials',
-      type: 'string',
-      placeholder: 'e.g., Oil on Canvas, Gouache on Arches Paper, Mixed Media',
-    }),
-    defineField({
-      name: 'dimensions',
-      title: 'Dimensions',
-      type: 'string',
-      placeholder: 'e.g., 24 x 36 in (61 x 91 cm)',
-    }),
-    defineField({
-      name: 'collection',
-      title: 'Series / Collection',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'New Works', value: 'new-works' },
-          { title: 'Landscapes & Botanicals', value: 'landscapes' },
-          { title: 'Abstract Studies', value: 'abstracts' },
-          { title: 'Portraiture', value: 'portraits' },
-        ],
-      },
-    }),
-    defineField({
-      name: 'status',
-      title: 'Availability Status',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Available for Purchase', value: 'available' },
-          { title: 'Sold / Private Collection', value: 'sold' },
-          { title: 'On Exhibition', value: 'exhibition' },
-          { title: 'Archived / Study', value: 'archived' },
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'available',
-    }),
-    defineField({
-      name: 'price',
-      title: 'Price (Optional)',
-      description: 'Leave empty for "Inquire for Pricing"',
-      type: 'string',
-      placeholder: 'e.g., $1,200 USD',
     }),
     defineField({
       name: 'description',
@@ -105,8 +106,15 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      subtitle: 'medium',
+      subtitle: 'collection',
       media: 'mainImage',
+    },
+    prepare({ title, subtitle, media }) {
+      return {
+        title,
+        subtitle: subtitle ? `Type: ${subtitle.toUpperCase()}` : '',
+        media,
+      };
     },
   },
 });
