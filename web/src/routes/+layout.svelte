@@ -31,7 +31,15 @@
   let isError = $derived(page.status >= 400 || !!page.error);
 
   let scrollY = $state(0);
-  let isScrolled = $derived(scrollY > 25);
+  let isScrolled = $state(false);
+
+  $effect(() => {
+    if (scrollY > 5 && !isScrolled) {
+      isScrolled = true;
+    } else if (scrollY <= 0 && isScrolled) {
+      isScrolled = false;
+    }
+  });
 
   let currentTheme = $state("dark");
   let clickSound: HTMLAudioElement | null = null;
@@ -604,7 +612,7 @@
     width: 100%;
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 20px 24px;
+    padding: 12px 24px;
     background: transparent;
     border: none;
     box-shadow: none;
@@ -613,11 +621,6 @@
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    transition: padding var(--duration-normal, 220ms) var(--ease-out);
-  }
-
-  .neo-header-wrapper.is-scrolled .neo-header {
-    padding: 10px 24px;
   }
 
   .neo-brand {
@@ -625,28 +628,34 @@
     align-items: center;
     text-decoration: none;
     color: var(--color-ink);
+    height: 48px;
+    width: 140px;
+    position: relative;
   }
 
   .brand-logo {
-    height: 117px;
+    height: 44px;
     width: auto;
     display: block;
     object-fit: contain;
+    transform-origin: left center;
+    will-change: transform;
     /* Light mode: black graffiti lettering with crisp white contour stroke */
     filter: drop-shadow(1.5px 0 0 #ffffff) drop-shadow(-1.5px 0 0 #ffffff)
       drop-shadow(0 1.5px 0 #ffffff) drop-shadow(0 -1.5px 0 #ffffff);
+    transform: scale(2.2);
     transition:
-      height var(--duration-normal, 220ms) var(--ease-out),
-      filter var(--duration-fast, 120ms) var(--ease-out),
-      transform var(--duration-fast, 120ms) var(--ease-out);
+      transform var(--duration-normal, 220ms) cubic-bezier(0.16, 1, 0.3, 1),
+      filter var(--duration-fast, 120ms) var(--ease-out);
   }
 
   .brand-logo:hover {
-    transform: scale(1.03);
+    filter: drop-shadow(2px 0 0 #ffffff) drop-shadow(-2px 0 0 #ffffff)
+      drop-shadow(0 2px 0 #ffffff) drop-shadow(0 -2px 0 #ffffff);
   }
 
   .neo-header-wrapper.is-scrolled .brand-logo {
-    height: 36px;
+    transform: scale(1);
   }
 
   .footer-logo {
@@ -1254,20 +1263,17 @@
   /* Responsive Masthead */
   @media (max-width: 1200px) {
     .neo-header {
-      padding: 14px 20px;
-    }
-
-    .neo-header-wrapper.is-scrolled .neo-header {
-      padding: 8px 20px;
+      padding: 10px 20px;
     }
 
     .brand-logo {
-      height: 72px;
+      height: 36px;
+      transform: scale(1.6);
       max-width: calc(100vw - 84px);
     }
 
     .neo-header-wrapper.is-scrolled .brand-logo {
-      height: 32px;
+      transform: scale(1);
     }
 
     .desktop-nav {
@@ -1281,11 +1287,7 @@
 
   @media (max-width: 768px) {
     .neo-header {
-      padding: 14px 16px;
-    }
-
-    .neo-header-wrapper.is-scrolled .neo-header {
-      padding: 8px 16px;
+      padding: 10px 16px;
     }
 
     .neo-main {

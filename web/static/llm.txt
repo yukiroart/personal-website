@@ -18,12 +18,13 @@
 - **[About](/about)**: Artist biography, polaroid portrait, education background, and studio toolset.
 
 ## Commission Terms & Guidelines
-- **Rates**: Determined by the scope and complexity of the requested artwork. Clients are invited to direct message for tailored quotes.
-- **Progress**: Weekly progress updates are provided to commissioners throughout the workflow.
-- **Deadlines**: Rush deliveries may incur an increased rate.
-- **Usage**: Personal use only (avatars, banners, personal wallpapers, private prints) unless a commercial license has been explicitly purchased.
-- **Copyright**: The artist retains copyright and promotional rights to display created artwork in portfolios and art books.
-- **Payment**: Work commences once the agreed upfront deposit (50% minimum) or full payment is received.
+- **Payment**: FULL PAYMENT MUST BE DONE FIRST after the approval of the commission.
+- **Refund Policy**: If the artist fails to provide the commission requested because of circumstance, the client will be REFUNDED.
+- **AI & NFTs**: DO NOT use artwork to train AI or for NFTs.
+- **Credit**: If sharing or posting the commission, the artist must be credited properly.
+- **Copyright & Commercial Use**: The artwork provided is the artist's intellectual property. Commercial, business, & project purposes must be discussed thoroughly through DMs.
+- **Progress**: Weekly updates of progress are sent to the client via DMs of their preferred messaging platform.
+- **Rates**: Determined by the scope and complexity of the requested artwork. Clients are invited to direct message for tailored quotes. Rush deliveries may incur an increased rate.
 
 ## Verified Channels & Contacts
 - **Discord**: `yuk1r0`

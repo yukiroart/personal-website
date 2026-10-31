@@ -46,52 +46,27 @@
       question: "Once I purchase a commission, when is the expected date?",
       paragraphs: [
         '<strong class="faq-accent">If the artwork is needed to be completed at an immediate date, rates may increase.</strong>',
-        "I will be sending weekly updates of the progress!",
+        "I will be sending weekly updates of the progress to the client VIA DMs of their preferred message platform.",
       ],
     },
   ];
 
-  // Terms and Conditions bullet points (~10 bullets)
+  // Terms and Conditions bullet points
   const termsBullets = [
     {
-      title: "Personal Use Only",
-      text: "Commissioned artwork is strictly for personal use (social media avatars, personal wallpapers, private prints) unless a commercial license has been explicitly purchased.",
+      html: '<strong>FULL PAYMENT MUST BE DONE FIRST</strong> after the approval of the commission.',
     },
     {
-      title: "Copyright & Intellectual Property",
-      text: "The artist retains all moral rights, copyright, and distribution rights to the created artwork, including the right to display the piece in portfolios, social media, and artbooks.",
+      html: 'If I fail to provide the commission requested because of circumstance, the client will be <strong>REFUNDED</strong>.',
     },
     {
-      title: "Payment Milestones",
-      text: "Work officially commences once the agreed upfront deposit (50% minimum) or full payment is received. All invoices are billed in USD.",
+      html: '<strong>DO NOT</strong> use my artwork to train AI or for NFTs.',
     },
     {
-      title: "WIP Updates & Communication",
-      text: "Progress updates (rough sketch, refined lineart, color preview) will be sent for review at each major milestone.",
+      html: 'If you wish to share or post the commission, I am to be credited properly.',
     },
     {
-      title: "Revision Policy",
-      text: "Up to 2 rounds of minor revisions are included during the preliminary sketch stage. Major concept changes requested after color approval may incur additional revision fees.",
-    },
-    {
-      title: "Turnaround & Deadlines",
-      text: "Standard delivery time is between 2 to 4 weeks. Any strict release dates or event deadlines must be discussed and approved prior to project confirmation.",
-    },
-    {
-      title: "High-Resolution Deliverables",
-      text: "Final artwork will be delivered digitally as high-resolution 300 DPI lossless PNG files via direct download link or email attachment.",
-    },
-    {
-      title: "Cancellation & Refund Policy",
-      text: "If a project is cancelled before sketching begins, a 100% refund is provided. Once work has commenced, the initial deposit is non-refundable to cover labor and materials.",
-    },
-    {
-      title: "Privacy & Embargo Requests",
-      text: "If the artwork is a surprise gift, album reveal, or unannounced project, please notify the artist in advance so public showcase can be held until your reveal date.",
-    },
-    {
-      title: "Declined Subject Matter",
-      text: "The artist reserves the right to decline any request containing hateful imagery, bigotry, unauthorized impersonation, or subject matter outside artistic boundaries.",
+      html: 'The artwork I provide is <strong>MY intellectual property</strong>. <span class="terms-highlight-red">For commercial, business, &amp; project purposes, it is to be discussed thoroughly through DMs.</span>',
     },
   ];
 </script>
@@ -162,9 +137,7 @@
             {#each termsBullets as bullet}
               <li class="dm-terms-bullet">
                 <span class="bullet-dot" aria-hidden="true">•</span>
-                <span class="bullet-text"
-                  ><strong>{bullet.title}:</strong> {bullet.text}</span
-                >
+                <span class="bullet-text">{@html bullet.html}</span>
               </li>
             {/each}
           </ul>
@@ -738,10 +711,20 @@
     flex-shrink: 0;
   }
 
-  .bullet-text strong {
+  :global(.dm-terms-bullet strong) {
     font-weight: 700;
     font-family: var(--font-heading);
-    margin-right: 4px;
+    margin-right: 2px;
+  }
+
+  :global(.terms-highlight-red) {
+    color: #e53935;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  :global(:root[data-theme="dark"] .terms-highlight-red) {
+    color: #ff5252;
   }
 
   /* Responsive Adjustments */
