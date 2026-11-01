@@ -133,7 +133,13 @@
         <li>
           I love indulging in my hobbies such as wotagei (a unique japanese art
           form where you dance with lightsticks), as I am in a wotagei dance
-          group called Zappu!
+          group called <a
+            class="external-link"
+            href="https://x.com/ZappuWotagei"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Zappu Wotagei on X (@ZappuWotagei)">Zappu</a
+          >!
         </li>
         <li>I also like skateboarding and video games.</li>
       </ul>
@@ -325,6 +331,27 @@
     line-height: 1.65;
     color: var(--color-ink);
     opacity: 0.94;
+  }
+
+  .external-link {
+    color: var(--color-pink);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition:
+      opacity var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .external-link:hover {
+      opacity: 0.8;
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  .external-link:active {
+    opacity: 0.6;
   }
 
   /* Responsive Breakpoints */
