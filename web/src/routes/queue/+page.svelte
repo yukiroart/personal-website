@@ -2,10 +2,21 @@
   import {
     QUEUE_COLUMNS,
     SAMPLE_QUEUE_ITEMS,
+    type CommissionItem,
     type QueueStage,
   } from "#lib/data/sampleQueue";
 
-  const queueItems = SAMPLE_QUEUE_ITEMS;
+  let { data } = $props<{ data: { items?: CommissionItem[] } }>();
+
+  // Defensive hydration state guard to prevent disappearing queue items
+  let initialItems = data.items || SAMPLE_QUEUE_ITEMS;
+  let queueItems = $state<CommissionItem[]>(initialItems);
+
+  $effect(() => {
+    if (data.items) {
+      queueItems = data.items;
+    }
+  });
 
   function getItemsByStage(stage: QueueStage) {
     return queueItems.filter((item) => item.stage === stage);
