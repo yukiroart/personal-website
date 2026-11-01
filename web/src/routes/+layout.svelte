@@ -546,12 +546,6 @@
   </footer>
 {/if}
 
-{#if !isError}
-  <!-- Floating Watermark Annotation above Netlify Badge -->
-  <aside class="watermark-annotation" aria-hidden="true">
-    (Ignore this watermark)
-  </aside>
-{/if}
 
 <!-- Bottom-Left Floating Quick Controls (Sound Mute & Theme) -->
 <div class="neo-floating-dock">
@@ -1443,28 +1437,5 @@
     }
   }
 
-  /* Floating Watermark Annotation above Netlify Badge */
-  .watermark-annotation {
-    position: fixed;
-    bottom: 60px;
-    right: 18px;
-    z-index: 90;
-    pointer-events: none;
-    user-select: none;
-    font-family: var(--font-handwriting, "Caveat", cursive);
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--color-muted);
-    transform: rotate(-3deg);
-    letter-spacing: 0.02em;
-    white-space: nowrap;
-  }
 
-  @media (max-width: 680px) {
-    .watermark-annotation {
-      bottom: 56px;
-      right: 14px;
-      font-size: 1.05rem;
-    }
-  }
 </style>
