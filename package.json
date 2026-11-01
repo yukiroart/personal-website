@@ -5,7 +5,7 @@
     "dev": "npm --prefix web run dev",
     "dev:web": "npm --prefix web run dev",
     "dev:studio": "npm --prefix studio run dev",
-    "build": "npm --prefix web run build && npm --prefix studio ci && npm --prefix studio run build && cp -r studio/dist web/dist/studio",
+    "build": "npm --prefix web ci && npm --prefix web run build && npm --prefix studio ci && npm --prefix studio run build && cp -r studio/dist web/dist/studio",
     "build:web": "npm --prefix web run build",
     "build:studio": "npm --prefix studio run build"
   },
