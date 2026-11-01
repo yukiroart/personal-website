@@ -54,16 +54,16 @@
   // Terms and Conditions bullet points
   const termsBullets = [
     {
-      html: '<strong>FULL PAYMENT MUST BE DONE FIRST</strong> after the approval of the commission.',
+      html: "<strong>FULL PAYMENT MUST BE DONE FIRST</strong> after the approval of the commission.",
     },
     {
-      html: 'If I fail to provide the commission requested because of circumstance, the client will be <strong>REFUNDED</strong>.',
+      html: "If I fail to provide the commission requested because of circumstance, the client will be <strong>REFUNDED</strong>.",
     },
     {
-      html: '<strong>DO NOT</strong> use my artwork to train AI or for NFTs.',
+      html: "<strong>DO NOT</strong> use my artwork to train AI or for NFTs.",
     },
     {
-      html: 'If you wish to share or post the commission, I am to be credited properly.',
+      html: "If you wish to share or post the commission, I am to be credited properly.",
     },
     {
       html: 'The artwork I provide is <strong>MY intellectual property</strong>. <span class="terms-highlight-red">For commercial, business, &amp; project purposes, it is to be discussed thoroughly through DMs.</span>',
@@ -72,11 +72,53 @@
 </script>
 
 <svelte:head>
-  <title>Commissions — Yukiro Custom Art & Rates</title>
+  <title>Commissions & Pricing FAQ — Yukiro Custom Art</title>
   <meta
     name="description"
-    content="Direct message Yukiro to request character art commissions, view rates FAQ, and read terms of service."
+    content="Direct message Yukiro to request character art commissions, view rates FAQ, progress policies, and read Terms of Service."
   />
+  <meta
+    property="og:title"
+    content="Commissions & Pricing FAQ — Yukiro Custom Art"
+  />
+  <meta
+    property="og:description"
+    content="Direct message Yukiro to request character art commissions, view rates FAQ, progress policies, and read Terms of Service."
+  />
+  <meta
+    name="twitter:title"
+    content="Commissions & Pricing FAQ — Yukiro Custom Art"
+  />
+  <meta
+    name="twitter:description"
+    content="Direct message Yukiro to request character art commissions, view rates FAQ, progress policies, and read Terms of Service."
+  />
+
+  <!-- FAQPage Schema for Rich Search Snippets -->
+  {@html `<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are your RATES for commissions?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Depends on the complexity of the piece. Please don't hesitate to DM me for more details."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Once I purchase a commission, when is the expected date?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "If the artwork is needed to be completed at an immediate date, rates may increase. I will be sending weekly updates of the progress to the client VIA DMs of their preferred message platform."
+        }
+      }
+    ]
+  }
+  </script>`}
 </svelte:head>
 
 <div class="comm-page-container">
@@ -440,7 +482,7 @@
   }
 
   .comm-discord-wrap .toast-popup::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 100%;
     left: 50%;

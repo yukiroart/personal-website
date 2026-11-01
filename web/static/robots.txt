@@ -62,3 +62,6 @@ Allow: /
 Disallow: /_app/
 Disallow: /api/
 
+Sitemap: https://yukiroart.com/sitemap.xml
+
+

@@ -53,10 +53,26 @@
 </script>
 
 <svelte:head>
-  <title>Yukiro — Digital Illustration & Character Design</title>
+  <title>Yukiro — Digital Illustration & Character Design Portfolio</title>
   <meta
     name="description"
-    content="Digital illustration, character design, and visual artwork showcase by Yukiro."
+    content="Digital illustration, character design, and visual artwork showcase by Yukiro. Explore original artworks, fan art, animations, and commission pieces."
+  />
+  <meta
+    property="og:title"
+    content="Yukiro — Digital Illustration & Character Design Portfolio"
+  />
+  <meta
+    property="og:description"
+    content="Digital illustration, character design, and visual artwork showcase by Yukiro. Explore original artworks, fan art, animations, and commission pieces."
+  />
+  <meta
+    name="twitter:title"
+    content="Yukiro — Digital Illustration & Character Design Portfolio"
+  />
+  <meta
+    name="twitter:description"
+    content="Digital illustration, character design, and visual artwork showcase by Yukiro. Explore original artworks, fan art, animations, and commission pieces."
   />
 </svelte:head>
 

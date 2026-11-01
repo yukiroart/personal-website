@@ -98,10 +98,26 @@
 </script>
 
 <svelte:head>
-  <title>Portfolio — Yukiro Illustration Archive</title>
+  <title>Portfolio Archive — Yukiro Visual Art & Illustrations</title>
   <meta
     name="description"
-    content="Explore the complete artwork showcase and illustration gallery by Yukiro."
+    content="Browse the complete digital art catalog by Yukiro: character designs, original paintings, animations, and commission archive."
+  />
+  <meta
+    property="og:title"
+    content="Portfolio Archive — Yukiro Visual Art & Illustrations"
+  />
+  <meta
+    property="og:description"
+    content="Browse the complete digital art catalog by Yukiro: character designs, original paintings, animations, and commission archive."
+  />
+  <meta
+    name="twitter:title"
+    content="Portfolio Archive — Yukiro Visual Art & Illustrations"
+  />
+  <meta
+    name="twitter:description"
+    content="Browse the complete digital art catalog by Yukiro: character designs, original paintings, animations, and commission archive."
   />
 </svelte:head>
 

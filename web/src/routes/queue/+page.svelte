@@ -13,10 +13,26 @@
 </script>
 
 <svelte:head>
-  <title>Commission Queue — Yukiro Live Project Tracker</title>
+  <title>Commission Queue & Availability Tracker — Yukiro</title>
   <meta
     name="description"
-    content="Live 4-stage Kanban commission queue tracking active client artwork progress and availability."
+    content="Real-time 4-stage Kanban commission queue tracking active client artwork progress, review milestones, and queue openings."
+  />
+  <meta
+    property="og:title"
+    content="Commission Queue & Availability Tracker — Yukiro"
+  />
+  <meta
+    property="og:description"
+    content="Real-time 4-stage Kanban commission queue tracking active client artwork progress, review milestones, and queue openings."
+  />
+  <meta
+    name="twitter:title"
+    content="Commission Queue & Availability Tracker — Yukiro"
+  />
+  <meta
+    name="twitter:description"
+    content="Real-time 4-stage Kanban commission queue tracking active client artwork progress, review milestones, and queue openings."
   />
 </svelte:head>
 

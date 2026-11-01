@@ -19,10 +19,26 @@
 </script>
 
 <svelte:head>
-  <title>Contact — Yukiro Business Inquiries & Channels</title>
+  <title>Contact & Inquiries — Direct Channels | Yukiro</title>
   <meta
     name="description"
-    content="Direct contact channels for business inquiries and illustration projects: Discord, Gmail, and X."
+    content="Direct contact channels for project inquiries, licensing, and illustration collaborations: Discord, Gmail, and X."
+  />
+  <meta
+    property="og:title"
+    content="Contact & Inquiries — Direct Channels | Yukiro"
+  />
+  <meta
+    property="og:description"
+    content="Direct contact channels for project inquiries, licensing, and illustration collaborations: Discord, Gmail, and X."
+  />
+  <meta
+    name="twitter:title"
+    content="Contact & Inquiries — Direct Channels | Yukiro"
+  />
+  <meta
+    name="twitter:description"
+    content="Direct contact channels for project inquiries, licensing, and illustration collaborations: Discord, Gmail, and X."
   />
 </svelte:head>
 

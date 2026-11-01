@@ -42,10 +42,26 @@
 </script>
 
 <svelte:head>
-  <title>About Yukiro — Artist Bio, Tools & Background</title>
+  <title>About Yukiro — Digital Illustrator, 2D Artist & Animator</title>
   <meta
     name="description"
-    content="Get to know digital illustrator Yukiro: character design focus, artistic background, and creative software suite."
+    content="Learn about digital illustrator Yukiro: artistic focus, background, studio toolset, creative software, and illustration practice."
+  />
+  <meta
+    property="og:title"
+    content="About Yukiro — Digital Illustrator, 2D Artist & Animator"
+  />
+  <meta
+    property="og:description"
+    content="Learn about digital illustrator Yukiro: artistic focus, background, studio toolset, creative software, and illustration practice."
+  />
+  <meta
+    name="twitter:title"
+    content="About Yukiro — Digital Illustrator, 2D Artist & Animator"
+  />
+  <meta
+    name="twitter:description"
+    content="Learn about digital illustrator Yukiro: artistic focus, background, studio toolset, creative software, and illustration practice."
   />
 </svelte:head>
 

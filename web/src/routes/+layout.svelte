@@ -6,6 +6,13 @@
   import { onNavigate } from "$app/navigation";
   import { onMount } from "svelte";
   import { fly, fade } from "svelte/transition";
+  import {
+    SITE_URL,
+    SITE_NAME,
+    ARTIST_NAME,
+    TWITTER_HANDLE,
+    DEFAULT_OG_IMAGE,
+  } from "#lib/constants/seo";
 
   let { children } = $props();
 
@@ -151,7 +158,10 @@
   }
 </script>
 
-<svelte:window onclick={handleGlobalClick} onkeydown={handleWindowKeydown} />
+<svelte:window
+  onclick={handleGlobalClick}
+  onkeydown={handleWindowKeydown}
+/>
 
 <svelte:head>
   <title>Yukiro — Digital Illustration Portfolio</title>
@@ -159,6 +169,57 @@
     name="description"
     content="Contemporary digital illustration, character design, and visual art portfolio by Yukiro."
   />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="{SITE_URL}{page.url.pathname === '/' ? '' : page.url.pathname}" />
+
+  <!-- Open Graph / Facebook / Discord -->
+  <meta property="og:site_name" content={SITE_NAME} />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_PH" />
+  <meta property="og:url" content="{SITE_URL}{page.url.pathname === '/' ? '' : page.url.pathname}" />
+  <meta property="og:title" content="Yukiro — Digital Illustration Portfolio" />
+  <meta property="og:description" content="Contemporary digital illustration, character design, and visual art portfolio by Yukiro." />
+  <meta property="og:image" content={DEFAULT_OG_IMAGE} />
+  <meta property="og:image:alt" content="Yukiro Artwork Portfolio" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content={TWITTER_HANDLE} />
+  <meta name="twitter:creator" content={TWITTER_HANDLE} />
+  <meta name="twitter:title" content="Yukiro — Digital Illustration Portfolio" />
+  <meta name="twitter:description" content="Contemporary digital illustration, character design, and visual art portfolio by Yukiro." />
+  <meta name="twitter:image" content={DEFAULT_OG_IMAGE} />
+
+  <!-- JSON-LD Structured Data: Person & WebSite -->
+  {@html `<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "${SITE_URL}/#website",
+        "url": "${SITE_URL}",
+        "name": "${SITE_NAME}",
+        "description": "Digital illustration, character design, and visual art showcase by Yukiro.",
+        "inLanguage": "en-PH"
+      },
+      {
+        "@type": "Person",
+        "@id": "${SITE_URL}/#artist",
+        "name": "${ARTIST_NAME}",
+        "alternateName": ["yuk1r0", "yukir0_art"],
+        "url": "${SITE_URL}",
+        "image": "${DEFAULT_OG_IMAGE}",
+        "jobTitle": "Digital Illustrator & Character Artist",
+        "sameAs": [
+          "https://x.com/yukir0_art",
+          "https://github.com/yukiroart"
+        ]
+      }
+    ]
+  }
+  </script>`}
 </svelte:head>
 
 {#if !isError}
