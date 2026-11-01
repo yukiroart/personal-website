@@ -162,6 +162,21 @@
 
 <div class="error-page-wrapper">
   <div class="interactive-404-container">
+    <!-- Dizzy Character Illustration on Top -->
+    <div class="error-art-wrap">
+      <img
+        src="/images/404_converted.webp"
+        alt="Dizzy exhausted character lying down"
+        class="error-dizzy-art"
+        loading="eager"
+      />
+    </div>
+
+    <!-- 404 Badge & Narrative -->
+    <div class="error-badge-row">
+      <span class="error-badge">404</span>
+    </div>
+
     <!-- Page Title & Narrative -->
     <h1 class="error-main-title">Oh, you're on the wrong page.</h1>
 
@@ -298,6 +313,49 @@
       opacity: 1;
       transform: none;
     }
+  }
+
+  .error-art-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: -4px;
+  }
+
+  .error-dizzy-art {
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.1));
+    transition: transform var(--duration-normal, 220ms) var(--ease-out);
+  }
+
+  :global(:root[data-theme="dark"]) .error-dizzy-art {
+    filter: drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.45));
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .error-dizzy-art:hover {
+      transform: scale(1.03) rotate(-1deg);
+    }
+  }
+
+  .error-badge-row {
+    display: flex;
+    justify-content: center;
+  }
+
+  .error-badge {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 6px 20px;
+    background: var(--color-pink);
+    color: #ffffff;
+    border: 2px solid var(--color-ink);
+    box-shadow: var(--shadow-neo-xs);
   }
 
   .error-main-title {

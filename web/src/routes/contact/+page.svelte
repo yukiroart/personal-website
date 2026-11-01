@@ -50,77 +50,91 @@
 
   <!-- Central Contact Card -->
   <section class="neo-card contact-card" aria-label="Contacts">
-    <div class="contact-header">
-      <span class="contact-badge">CONTACTS</span>
-    </div>
+    <div class="contact-card-grid">
+      <div class="contact-info-col">
+        <div class="contact-header">
+          <span class="contact-badge">CONTACTS</span>
+        </div>
 
-    <!-- Contact Items: Text with Icons -->
-    <div class="contact-items-list">
-      <!-- Discord item (click to copy) -->
-      <div class="contact-item discord-item-wrap">
-        <button
-          type="button"
-          class="contact-link-row discord-btn"
-          onclick={copyDiscord}
-          aria-label="Copy Discord username yuk1r0"
-          title="Click to copy yuk1r0"
-        >
-          <img
-            src="/icons/contacts/discord.svg"
-            alt="Discord"
-            class="contact-icon icon-monochrome"
-            loading="lazy"
-          />
-          <span class="contact-label">yuk1r0</span>
-        </button>
+        <!-- Contact Items: Text with Icons -->
+        <div class="contact-items-list">
+          <!-- Discord item (click to copy) -->
+          <div class="contact-item discord-item-wrap">
+            <button
+              type="button"
+              class="contact-link-row discord-btn"
+              onclick={copyDiscord}
+              aria-label="Copy Discord username yuk1r0"
+              title="Click to copy yuk1r0"
+            >
+              <img
+                src="/icons/contacts/discord.svg"
+                alt="Discord"
+                class="contact-icon icon-monochrome"
+                loading="lazy"
+              />
+              <span class="contact-label">yuk1r0</span>
+            </button>
 
-        {#if copied}
-          <div
-            class="toast-popup"
-            role="status"
-            aria-live="polite"
-            in:fly={{ x: -8, duration: 180 }}
-            out:fade={{ duration: 150 }}
-          >
-            Copied discord username!
+            {#if copied}
+              <div
+                class="toast-popup"
+                role="status"
+                aria-live="polite"
+                in:fly={{ x: -8, duration: 180 }}
+                out:fade={{ duration: 150 }}
+              >
+                Copied discord username!
+              </div>
+            {/if}
           </div>
-        {/if}
+
+          <!-- Gmail item -->
+          <div class="contact-item">
+            <a
+              href="mailto:yukiroart19@gmail.com"
+              class="contact-link-row"
+              title="Send email to yukiroart19@gmail.com"
+            >
+              <img
+                src="/icons/contacts/gmail.svg"
+                alt="Gmail"
+                class="contact-icon icon-monochrome"
+                loading="lazy"
+              />
+              <span class="contact-label">yukiroart19@gmail.com</span>
+            </a>
+          </div>
+
+          <!-- X item -->
+          <div class="contact-item">
+            <a
+              href="https://x.com/yukir0_art"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="contact-link-row"
+              title="Yukiro on X"
+            >
+              <img
+                src="/icons/contacts/x.svg"
+                alt="X"
+                class="contact-icon icon-monochrome"
+                loading="lazy"
+              />
+              <span class="contact-label">yukir0_art</span>
+            </a>
+          </div>
+        </div>
       </div>
 
-      <!-- Gmail item -->
-      <div class="contact-item">
-        <a
-          href="mailto:yukiroart19@gmail.com"
-          class="contact-link-row"
-          title="Send email to yukiroart19@gmail.com"
-        >
-          <img
-            src="/icons/contacts/gmail.svg"
-            alt="Gmail"
-            class="contact-icon icon-monochrome"
-            loading="lazy"
-          />
-          <span class="contact-label">yukiroart19@gmail.com</span>
-        </a>
-      </div>
-
-      <!-- X item -->
-      <div class="contact-item">
-        <a
-          href="https://x.com/yukir0_art"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="contact-link-row"
-          title="Yukiro on X"
-        >
-          <img
-            src="/icons/contacts/x.svg"
-            alt="X"
-            class="contact-icon icon-monochrome"
-            loading="lazy"
-          />
-          <span class="contact-label">yukir0_art</span>
-        </a>
+      <!-- Right Side: Character Illustration -->
+      <div class="contact-art-col">
+        <img
+          src="/images/contact_converted.webp"
+          alt="Yukiro character relaxing with phone"
+          class="contact-character-art"
+          loading="eager"
+        />
       </div>
     </div>
   </section>
@@ -162,9 +176,44 @@
   /* Central Contact Card */
   .contact-card {
     padding: 38px 40px;
+  }
+
+  .contact-card-grid {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    align-items: center;
+    gap: 36px;
+  }
+
+  .contact-info-col {
     display: flex;
     flex-direction: column;
     gap: 28px;
+  }
+
+  .contact-art-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .contact-character-art {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.08));
+    transition: transform var(--duration-normal, 220ms) var(--ease-out);
+  }
+
+  :global(:root[data-theme="dark"]) .contact-character-art {
+    filter: drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.45));
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .contact-character-art:hover {
+      transform: scale(1.03) rotate(-1deg);
+    }
   }
 
   .contact-header {
@@ -300,7 +349,19 @@
   @media (max-width: 680px) {
     .contact-card {
       padding: 26px 20px;
-      gap: 20px;
+    }
+
+    .contact-card-grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .contact-art-col {
+      order: 2;
+    }
+
+    .contact-character-art {
+      max-width: 220px;
     }
 
     .contact-link-row {
@@ -337,7 +398,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .contact-link-row {
+    .contact-link-row,
+    .contact-character-art {
       transition: none !important;
     }
   }
