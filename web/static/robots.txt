@@ -19,20 +19,27 @@ Allow: /
 User-agent: Yandex
 Allow: /
 
+# AI search engines & real-time conversational retrieval: allowed to read site & llms.txt
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 # AI dataset and training scrapers: scraping disallowed to protect original artwork
 User-agent: GPTBot
-Disallow: /
-
-User-agent: ChatGPT-User
 Disallow: /
 
 User-agent: CCBot
 Disallow: /
 
 User-agent: anthropic-ai
-Disallow: /
-
-User-agent: Claude-Web
 Disallow: /
 
 User-agent: ClaudeBot
@@ -45,9 +52,6 @@ User-agent: Diffbot
 Disallow: /
 
 User-agent: ImagesiftBot
-Disallow: /
-
-User-agent: PerplexityBot
 Disallow: /
 
 User-agent: Cohere-ai
@@ -63,5 +67,6 @@ Disallow: /_app/
 Disallow: /api/
 
 Sitemap: https://yukiroart.com/sitemap.xml
+
 
 

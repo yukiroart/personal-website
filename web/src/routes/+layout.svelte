@@ -158,37 +158,57 @@
   }
 </script>
 
-<svelte:window
-  onclick={handleGlobalClick}
-  onkeydown={handleWindowKeydown}
-/>
+<svelte:window onclick={handleGlobalClick} onkeydown={handleWindowKeydown} />
 
 <svelte:head>
-  <title>Yukiro — Digital Illustration Portfolio</title>
+  <title>Yukiro Arts — Digital Graphics, Illustrations & Character Design</title
+  >
   <meta
     name="description"
-    content="Contemporary digital illustration, character design, and visual art portfolio by Yukiro."
+    content="Official portfolio of Yukiro Arts: digital graphics, character designs, 2D animations, and custom illustrations by Lindsay."
+  />
+  <meta
+    name="keywords"
+    content="Yukiro, Yukiro Arts, Yukiro Digital Graphics, Yukiro Illustrations, Lindsay, Character Design, Anime Art, 2D Animation, Digital Painter, Commissions Queue, Fan Art, Original Character"
   />
 
   <!-- Canonical URL -->
-  <link rel="canonical" href="{SITE_URL}{page.url.pathname === '/' ? '' : page.url.pathname}" />
+  <link
+    rel="canonical"
+    href="{SITE_URL}{page.url.pathname === '/' ? '' : page.url.pathname}"
+  />
 
   <!-- Open Graph / Facebook / Discord -->
-  <meta property="og:site_name" content={SITE_NAME} />
+  <meta property="og:site_name" content="Yukiro Arts" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="en_PH" />
-  <meta property="og:url" content="{SITE_URL}{page.url.pathname === '/' ? '' : page.url.pathname}" />
-  <meta property="og:title" content="Yukiro — Digital Illustration Portfolio" />
-  <meta property="og:description" content="Contemporary digital illustration, character design, and visual art portfolio by Yukiro." />
+  <meta
+    property="og:url"
+    content="{SITE_URL}{page.url.pathname === '/' ? '' : page.url.pathname}"
+  />
+  <meta
+    property="og:title"
+    content="Yukiro Arts — Digital Graphics, Illustrations & Character Design"
+  />
+  <meta
+    property="og:description"
+    content="Official portfolio of Yukiro Arts: digital graphics, character designs, 2D animations, and custom illustrations by Lindsay."
+  />
   <meta property="og:image" content={DEFAULT_OG_IMAGE} />
-  <meta property="og:image:alt" content="Yukiro Artwork Portfolio" />
+  <meta property="og:image:alt" content="Yukiro Arts Artwork Portfolio" />
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content={TWITTER_HANDLE} />
   <meta name="twitter:creator" content={TWITTER_HANDLE} />
-  <meta name="twitter:title" content="Yukiro — Digital Illustration Portfolio" />
-  <meta name="twitter:description" content="Contemporary digital illustration, character design, and visual art portfolio by Yukiro." />
+  <meta
+    name="twitter:title"
+    content="Yukiro Arts — Digital Graphics, Illustrations & Character Design"
+  />
+  <meta
+    name="twitter:description"
+    content="Official portfolio of Yukiro Arts: digital graphics, character designs, 2D animations, and custom illustrations by Lindsay."
+  />
   <meta name="twitter:image" content={DEFAULT_OG_IMAGE} />
 
   <!-- JSON-LD Structured Data: Person & WebSite -->
@@ -200,15 +220,16 @@
         "@type": "WebSite",
         "@id": "${SITE_URL}/#website",
         "url": "${SITE_URL}",
-        "name": "${SITE_NAME}",
-        "description": "Digital illustration, character design, and visual art showcase by Yukiro.",
+        "name": "Yukiro Arts",
+        "alternateName": ["Yukiro Digital Graphics", "Yukiro Portfolio", "Yukiro Illustrations"],
+        "description": "Digital graphics, character design, and visual art showcase by Yukiro.",
         "inLanguage": "en-PH"
       },
       {
         "@type": "Person",
         "@id": "${SITE_URL}/#artist",
         "name": "${ARTIST_NAME}",
-        "alternateName": ["yuk1r0", "yukir0_art"],
+        "alternateName": ["Yukiro Arts", "Yukiro Digital Graphics", "yuk1r0", "yukir0_art", "Lindsay"],
         "url": "${SITE_URL}",
         "image": "${DEFAULT_OG_IMAGE}",
         "jobTitle": "Digital Illustrator & Character Artist",
