@@ -2,8 +2,9 @@
   import { fly, fade } from "svelte/transition";
   import FaqAccordion from "#lib/components/FaqAccordion.svelte";
   import { DEFAULT_COMMISSIONS_FAQS, type FaqItem } from "#lib/data/sampleFaq";
+  import { DEFAULT_TERMS_BULLETS, formatTermHtml, type TermItem } from "#lib/data/sampleTerms";
 
-  let { data } = $props<{ data: { faqs?: FaqItem[] } }>();
+  let { data } = $props<{ data: { faqs?: FaqItem[]; terms?: TermItem[] } }>();
 
   // Defensive hydration state guard to prevent disappearing FAQs
   let initialFaqs = data.faqs && data.faqs.length > 0 ? data.faqs : DEFAULT_COMMISSIONS_FAQS;
@@ -12,6 +13,16 @@
   $effect(() => {
     if (data.faqs && data.faqs.length > 0) {
       faqs = data.faqs;
+    }
+  });
+
+  // Defensive hydration state guard for Terms of Service
+  let initialTerms = data.terms && data.terms.length > 0 ? data.terms : DEFAULT_TERMS_BULLETS;
+  let terms = $state<TermItem[]>(initialTerms);
+
+  $effect(() => {
+    if (data.terms && data.terms.length > 0) {
+      terms = data.terms;
     }
   });
 
@@ -37,25 +48,6 @@
       console.error("Failed to copy Discord username:", err);
     }
   }
-
-  // Terms and Conditions bullet points
-  const termsBullets = [
-    {
-      html: "<strong>FULL PAYMENT MUST BE DONE FIRST</strong> after the approval of the commission.",
-    },
-    {
-      html: "If I fail to provide the commission requested because of circumstance, the client will be <strong>REFUNDED</strong>.",
-    },
-    {
-      html: "<strong>DO NOT</strong> use my artwork to train AI or for NFTs.",
-    },
-    {
-      html: "If you wish to share or post the commission, I am to be credited properly.",
-    },
-    {
-      html: 'The artwork I provide is <strong>MY intellectual property</strong>. <span class="terms-highlight-red">For commercial, business, &amp; project purposes, it is to be discussed thoroughly through DMs.</span>',
-    },
-  ];
 </script>
 
 <svelte:head>
@@ -155,10 +147,10 @@
       >
         <div class="dm-terms-inner">
           <ul class="dm-terms-list">
-            {#each termsBullets as bullet}
+            {#each terms as term (term._id || term.order)}
               <li class="dm-terms-bullet">
                 <span class="bullet-dot" aria-hidden="true">•</span>
-                <span class="bullet-text">{@html bullet.html}</span>
+                <span class="bullet-text">{@html formatTermHtml(term)}</span>
               </li>
             {/each}
           </ul>
