@@ -54,6 +54,19 @@ export const ARTWORK_TAGS: ArtworkTag[] = [
 let cachedArtworks: Artwork[] = [];
 
 export async function fetchArtworks(): Promise<Artwork[]> {
+  // In browser, initialize from sessionStorage if in-memory cache is empty
+  if (typeof window !== 'undefined' && cachedArtworks.length === 0) {
+    try {
+      const stored = sessionStorage.getItem('yukiro_artworks_cache');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          cachedArtworks = parsed;
+        }
+      }
+    } catch {}
+  }
+
   try {
     const rawArtworks = await sanityClient.fetch(`
       *[_type == "artwork"] | order(order asc) {
@@ -112,6 +125,13 @@ export async function fetchArtworks(): Promise<Artwork[]> {
           aspectRatio,
         };
       });
+
+      if (typeof window !== 'undefined') {
+        try {
+          sessionStorage.setItem('yukiro_artworks_cache', JSON.stringify(cachedArtworks));
+        } catch {}
+      }
+
       return cachedArtworks;
     }
   } catch (err) {

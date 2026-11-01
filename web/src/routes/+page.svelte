@@ -15,7 +15,14 @@
   let isModalOpen = $state(false);
   let activeModalIndex = $state(0);
 
-  let artworks = $derived(data.artworks || []);
+  let initialArtworks = data.artworks || [];
+  let artworks = $state<Artwork[]>(initialArtworks);
+
+  $effect(() => {
+    if (data.artworks && data.artworks.length > 0) {
+      artworks = data.artworks;
+    }
+  });
 
   let filteredArtworks = $derived(
     artworks.filter((art) => {
