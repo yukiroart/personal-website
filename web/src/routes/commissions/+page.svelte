@@ -3,8 +3,25 @@
   import FaqAccordion from "#lib/components/FaqAccordion.svelte";
   import { DEFAULT_COMMISSIONS_FAQS, type FaqItem } from "#lib/data/sampleFaq";
   import { DEFAULT_TERMS_BULLETS, formatTermHtml, type TermItem } from "#lib/data/sampleTerms";
+  import { DEFAULT_COMMISSION_STATUS, type CommissionStatusConfig } from "#lib/data/sampleProfile";
 
-  let { data } = $props<{ data: { faqs?: FaqItem[]; terms?: TermItem[] } }>();
+  let { data } = $props<{
+    data: {
+      faqs?: FaqItem[];
+      terms?: TermItem[];
+      commissionStatus?: CommissionStatusConfig;
+    };
+  }>();
+
+  // Defensive hydration state guard for Commission Availability Status
+  let initialStatus = data.commissionStatus || DEFAULT_COMMISSION_STATUS;
+  let commissionStatus = $state<CommissionStatusConfig>(initialStatus);
+
+  $effect(() => {
+    if (data.commissionStatus) {
+      commissionStatus = data.commissionStatus;
+    }
+  });
 
   // Defensive hydration state guard to prevent disappearing FAQs
   let initialFaqs = data.faqs && data.faqs.length > 0 ? data.faqs : DEFAULT_COMMISSIONS_FAQS;
@@ -96,6 +113,26 @@
   <!-- Masthead Title -->
   <section class="comm-masthead-section" aria-label="Commissions Introduction">
     <h1 class="comm-main-title">Commissions</h1>
+  </section>
+
+  <!-- Commission Availability Status Banner Card -->
+  <section
+    class="neo-card comm-status-card"
+    aria-label="Commission Availability Status"
+  >
+    <div class="status-content">
+      <span class="status-label">STATUS :</span>
+      <span
+        class="status-badge"
+        class:is-open={commissionStatus.status === 'open'}
+        class:is-closed={commissionStatus.status === 'closed'}
+      >
+        {commissionStatus.status === 'open' ? 'OPEN' : 'CLOSED'}
+      </span>
+    </div>
+    {#if commissionStatus.note && commissionStatus.note.trim()}
+      <p class="status-note">{commissionStatus.note.trim()}</p>
+    {/if}
   </section>
 
   <!-- 1st Container: DM FOR A COMMISSION -->
@@ -266,6 +303,74 @@
     box-shadow: var(--shadow-neo);
     padding: 32px 36px;
     box-sizing: border-box;
+  }
+
+  /* ----------------------------------------------------
+     STATUS BANNER CARD (Matches Hand-Drawn Reference)
+     ---------------------------------------------------- */
+  .comm-status-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 36px;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .status-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .status-label {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: var(--color-ink);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .status-badge {
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    padding: 6px 28px;
+    border: var(--stroke-neo);
+    border-radius: 4px;
+    line-height: 1.1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    box-shadow: 3px 3px 0px var(--color-ink);
+    transition: background-color var(--duration-fast, 120ms) var(--ease-out),
+                color var(--duration-fast, 120ms) var(--ease-out);
+  }
+
+  .status-badge.is-open {
+    background-color: #06D6A0;
+    color: #121212;
+  }
+
+  .status-badge.is-closed {
+    background-color: #E02E53;
+    color: #FFFFFF;
+  }
+
+  .status-note {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-ink);
+    margin: 4px 0 0 0;
+    opacity: 0.85;
   }
 
   /* ----------------------------------------------------
