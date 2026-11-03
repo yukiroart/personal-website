@@ -1,4 +1,23 @@
 <script lang="ts">
+  import { urlFor } from "#lib/sanity";
+  import {
+    DEFAULT_ARTIST_PROFILE,
+    DEFAULT_BIO_HTML,
+    type ArtistProfile,
+  } from "#lib/data/sampleProfile";
+
+  let { data } = $props<{ data: { profile?: ArtistProfile } }>();
+
+  // Defensive hydration state guard for dynamic Artist Profile
+  let initialProfile = data.profile || DEFAULT_ARTIST_PROFILE;
+  let profile = $state<ArtistProfile>(initialProfile);
+
+  $effect(() => {
+    if (data.profile) {
+      profile = data.profile;
+    }
+  });
+
   const tools = [
     { name: "Toonboom", icon: "/icons/tools/toonboom.png" },
     { name: "IbisPaint", icon: "/icons/tools/ibispaint.svg" },
@@ -78,8 +97,10 @@
     <div class="neo-card portrait-card">
       <div class="portrait-media-wrap">
         <img
-          src="/artworks/yukiro-portrait.jpg"
-          alt="Portrait of Lindsay (Yukiro)"
+          src={profile.portraitImage
+            ? urlFor(profile.portraitImage).width(800).url()
+            : "/artworks/yukiro-portrait.jpg"}
+          alt="Portrait of {profile.artistName || 'Yukiro'}"
           class="portrait-img"
           loading="eager"
         />
@@ -91,8 +112,8 @@
       <h2 class="education-heading">Education</h2>
 
       <div class="education-item">
-        <h3 class="education-school">De La Salle Benilde</h3>
-        <p class="education-program">Art & Animation</p>
+        <h3 class="education-school">{profile.education?.school || "De La Salle Benilde"}</h3>
+        <p class="education-program">{profile.education?.program || "Art & Animation"}</p>
       </div>
     </div>
   </aside>
@@ -118,31 +139,12 @@
       </div>
     </div>
 
-    <!-- Bio Narrative Card -->
+    <!-- Bio Narrative Card (Formatted Text Block) -->
     <div class="neo-card bio-card">
       <h2 class="bio-heading">Bio</h2>
-      <ul class="bio-list">
-        <li>
-          Salutations! Thank you for stumbling upon my website. My name is
-          Lindsay, and I go by Yukiro as my username.
-        </li>
-        <li>
-          I am a digital illustrator, who enjoys character design! I can also do
-          diverse art styles if need be.
-        </li>
-        <li>
-          I love indulging in my hobbies such as wotagei (a unique japanese art
-          form where you dance with lightsticks), as I am in a wotagei dance
-          group called <a
-            class="external-link"
-            href="https://x.com/ZappuWotagei"
-            target="_blank"
-            rel="noopener noreferrer"
-            title="Zappu Wotagei on X (@ZappuWotagei)">Zappu</a
-          >!
-        </li>
-        <li>I also like skateboarding and video games.</li>
-      </ul>
+      <div class="bio-prose">
+        {@html profile.bioHtml || DEFAULT_BIO_HTML}
+      </div>
     </div>
   </article>
 </div>
@@ -316,16 +318,48 @@
     margin-bottom: 18px;
   }
 
-  .bio-list {
-    list-style: disc;
+  .bio-prose {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .bio-prose :global(p),
+  .bio-prose :global(.bio-paragraph) {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-ink);
+    opacity: 0.94;
+    margin: 0;
+  }
+
+  .bio-prose :global(.bio-subheading) {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-ink);
+    margin: 8px 0 0 0;
+  }
+
+  .bio-prose :global(.bio-list-unordered),
+  .bio-prose :global(.bio-list-ordered) {
     padding-left: 20px;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 10px;
   }
 
-  .bio-list li {
+  .bio-prose :global(.bio-list-unordered) {
+    list-style: disc;
+  }
+
+  .bio-prose :global(.bio-list-ordered) {
+    list-style: decimal;
+  }
+
+  .bio-prose :global(li) {
     font-family: var(--font-body);
     font-size: 1rem;
     line-height: 1.65;
@@ -333,7 +367,21 @@
     opacity: 0.94;
   }
 
-  .external-link {
+  .bio-prose :global(strong) {
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+
+  .bio-prose :global(em) {
+    font-style: italic;
+  }
+
+  .bio-prose :global(u) {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  :global(.external-link) {
     color: var(--color-pink);
     font-weight: 700;
     text-decoration: underline;
@@ -344,13 +392,13 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .external-link:hover {
+    :global(.external-link:hover) {
       opacity: 0.8;
       text-decoration-thickness: 2px;
     }
   }
 
-  .external-link:active {
+  :global(.external-link:active) {
     opacity: 0.6;
   }
 
