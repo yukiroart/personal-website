@@ -112,8 +112,12 @@
       <h2 class="education-heading">Education</h2>
 
       <div class="education-item">
-        <h3 class="education-school">{profile.education?.school || "De La Salle Benilde"}</h3>
-        <p class="education-program">{profile.education?.program || "Art & Animation"}</p>
+        <h3 class="education-school">
+          {profile.education?.school || "De La Salle Benilde"}
+        </h3>
+        <p class="education-program">
+          {profile.education?.program || "Art & Animation"}
+        </p>
       </div>
     </div>
   </aside>
